@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
+import classNames from "classnames"
 import * as IconsComponents from "./images"
 
 export interface IconsProps extends React.SVGProps<SVGSVGElement> {
@@ -7,12 +8,16 @@ export interface IconsProps extends React.SVGProps<SVGSVGElement> {
      * Icon name
      */
     icon: keyof typeof IconsComponents
+    /**
+     * Wrapper classname
+     */
+    wrapperClassname?: string
 }
 
-const Icons: React.FC<IconsProps> = ({ icon, ...props }: IconsProps) => {
+const Icons: React.FC<IconsProps> = ({ icon, wrapperClassname, ...props }: IconsProps) => {
     const Component = IconsComponents[icon]
     return (
-        <div className='inline-flex items-center justify-center'>
+        <div className={classNames("inline-flex items-center justify-center", wrapperClassname)}>
             <Component {...props} />
         </div>
     )
