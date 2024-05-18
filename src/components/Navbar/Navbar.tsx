@@ -22,6 +22,7 @@ import ModalLogin from "./components/ModalLogin"
 import Link from "next/link"
 
 const inter = Inter({ subsets: ["latin"] })
+// trigger
 
 const Navbar = () => {
     const [openModal, setOpenModal] = useState(false)
