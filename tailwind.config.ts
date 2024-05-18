@@ -67,6 +67,9 @@ const config: Config = {
 
             backgroundOpacity: {
                 16: "0.16"
+            },
+            screens: {
+                xl: "1067px"
             }
         }
     },
