@@ -48,14 +48,14 @@ interface ButtonProps
 
 const Button = ({
     children,
-    variant,
-    outline,
-    disabled,
-    block,
-    loading,
-    height,
-    borderRadius,
-    width,
+    variant = "primary",
+    outline = false,
+    disabled = false,
+    block = false,
+    loading = false,
+    height = 39,
+    borderRadius = 8,
+    width = undefined,
     className,
     ...props
 }: ButtonProps) => {
@@ -86,17 +86,6 @@ const Button = ({
             )}
         </button>
     )
-}
-
-Button.defaultProps = {
-    variant: "primary",
-    outline: false,
-    block: false,
-    disabled: false,
-    loading: false,
-    height: 39,
-    borderRadius: 8,
-    width: undefined
 }
 
 export default Button
