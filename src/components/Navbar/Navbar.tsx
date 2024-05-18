@@ -7,7 +7,7 @@ import classNames from "classnames"
 import Skeleton from "react-loading-skeleton"
 import { useMediaQuery } from "react-responsive"
 
-import { supabase } from "@config/auth"
+import { supabaseAuth } from "@config/auth"
 import toast from "@utils/toast"
 import useAuth, { useProfile } from "@hooks/useAuth"
 
@@ -36,7 +36,7 @@ const Navbar = () => {
     const avatar = profile?.user_metadata.avatar_url
 
     const signInWithGoogle = async () => {
-        const { error, data } = await supabase.auth.signInWithOAuth({
+        const { error, data } = await supabaseAuth.auth.signInWithOAuth({
             provider: "google",
             options: {
                 redirectTo: getURL()
@@ -56,7 +56,7 @@ const Navbar = () => {
     const logout = async () => {
         try {
             setIsLoading(true)
-            const { error } = await supabase.auth.signOut()
+            const { error } = await supabaseAuth.auth.signOut()
             if (error) {
                 throw new Error(error.message)
             } else {

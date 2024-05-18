@@ -18,7 +18,7 @@ const Head: React.FC = ({
         fullTitle = `${fullTitle} - ${titleSuffix}`
     }
 
-    const iconUrl = "https://ndbqcbbgigoygotysyae.supabase.co/storage/v1/object/public/icon/logo.png"
+    const iconUrl = "https://api.chamjo.design/storage/v1/object/public/icon/logo.png"
     return (
         <NextHead>
             <meta
