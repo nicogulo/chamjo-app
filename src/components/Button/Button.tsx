@@ -60,7 +60,7 @@ const Button = ({
     ...props
 }: ButtonProps) => {
     const buttonClass = classNames(
-        "inline-flex justify-center items-center text-base-1 border outline-none border-solid py-3 px-9 cursor-pointer transition-all duration-300 ease-in disabled:bg-base-2 disabled:border-base-2 disabled:text-base-4 disabled:cursor-not-allowed disabled:hover:bg-base-2 disabled:active:bg-base-2 disabled:hover:border-base-2 disabled:active:border-base-2 shadow-[0px 6px 24px rgba(224, 99, 67, 0.25)]",
+        "inline-flex justify-center items-center text-base-1 border outline-none border-solid py-3 px-9 cursor-pointer transition-all duration-300 ease-in disabled:bg-base-2 disabled:border-base-2 disabled:text-base-4 disabled:cursor-not-allowed disabled:hover:bg-base-2 disabled:active:bg-base-2 disabled:hover:border-base-2 disabled:active:border-base-2",
         className,
         {
             "flex w-full": block,
@@ -75,7 +75,12 @@ const Button = ({
     return (
         <button
             className={buttonClass}
-            style={{ borderRadius: borderRadius, height: height, width: width }}
+            style={{
+                borderRadius: borderRadius,
+                height: height,
+                width: width,
+                boxShadow: "0px 6px 24px rgba(224, 99, 67, 0.25)"
+            }}
             disabled={disabled}
             {...props}
         >

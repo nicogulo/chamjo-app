@@ -137,7 +137,7 @@ const Navbar = () => {
         <header className='relative'>
             <If condition={!isMobile}>
                 <Then>
-                    <div className='flex justify-between fixed left-0 right-0 top-0  z-50  h-[72px] py-0 pl-6 pr-[40px]  bg-base-1 transition-all duration-300 xl:max-w-full max-w-[375px]'>
+                    <div className='flex justify-between fixed left-0 right-0 top-0  z-50  h-[72px] py-0 pl-8 pr-[40px]  bg-base-1 transition-all duration-300 xl:max-w-full max-w-[375px]'>
                         <div className='inline-flex items-center gap-1.5'>
                             <div className='flex flex-row gap-3 items-center'>
                                 <Icons icon='LogoChamjo' width={79} height={24} />
@@ -148,7 +148,7 @@ const Navbar = () => {
                             <Link
                                 href='https://www.producthunt.com/products/chamjo#chamjo'
                                 target='_blank'
-                                className={`${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6 hidden xl:flex flex-row items-center gap-0.5 `}
+                                className={`${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6 hidden xl:flex flex-row items-center gap-0.5 `}
                             >
                                 #8 on Product Hunt
                                 <span>
@@ -165,7 +165,7 @@ const Navbar = () => {
                                     id={item.title === "About Us" ? "about" : ""}
                                 >
                                     <span
-                                        className={`${inter.style} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
+                                        className={`${inter.className} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
                                     >
                                         {item.title}
                                     </span>
@@ -188,7 +188,7 @@ const Navbar = () => {
                             ))}
 
                             <span
-                                className={`${inter.style} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
+                                className={`${inter.className} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
                                 onClick={() => {
                                     if (!isLoggedIn) {
                                         setOpenModal(true)
@@ -204,7 +204,7 @@ const Navbar = () => {
                                 Request
                             </span>
                             <span
-                                className={`${inter.style} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
+                                className={`${inter.className} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
                                 onClick={() => {
                                     if (!isLoggedIn) {
                                         setOpenModal(true)
@@ -213,7 +213,7 @@ const Navbar = () => {
                                     }
                                 }}
                             >
-                                Join Comunity
+                                Join Community
                             </span>
                             <If condition={isLoggedIn}>
                                 <Then>
@@ -336,7 +336,7 @@ const Navbar = () => {
                                 </Then>
                                 <Else>
                                     <Button
-                                        className=' flex flex-row items-center gap-[10px] pl-3 pr-3.5 py-1'
+                                        className=' flex flex-row items-center gap-[10px] pl-4 pr-3.5 py-1'
                                         onClick={handleOpenModal}
                                     >
                                         <span className='text-base-1 text-[14px] leading-6'>Login</span>
@@ -371,7 +371,7 @@ const Navbar = () => {
                             <Link
                                 href='https://www.producthunt.com/products/chamjo#chamjo'
                                 target='_blank'
-                                className={`${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6  flex-row items-center gap-0.5 `}
+                                className={`${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6  flex-row items-center gap-0.5 `}
                             >
                                 #8{" "}
                                 <span>
@@ -556,7 +556,7 @@ const Navbar = () => {
                                     <>
                                         <div className='flex flex-col gap-4 py-6 px-5'>
                                             <p
-                                                className={`${inter.style} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
+                                                className={`${inter.className} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
                                             >
                                                 {item.title}
                                             </p>
@@ -564,7 +564,7 @@ const Navbar = () => {
                                                 {item.item.map((subItem, index) => (
                                                     <a
                                                         key={index}
-                                                        className={`w-full ${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
+                                                        className={`w-full ${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
                                                     >
                                                         {subItem.title === "T&Cs"
                                                             ? "Terms and conditions"
@@ -579,13 +579,13 @@ const Navbar = () => {
                                 ))}
                                 <div className='flex flex-col gap-4 py-6 px-5'>
                                     <p
-                                        className={`${inter.style} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
+                                        className={`${inter.className} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
                                     >
                                         More
                                     </p>
                                     <ul className='list-none p-0 flex flex-col gap-4'>
                                         <a
-                                            className={`w-full ${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
+                                            className={`w-full ${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
                                             onClick={() => {
                                                 if (!isLoggedIn) {
                                                     setDropdown(false)
@@ -604,7 +604,7 @@ const Navbar = () => {
                                     </ul>
                                     <ul className='list-none p-0 flex flex-col gap-4'>
                                         <a
-                                            className={`w-full ${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
+                                            className={`w-full ${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
                                             onClick={() => {
                                                 if (!isLoggedIn) {
                                                     setDropdown(false)
@@ -640,21 +640,21 @@ const Navbar = () => {
                                 <div className='flex flex-col gap-4 items-center'>
                                     <Icons icon='IlusColor' width={134} height={67} />
                                     <span
-                                        className={`${inter.style} font-sans text-1 leading-[18px] text-base-6 text-center w-[288px]`}
+                                        className={`${inter.className} font-sans text-1 leading-[18px] text-base-6 text-center w-[288px]`}
                                     >
                                         You can access and discover more app patterns by logging in or signing up
                                     </span>
                                 </div>
                                 <div className='flex flex-col items-center gap-4'>
                                     <Button
-                                        className={`!border-none !bg-base-3 !text-base-9 gap-2 text-2 justify-center ${inter.style} font-sans !leading-[22px] hover:text-base-3`}
+                                        className={`!border-none !bg-base-3 !text-base-9 gap-2 text-2 justify-center ${inter.className} font-sans !leading-[22px] hover:text-base-3`}
                                         block
                                         onClick={signInWithGoogle}
                                     >
                                         <Icons icon='GoogleColor' />
                                         Continue with google
                                     </Button>
-                                    <p className={`text-base-6 text-1 ${inter.style} font-sans text-center`}>
+                                    <p className={`text-base-6 text-1 ${inter.className} font-sans text-center`}>
                                         By continuing, you agree to our{" "}
                                         <span
                                             className='text-[#424242] font-medium cursor-pointer'

@@ -54,7 +54,7 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                             Login or Sign up
                                         </span>
                                         <span
-                                            className={`text-1 leading-[18px] text-base-6 ${inter.style} font-sans text-center w-[288px]`}
+                                            className={`text-1 leading-[18px] text-base-6 ${inter.className} font-sans text-center w-[288px]`}
                                         >
                                             You can access and discover more app patterns by logging in or signing up
                                         </span>
@@ -62,12 +62,14 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                     <div className=' flex flex-col w-full gap-4'>
                                         <div className=' flex flex-row gap-3 items-center rounded-[4px] bg-base-2 border border-base-3 p-3'>
                                             <Icons icon='Shield' width={24} height={24} />
-                                            <span className={`text-1 text-base-6 ${inter.style} font-sans font-normal`}>
+                                            <span
+                                                className={`text-1 text-base-6 ${inter.className} font-sans font-normal`}
+                                            >
                                                 Chamjo uses{" "}
                                                 <a
                                                     href='https://supabase.com/'
                                                     target='_blank'
-                                                    className={`!text-[#22925F] !font-semibold ${inter.style} font-sans font-normal`}
+                                                    className={`!text-[#22925F] !font-semibold ${inter.className} font-sans font-normal`}
                                                 >
                                                     Supabase{" "}
                                                 </a>
@@ -75,7 +77,7 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                             </span>
                                         </div>
                                         <Button
-                                            className={`!border-none !rounded  text-base-1 gap-2 text-2 justify-center ${inter.style} font-sans font-normal leading-[22px] hover:text-base-3`}
+                                            className={`!border-none !rounded  text-base-1 gap-2 text-2 justify-center ${inter.className} font-sans font-normal leading-[22px] hover:text-base-3`}
                                             block
                                             onClick={signInWithGoogle}
                                             height={46}
@@ -85,11 +87,11 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                             Continue with Google
                                         </Button>
                                         <p
-                                            className={`text-base-6 text-1 ${inter.style} font-sans font-normal text-center`}
+                                            className={`text-base-6 text-1 ${inter.className} font-sans font-normal text-center`}
                                         >
                                             By continuing, you agree to our{" "}
                                             <span
-                                                className={`text-base-9 font-medium cursor-pointer ${inter.style} font-sans font-normal`}
+                                                className={`text-base-9 font-medium cursor-pointer ${inter.className} font-sans font-normal`}
                                                 onClick={() => {
                                                     window.open(
                                                         "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9",
@@ -102,7 +104,7 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                             </span>{" "}
                                             and{" "}
                                             <span
-                                                className={`text-base-9 ${inter.style} font-sans font-medium cursor-pointer`}
+                                                className={`text-base-9 ${inter.className} font-sans font-medium cursor-pointer`}
                                                 onClick={() => {
                                                     window.open(
                                                         "https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197",
