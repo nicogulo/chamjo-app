@@ -20,15 +20,16 @@ import "./module.css"
 import { removeClickedCard } from "./utils/clikced-card"
 import ModalLogin from "./components/ModalLogin"
 import Link from "next/link"
+import BottomSheet from "@components/BottomSheet"
 
 const inter = Inter({ subsets: ["latin"] })
-// trigger
 
 const Navbar = () => {
     const [openModal, setOpenModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isOpenProfile, setOpenProfile] = useState(false)
     const [dropdown, setDropdown] = useState(false)
+    const [bottomSheet, setBottomSheet] = useState(false)
 
     const { profile, loading } = useProfile()
     const { isLoggedIn } = useAuth()
@@ -81,12 +82,13 @@ const Navbar = () => {
     }
 
     const handleProfile = () => {
+        setDropdown(false)
         setOpenProfile(!isOpenProfile)
     }
 
     const itemNav = [
         {
-            title: "About Us",
+            title: "About us",
             item: [
                 {
                     id: 1,
@@ -110,7 +112,7 @@ const Navbar = () => {
                 },
                 {
                     id: 5,
-                    title: "Privacy Policies",
+                    title: "Privacy policies",
                     url: "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9"
                 }
             ]
@@ -356,9 +358,9 @@ const Navbar = () => {
                     </When>
                 </Then>
                 <Else>
-                    <div className='flex justify-between py-3.5 px-3 my-0 mx-auto fixed left-0 right-0 bg-base-1 z-[101] max-w-[375px] '>
+                    <div className='flex justify-between py-3.5 px-4 my-0 mx-auto fixed left-0 right-0 bg-base-1 z-50 max-w-[375px] '>
                         <div className='inline-flex items-center gap-1.5'>
-                            <div className='flex flex-row gap-3 items-center'>
+                            <div className='flex flex-row gap-2 items-center'>
                                 {/* <Link href='/'> */}
                                 <Icons icon='LogoChamjo' wrapperClassname='w-[66px] h-5' width={66} height={20} />
                                 {/* </Link> */}
@@ -518,6 +520,172 @@ const Navbar = () => {
                             </If>
                         </div>
                     </div>
+                    <AnimatePresence>
+                        {dropdown && (
+                            <motion.div
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -50, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className='flex flex-col w-full h-[100vh] z-40 max-w-[375px] pt-[64px] pb-4 fixed mx-auto left-0 right-0  bg-base-1 overflow-scroll'
+                            >
+                                <div className='w-full h-1.5 bg-base-2' />
+                                <If condition={!isLoggedIn}>
+                                    <Then>
+                                        <div className='flex flex-col gap-4 py-6 px-5'>
+                                            <Button
+                                                className='!px-3.5  !rounded-lg !flex-row !justify-center relative'
+                                                onClick={signInWithGoogle}
+                                                style={{
+                                                    boxShadow: "0px 6px 12px -5px rgba(224, 99, 67, 0.25)",
+                                                    height: 39
+                                                }}
+                                            >
+                                                <span className=' font-medium text-[14px] text-[#fff] w-full'>
+                                                    Login
+                                                </span>
+                                                <Icons icon='ArrowRightCircle' width={20} height={20} />
+                                            </Button>
+                                        </div>
+                                        <div className='w-[90%] h-[1px] bg-base-2 mx-auto' />
+                                    </Then>
+                                </If>
+                                {/* item navbar */}
+
+                                {itemNav.map((item, index) => (
+                                    <>
+                                        <div className='flex flex-col gap-4 py-6 px-5'>
+                                            <p
+                                                className={`${inter.style} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
+                                            >
+                                                {item.title}
+                                            </p>
+                                            <ul className='list-none p-0 flex flex-col gap-4'>
+                                                {item.item.map((subItem, index) => (
+                                                    <a
+                                                        key={index}
+                                                        className={`w-full ${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
+                                                    >
+                                                        {subItem.title === "T&Cs"
+                                                            ? "Terms and conditions"
+                                                            : subItem.title}
+                                                        <Icons icon='ArrowNavbar' width={9} height={9} />
+                                                    </a>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div className='w-[90%] h-[1px] bg-base-2 mx-auto' />
+                                    </>
+                                ))}
+                                <div className='flex flex-col gap-4 py-6 px-5'>
+                                    <p
+                                        className={`${inter.style} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
+                                    >
+                                        More
+                                    </p>
+                                    <ul className='list-none p-0 flex flex-col gap-4'>
+                                        <a
+                                            className={`w-full ${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
+                                            onClick={() => {
+                                                if (!isLoggedIn) {
+                                                    setDropdown(false)
+                                                    setBottomSheet(true)
+                                                } else {
+                                                    window.open(
+                                                        "https://forms.gle/DxFDvVu3irnTW6u58",
+                                                        "popup",
+                                                        "width=600, height=600"
+                                                    )
+                                                }
+                                            }}
+                                        >
+                                            Request <Icons icon='ArrowNavbar' width={9} height={9} />
+                                        </a>
+                                    </ul>
+                                    <ul className='list-none p-0 flex flex-col gap-4'>
+                                        <a
+                                            className={`w-full ${inter.style} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
+                                            onClick={() => {
+                                                if (!isLoggedIn) {
+                                                    setDropdown(false)
+                                                    setBottomSheet(true)
+                                                } else {
+                                                    window.open(
+                                                        "https://t.me/designfellowid",
+                                                        "popup",
+                                                        "width=600, height=600"
+                                                    )
+                                                }
+                                            }}
+                                        >
+                                            Join Community <Icons icon='ArrowNavbar' width={9} height={9} />
+                                        </a>
+                                    </ul>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                    <BottomSheet
+                        open={bottomSheet}
+                        onDismiss={() => setBottomSheet(false)}
+                        contentClassName='max-h-[324px] !max-w-[375px]'
+                        header={
+                            <span className='font-medium text-3 leading-6 text-base-9 text-center'>
+                                Login or Sign up
+                            </span>
+                        }
+                    >
+                        <div className='flex flex-col px-1.5 pt-1 gap-[18px]'>
+                            <div className='flex flex-col gap-8 w-full'>
+                                <div className='flex flex-col gap-4 items-center'>
+                                    <Icons icon='IlusColor' width={134} height={67} />
+                                    <span
+                                        className={`${inter.style} font-sans text-1 leading-[18px] text-base-6 text-center w-[288px]`}
+                                    >
+                                        You can access and discover more app patterns by logging in or signing up
+                                    </span>
+                                </div>
+                                <div className='flex flex-col items-center gap-4'>
+                                    <Button
+                                        className={`!border-none !bg-base-3 !text-base-9 gap-2 text-2 justify-center ${inter.style} font-sans !leading-[22px] hover:text-base-3`}
+                                        block
+                                        onClick={signInWithGoogle}
+                                    >
+                                        <Icons icon='GoogleColor' />
+                                        Continue with google
+                                    </Button>
+                                    <p className={`text-base-6 text-1 ${inter.style} font-sans text-center`}>
+                                        By continuing, you agree to our{" "}
+                                        <span
+                                            className='text-[#424242] font-medium cursor-pointer'
+                                            onClick={() => {
+                                                window.open(
+                                                    "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9",
+                                                    "popup",
+                                                    "width=600, height=600"
+                                                )
+                                            }}
+                                        >
+                                            Privacy Policy
+                                        </span>{" "}
+                                        and{" "}
+                                        <span
+                                            className='text-[#424242] font-medium cursor-pointer'
+                                            onClick={() => {
+                                                window.open(
+                                                    "https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197",
+                                                    "popup",
+                                                    "width=600, height=600"
+                                                )
+                                            }}
+                                        >
+                                            T&Cs
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </BottomSheet>
                 </Else>
             </If>
         </header>
