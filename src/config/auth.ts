@@ -7,6 +7,7 @@ import { throttleAdapterEnhancer } from "axios-extensions"
 
 import { createClient } from "@supabase/supabase-js"
 import querystring from "@utils/querystring"
+import { Database } from "@utils/supabase"
 
 const publicSupabaseUrl = PUBLIC_SUPABASE_URL ?? ""
 const supabasePublicKey = PUBLIC_SUPABASE_KEY ?? ""
@@ -14,6 +15,7 @@ const supabasePublicKey = PUBLIC_SUPABASE_KEY ?? ""
 const defaultContentType = "application/x-www-form-urlencoded"
 
 export const supabaseAuth = createClient(publicSupabaseUrl, supabasePublicKey)
+export const supabaseClient = createClient(API_URL ?? "", supabasePublicKey)
 
 export const client = axios.create({
     baseURL: API_URL,

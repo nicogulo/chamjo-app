@@ -148,7 +148,7 @@ const Navbar = () => {
                             <Link
                                 href='https://www.producthunt.com/products/chamjo#chamjo'
                                 target='_blank'
-                                className={`${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6 hidden xl:flex flex-row items-center gap-0.5 `}
+                                className={`${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6 hidden xl:flex flex-row items-center gap-1 `}
                             >
                                 #8 on Product Hunt
                                 <span>
