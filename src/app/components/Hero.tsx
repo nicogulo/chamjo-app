@@ -14,7 +14,7 @@ const Hero = () => {
     return (
         <div className='hero-wrapper '>
             <div className='flex flex-col items-center gap-3 xl:gap-4 w-full'>
-                <h1 className='font-medium xl:text-[48px] text-[28px] xl:leading-[54px] leading-9 xl:w-[560px] w-[inherit] text-[#121212] text-center'>
+                <h1 className='font-medium xl:text-[48px] text-[28px] xl:leading-[54px] leading-9 xl:w-[560px] w-[inherit] text-[#121212] text-center py-0 xl:px-0 px-6'>
                     Backed your product with{" "}
                     <span className=' font-medium xl:text-[48px] text-[28px] xl:leading-[54px] leading-9 text-[#7543df]'>
                         various

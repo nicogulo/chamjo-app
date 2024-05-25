@@ -358,7 +358,7 @@ const Navbar = () => {
                     </When>
                 </Then>
                 <Else>
-                    <div className='flex justify-between py-3.5 px-4 my-0 mx-auto fixed left-0 right-0 bg-base-1 z-50 max-w-[375px] '>
+                    <div className='flex justify-between py-3.5 px-4 my-0 mx-auto fixed left-0 right-0 bg-base-1 z-50  '>
                         <div className='inline-flex items-center gap-1.5'>
                             <div className='flex flex-row gap-2 items-center'>
                                 {/* <Link href='/'> */}
