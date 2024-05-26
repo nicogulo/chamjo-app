@@ -7,6 +7,9 @@ import Category from "./Category"
 import classNames from "classnames"
 import { Database } from "@utils/supabase"
 import toast from "@utils/toast"
+import Filter from "./Filter"
+import "./module.css"
+import Loader from "@components/Loader"
 
 export interface CategoryModel {
     id: number | null
@@ -38,6 +41,9 @@ const SkeletonItem = () => (
 const SkeletonComp = () => [...Array(8)].map((_, index) => <SkeletonItem key={index} />)
 
 const Sidebar = ({ categoryParams, categoryidParams, search }: Props) => {
+    let page = 0
+    let limit = 17
+
     const [isLoadingCategory, setLoadingCategory] = useState(true)
     const [isLoadingData, setLoadingData] = useState(true)
     const [category, setCategory] = useState<CategoryModel[]>([])
@@ -45,8 +51,8 @@ const Sidebar = ({ categoryParams, categoryidParams, search }: Props) => {
     const [totalData, setTotalData] = useState<number>(0)
     const [selectedTittle, setSelectedTittle] = useState("All")
     const [pagination, setPagination] = useState({
-        page: 0,
-        limit: 17
+        page: page,
+        limit: limit
     })
 
     if (categoryidParams === undefined) {
@@ -159,20 +165,38 @@ const Sidebar = ({ categoryParams, categoryidParams, search }: Props) => {
 
                 {/* End Sidebar */}
             </div>
-            <div className='max-[1066px]:max-w-[375px] max-[1066px]:mx-auto '>
-                <div className='pb-5 pt-10 max-[1066px]:pt-4 max-[1066px]:pb-3'>
-                    <span className='text-[24px] font-medium flex flex-row items-center gap-1  leading-8 text-base-8 max-[1066px]:text-[20px] max-[1066px]:leading-5'>
+            <div className='wrapper-card'>
+                <div className='wrapper-title'>
+                    <span className='title' id='title'>
                         Browse <span className='text-base-5'>in </span>{" "}
                         <span
-                            className={classNames("text-base-8 ", {
-                                "max-[1066]:whitespace-nowrap max-[1066]:w-[100px] max-[1066]:overflow-hidden max-[1066]:text-ellipsis":
-                                    checkLength(selectedTittle)
+                            className={classNames("text-base-8", {
+                                "category-name": !checkLength(selectedTittle)
                             })}
-                            id='title'
                         >
                             {selectedTittle}
                         </span>
+                        <If condition={isLoadingData}>
+                            <Then>
+                                <div className='pl-2'>
+                                    <Loader type='ThreeDots' height={10} width={20} />
+                                </div>
+                            </Then>
+                            <Else>
+                                <span className='total-data bg-primary-5 text-base-1'>{totalData}</span>
+                            </Else>
+                        </If>
                     </span>
+                    <Filter
+                        itemFilter={category}
+                        total={totalData}
+                        loading={isLoadingCategory}
+                        categoryParams={categoryParams}
+                        onChange={(value) => {
+                            setSelectedTittle(value)
+                            setPagination({ page: page, limit: limit })
+                        }}
+                    />
                 </div>
             </div>
         </>
