@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Inter } from "next/font/google"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
@@ -85,6 +85,16 @@ const Navbar = () => {
         setDropdown(false)
         setOpenProfile(!isOpenProfile)
     }
+
+    useEffect(() => {
+        if (openModal) {
+            document.body.classList.add("overflow-hidden")
+            document.body.classList.remove("overflow-auto")
+        } else {
+            document.body.classList.remove("overflow-hidden")
+            document.body.classList.add("overflow-auto")
+        }
+    }, [openModal])
 
     const itemNav = [
         {

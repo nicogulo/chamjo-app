@@ -60,7 +60,7 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                         </span>
                                     </div>
                                     <div className=' flex flex-col w-full gap-4'>
-                                        <div className=' flex flex-row gap-3 items-center rounded-[4px] bg-base-2 border border-base-3 p-3'>
+                                        <div className=' flex flex-row gap-3 items-center rounded-[4px] bg-base-2 border border-base-3 p-4'>
                                             <Icons icon='Shield' width={24} height={24} />
                                             <span
                                                 className={`text-1 text-base-6 ${inter.className} font-sans font-normal`}
