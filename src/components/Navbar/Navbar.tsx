@@ -30,6 +30,8 @@ const Navbar = () => {
     const [isOpenProfile, setOpenProfile] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [bottomSheet, setBottomSheet] = useState(false)
+    const [scrollPos, setScrollPos] = useState(0)
+    const [showNav, setShowNav] = useState(true)
 
     const { profile, loading } = useProfile()
     const { isLoggedIn } = useAuth()
@@ -85,6 +87,22 @@ const Navbar = () => {
         setDropdown(false)
         setOpenProfile(!isOpenProfile)
     }
+
+    const handleScroll = () => {
+        const currentScrollPos = window.scrollY
+        if (currentScrollPos > 0 && currentScrollPos < document.body.clientHeight - window.innerHeight) {
+            setShowNav(scrollPos > currentScrollPos || currentScrollPos < 400)
+            setScrollPos(currentScrollPos)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll)
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+        }
+    }, [])
 
     useEffect(() => {
         if (openModal) {
@@ -147,7 +165,14 @@ const Navbar = () => {
         <header className='relative'>
             <If condition={!isMobile}>
                 <Then>
-                    <div className='flex justify-between fixed left-0 right-0 top-0  z-50  h-[72px] py-0 pl-8 pr-[40px]  bg-base-1 transition-all duration-300 xl:max-w-full max-w-[375px]'>
+                    <div
+                        className={classNames(
+                            "flex justify-between fixed left-0 right-0 top-0  z-50  h-[72px] py-0 pl-8 pr-[40px]  bg-base-1 transition-all duration-300 xl:max-w-full max-w-[375px]",
+                            {
+                                "transform -translate-y-full": !showNav
+                            }
+                        )}
+                    >
                         <div className='inline-flex items-center gap-1.5'>
                             <div className='flex flex-row gap-3 items-center'>
                                 <Icons icon='LogoChamjo' width={79} height={24} />
