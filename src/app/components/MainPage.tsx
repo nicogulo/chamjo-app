@@ -1,7 +1,8 @@
 "use client"
+
 import { Else, If, Then } from "@components/If"
 import fetchAPI, { supabaseAuth, supabaseClient } from "@config/auth"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import Category from "./Category"
 import classNames from "classnames"
@@ -10,6 +11,10 @@ import toast from "@utils/toast"
 import Filter from "./Filter"
 import "./module.css"
 import Loader from "@components/Loader"
+import SearchBar from "./SearchBar"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useDebouncedCallback } from "use-debounce"
+import { useMediaQuery } from "react-responsive"
 
 export interface CategoryModel {
     id: number | null
@@ -53,7 +58,11 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
         page: page,
         limit: limit
     })
-
+    const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
+    const isMobile = useMediaQuery({ maxWidth: "1066px" })
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const pathName = usePathname()
     if (categoryidParams === undefined) {
         categoryidParams = "26"
     }
@@ -96,17 +105,25 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
     const getAppData = async (pagination: any) => {
         try {
             setLoadingData(true)
+            let params: object = {
+                select: "*,CategoriesOnApps!inner(*)",
+                order: "id.desc",
+                limit: pagination.limit,
+                offset: pagination.page,
+                "CategoriesOnApps.category_id": `eq.${categoryidParams}`
+            }
+
+            if (search) {
+                params = {
+                    ...params,
+                    app_name: `ilike.%${search}%`
+                }
+            }
 
             const response = await fetchAPI({
                 url: "/rest/v1/Application",
                 method: "GET",
-                params: {
-                    select: "*,CategoriesOnApps!inner(*)",
-                    order: "id.desc",
-                    limit: pagination.limit,
-                    offset: pagination.page,
-                    "CategoriesOnApps.category_id": `eq.${categoryidParams}`
-                }
+                params: params
             })
             const data: DataAppType[] = response.data
             const countData = response?.count
@@ -115,8 +132,16 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                 throw response
             }
 
+            const dataFilter = data.filter((item) => {
+                if (!item) return false
+                const searchValue = search?.toLowerCase()
+                const name = item.app_name.toLowerCase()
+
+                !searchValue || name.includes(searchValue)
+            })
+
             setTotalData(countData)
-            setDataApp(data as unknown as DataAppType[])
+            setDataApp(dataFilter as unknown as DataAppType[])
 
             setLoadingData(false)
         } catch (error: any) {
@@ -133,12 +158,27 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
         }
     }
 
+    const handleSearch = useDebouncedCallback((value) => {
+        const params = new URLSearchParams(searchParams.toString())
+        if (value) {
+            params.set("search", value)
+        } else {
+            params.delete("search")
+        }
+
+        router.replace(`${pathName}?${params.toString()}`, { scroll: false })
+    }, 1000)
+
     useEffect(() => {
         getAppData(pagination)
-    }, [pagination.page, categoryidParams])
+    }, [pagination.page, categoryidParams, search])
 
     useEffect(() => {
         getCategory()
+    }, [])
+
+    useEffect(() => {
+        setSearchValue(searchParams.get("search") || "")
     }, [])
 
     return (
@@ -158,6 +198,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                             }}
                             loadingData={isLoadingData}
                             total={totalData}
+                            searchParams={search}
                         />
                     </Else>
                 </If>
@@ -170,14 +211,14 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                         Browse <span className='text-base-5'>in </span>{" "}
                         <span
                             className={classNames("text-base-8", {
-                                "category-name": !checkLength(selectedTittle)
+                                "category-name": !checkLength(selectedTittle) && isMobile
                             })}
                         >
                             {selectedTittle}
                         </span>
                         <If condition={isLoadingData}>
                             <Then>
-                                <div className='pl-2'>
+                                <div className='pl-2 xl:hidden block'>
                                     <Loader type='ThreeDots' height={10} width={20} />
                                 </div>
                             </Then>
@@ -197,7 +238,13 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                         }}
                     />
                 </div>
-                serac
+                <SearchBar
+                    onChange={(e) => {
+                        setSearchValue(e.target.value)
+                        handleSearch(e.target.value)
+                    }}
+                    value={searchValue}
+                />
             </div>
         </>
     )

@@ -66,11 +66,10 @@ const Filter = ({ itemFilter, loading, onChange, total, categoryParams }: Props)
     }
 
     useEffect(() => {
-        const index = itemFilter.findIndex((cat) => cat.appCategoryName === categoryParams)
-
-        if (index !== -1) {
+        const index = itemFilter?.findIndex((cat) => cat.appCategoryName?.includes(categoryParams ?? ""))
+        if (index !== -1 && index !== undefined) {
             setClickedId(index)
-            onChange?.(itemFilter[index].appCategoryName ?? "")
+            onChange?.(itemFilter?.[index].appCategoryName ?? "")
         }
     }, [itemFilter, setClickedId])
     return (

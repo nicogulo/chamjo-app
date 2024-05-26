@@ -15,12 +15,14 @@ const inter = Inter({ subsets: ["latin"] })
 interface CategoryProps {
     category: CategoryModel[] | null
     categoryParams?: string
+
+    searchParams?: string
     total?: number
     onChange?: (category: string) => void
     loadingData?: boolean
 }
 
-const Category = ({ category, categoryParams, total, onChange, loadingData }: CategoryProps) => {
+const Category = ({ category, categoryParams, searchParams, total, onChange, loadingData }: CategoryProps) => {
     const [clickedId, setClickedId] = useState<number | undefined>(0)
     const router = useRouter()
 
@@ -32,8 +34,7 @@ const Category = ({ category, categoryParams, total, onChange, loadingData }: Ca
     }
 
     useEffect(() => {
-        const index = category?.findIndex((cat) => cat.appCategoryName === categoryParams)
-
+        const index = category?.findIndex((cat) => cat.appCategoryName?.includes(categoryParams ?? ""))
         if (index !== -1 && index !== undefined) {
             setClickedId(index)
             onChange?.(category?.[index].appCategoryName ?? "")
@@ -58,7 +59,10 @@ const Category = ({ category, categoryParams, total, onChange, loadingData }: Ca
                             onClick={(event) => {
                                 handleClick(event, index)
                                 onChange?.(item.appCategoryName ?? "")
-                                router.push(`/?category=${item.appCategoryName}&id=${item.id}`, { scroll: false })
+                                router.push(
+                                    `/?category=${item.appCategoryName}&id=${item.id}${searchParams ? `&search=${searchParams}` : ""}`,
+                                    { scroll: false }
+                                )
                             }}
                         >
                             <div className='flex flex-row gap-[10px]'>
