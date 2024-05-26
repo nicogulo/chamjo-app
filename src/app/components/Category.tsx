@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import { Inter } from "next/font/google"
 
-import { CategoryModel } from "./Sidebar"
+import { CategoryModel } from "./MainPage"
 import classNames from "classnames"
 import { Else, If, Then, When } from "@components/If"
 import { useRouter } from "next/navigation"

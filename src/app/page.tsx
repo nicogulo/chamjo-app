@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Hero from "./components/Hero"
-import Sidebar from "./components/Sidebar"
+import MainPage from "./components/MainPage"
 
 interface HomeProps {
     searchParams?: { [key: string]: string }
@@ -15,7 +15,7 @@ const Home = ({ searchParams }: HomeProps) => {
             <Hero />
             <div className='max-w-[1407px] my-0 mx-auto'>
                 <div className='content-page bg-base-1' id='content'>
-                    <Sidebar categoryParams={categoryParams} categoryidParams={categoryidParams} search={search} />
+                    <MainPage categoryParams={categoryParams} categoryidParams={categoryidParams} search={search} />
                 </div>
             </div>
         </main>

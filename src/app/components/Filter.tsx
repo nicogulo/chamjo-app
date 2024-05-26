@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react"
 import { Inter } from "next/font/google"
 import Icons from "@components/Icons"
 
-import { CategoryModel } from "./Sidebar"
+import { CategoryModel } from "./MainPage"
 import classNames from "classnames"
 import Image from "next/image"
 import { Else, If, Then, When } from "@components/If"

@@ -26,7 +26,6 @@ interface Props {
     search?: string
 }
 type CategoryType = Database["public"]["Tables"]["CategoriesOnApps"]["Row"]
-type Categoriestype = Database["public"]["Tables"]["AppCategory"]["Row"]
 type DataAppType = Database["public"]["Tables"]["Application"]["Row"] & {
     category: CategoryType[]
 }
@@ -40,7 +39,7 @@ const SkeletonItem = () => (
 
 const SkeletonComp = () => [...Array(8)].map((_, index) => <SkeletonItem key={index} />)
 
-const Sidebar = ({ categoryParams, categoryidParams, search }: Props) => {
+const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
     let page = 0
     let limit = 17
 
@@ -198,9 +197,10 @@ const Sidebar = ({ categoryParams, categoryidParams, search }: Props) => {
                         }}
                     />
                 </div>
+                serac
             </div>
         </>
     )
 }
 
-export default Sidebar
+export default MainPage
