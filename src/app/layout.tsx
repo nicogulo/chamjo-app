@@ -1,15 +1,10 @@
 import type { Metadata } from "next"
-import { Outfit } from "next/font/google"
+import { Inter, Outfit } from "next/font/google"
 import "./globals.css"
 import Navbar from "@components/Navbar"
 
 const outfit = Outfit({ subsets: ["latin"] })
-
-export const metadata: Metadata = {
-    title: "Chamjo | Discover Asia-based App Patterns",
-    description:
-        "Bored of using Airbnb, Doordash, and Yadayadayada for inspiration? Say no more! Here you can be inspired by the Asian-based App Patterns that could be your next favorite app."
-}
+export const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({
     children
@@ -25,7 +20,7 @@ export default function RootLayout({
                     href='https://api.chamjo.design/storage/v1/object/public/icon/favicon.ico'
                 />
                 <Navbar />
-                {children}
+                <div className='mt-[72px]'>{children}</div>
             </body>
         </html>
     )

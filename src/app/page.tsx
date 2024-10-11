@@ -1,9 +1,15 @@
 import Image from "next/image"
 import Hero from "./components/Hero"
 import MainPage from "./components/MainPage"
+import { Metadata } from "next"
 
 interface HomeProps {
     searchParams?: { [key: string]: string }
+}
+export const metadata: Metadata = {
+    title: "Chamjo | Discover Asia-based App Patterns",
+    description:
+        "Bored of using Airbnb, Doordash, and Yadayadayada for inspiration? Say no more! Here you can be inspired by the Asian-based App Patterns that could be your next favorite app."
 }
 
 const Home = ({ searchParams }: HomeProps) => {

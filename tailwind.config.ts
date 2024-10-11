@@ -62,7 +62,7 @@ const config: Config = {
                 19: "48px"
             },
             fontFamily: {
-                generalSans: "'Inter',' sans-serif'"
+                generalSans: "var(--font-inter), 'sans-serif'"
             },
 
             backgroundOpacity: {
