@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
-import { Outfit } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import Navbar from "@components/Navbar"
+import BackToTop from "@components/BackToTop"
 
-const outfit = Outfit({ subsets: ["latin"] })
+export const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] })
 
 export const metadata: Metadata = {
     title: "Chamjo | Discover Asia-based App Patterns",
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <body className={`${outfit.className} bg-base-1 relative`}>
+            <body className={`${inter.className} bg-base-100 relative`}>
                 <link
                     rel='icon'
                     type='image/png'
@@ -26,6 +27,7 @@ export default function RootLayout({
                 />
                 <Navbar />
                 {children}
+                <BackToTop />
             </body>
         </html>
     )

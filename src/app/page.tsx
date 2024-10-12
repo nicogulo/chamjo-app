@@ -1,23 +1,29 @@
-import Image from "next/image"
-import Hero from "./components/Hero"
-import MainPage from "./components/MainPage"
+import Hero from "./home/components/Hero"
+
+import Content from "./home/components/Content"
+import Trusted from "./home/components/Trusted"
+import Benefit from "./home/components/Benefit"
+import Benchmark from "./home/components/Benchmark"
+
+import Faq from "./home/components/Faq"
+import CTA from "./home/components/CTA"
 
 interface HomeProps {
     searchParams?: { [key: string]: string }
 }
 
-const Home = ({ searchParams }: HomeProps) => {
-    const categoryParams = searchParams?.category
-    const categoryidParams = searchParams?.id
-    const search = searchParams?.search
+const Home = async ({ searchParams }: HomeProps) => {
+    const country = searchParams?.country
+
     return (
-        <main className='min-h-screen '>
+        <main className='min-h-screen max-xl:max-w-[375px] max-xl:mx-auto'>
             <Hero />
-            <div className='max-w-[1407px] my-0 mx-auto'>
-                <div className='content-page bg-base-1' id='content'>
-                    <MainPage categoryParams={categoryParams} categoryidParams={categoryidParams} search={search} />
-                </div>
-            </div>
+            <Content />
+            <Trusted />
+            <Benefit />
+            <Benchmark country={country} />
+            <Faq />
+            <CTA />
         </main>
     )
 }
