@@ -16,6 +16,7 @@ const IconComponents = {
     ArrowLink: lazy(() => import("./ArrowLink")),
     ArrowNavbar: lazy(() => import("./ArrowNavbar")),
     ArrowRight: lazy(() => import("./ArrowRight")),
+    ArrowTop: lazy(() => import("./ArrowTop")),
     ArrowRightCircle: lazy(() => import("./ArrowCircleRight")),
     Art1: lazy(() => import("./Art1")),
     Art2: lazy(() => import("./Art2")),
