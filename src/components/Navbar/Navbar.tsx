@@ -197,7 +197,9 @@ const Navbar = () => {
                                                 <div
                                                     key={index}
                                                     onClick={() => {
-                                                        router.replace(`?country=${item?.name}`)
+                                                        router.replace(`?country=${item?.name}`, {
+                                                            scroll: false
+                                                        })
                                                         setSelectedCountry(item?.name)
                                                         setShowCountry(false)
                                                     }}
@@ -562,7 +564,8 @@ const Navbar = () => {
                                                     <div
                                                         key={index}
                                                         onClick={() => {
-                                                            router.replace(`?country=${item?.name}`)
+                                                            router.replace(`?country=${item?.name}`, {
+                                                                scroll: false})
                                                             setSelectedCountry(item?.name)
                                                             setShowCountry(false)
                                                         }}
