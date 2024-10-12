@@ -1,30 +1,35 @@
 "use client"
+
 import React, { useEffect, useState } from "react"
-import { Inter } from "next/font/google"
+
 import Image from "next/image"
+import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { useRouter } from "next/navigation"
 import classNames from "classnames"
 import Skeleton from "react-loading-skeleton"
 import { useMediaQuery } from "react-responsive"
 
-import { supabaseAuth } from "@config/auth"
+import fetchAPI, { supabaseAuth } from "@config/auth"
 import toast from "@utils/toast"
 import useAuth, { useProfile } from "@hooks/useAuth"
+import { getURL } from "@helpers/get-url"
+import { Database } from "@utils/supabase"
 
 import Icons from "@components/Icons"
 import { Else, If, Then, When } from "@components/If"
 import Button from "@components/Button"
-import { getURL } from "@helpers/get-url"
+import BottomSheet from "@components/BottomSheet"
 
 import "./module.css"
 import { removeClickedCard } from "./utils/clikced-card"
 import ModalLogin from "./components/ModalLogin"
-import Link from "next/link"
-import BottomSheet from "@components/BottomSheet"
+import CollapseMenu from "./components/CollapseMenu"
 
-const inter = Inter({ subsets: ["latin"] })
+type CountryProps = Database["public"]["Tables"]["country"]["Row"]
 
 const Navbar = () => {
+    const router = useRouter()
     const [openModal, setOpenModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isOpenProfile, setOpenProfile] = useState(false)
@@ -32,6 +37,9 @@ const Navbar = () => {
     const [bottomSheet, setBottomSheet] = useState(false)
     const [scrollPos, setScrollPos] = useState(0)
     const [showNav, setShowNav] = useState(true)
+    const [country, setCountry] = useState<CountryProps[]>()
+    const [selectedCountry, setSelectedCountry] = useState<string | null>("Indonesia")
+    const [showCountry, setShowCountry] = useState(false)
 
     const { profile, loading } = useProfile()
     const { isLoggedIn } = useAuth()
@@ -40,6 +48,21 @@ const Navbar = () => {
     const name = profile?.user_metadata.name
     const email = profile?.user_metadata.email
     const avatar = profile?.user_metadata.avatar_url
+
+    const getCountry = async () => {
+        try {
+            const res = await fetchAPI({
+                url: "/country",
+                method: "GET",
+                params: {
+                    select: "*"
+                }
+            })
+            setCountry(res?.data as CountryProps[])
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const signInWithGoogle = async () => {
         const { error, data } = await supabaseAuth.auth.signInWithOAuth({
@@ -89,11 +112,11 @@ const Navbar = () => {
     }
 
     const handleScroll = () => {
+        if (dropdown) return
+
         const currentScrollPos = window.scrollY
-        if (currentScrollPos > 0 && currentScrollPos < document.body.clientHeight - window.innerHeight) {
-            setShowNav(scrollPos > currentScrollPos || currentScrollPos < 400)
-            setScrollPos(currentScrollPos)
-        }
+        setShowNav(scrollPos > currentScrollPos || currentScrollPos < 100)
+        setScrollPos(currentScrollPos)
     }
 
     useEffect(() => {
@@ -102,7 +125,7 @@ const Navbar = () => {
         return () => {
             window.removeEventListener("scroll", handleScroll)
         }
-    }, [])
+    }, [scrollPos, dropdown])
 
     useEffect(() => {
         if (openModal) {
@@ -114,148 +137,101 @@ const Navbar = () => {
         }
     }, [openModal])
 
+    useEffect(() => {
+        getCountry()
+    }, [])
+
     const itemNav = [
         {
-            title: "About us",
-            item: [
-                {
-                    id: 1,
-                    title: "Introduction",
-                    url: "https://tulip-heaven-489.notion.site/About-us-9ad473de875b47bbbdeeb5fb6f55e941"
-                },
-                {
-                    id: 2,
-                    title: "Contributor",
-                    url: "https://tulip-heaven-489.notion.site/Say-hello-to-Champions-9c057e9bf835424c859bf27733e6362f"
-                },
-                {
-                    id: 3,
-                    title: "Change Log",
-                    url: "https://tulip-heaven-489.notion.site/2022-3-What-s-up-Chamjo-f17e95f5729843f2a1a83cac833caccc"
-                },
-                {
-                    id: 4,
-                    title: "T&Cs",
-                    url: "https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197"
-                },
-                {
-                    id: 5,
-                    title: "Privacy policies",
-                    url: "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9"
-                }
-            ]
+            title: "Benefit"
         },
         {
-            title: "Support",
-            item: [
-                {
-                    id: 1,
-                    title: "Buy us a coffee",
-                    url: "https://linktr.ee/supportchamjo"
-                },
-                {
-                    id: 2,
-                    title: "Follow us",
-                    url: "https://linktr.ee/chamjodesign"
-                }
-            ]
+            title: "Library"
+        },
+        {
+            title: "Available Country"
+        },
+        {
+            title: "FAQ"
         }
     ]
+
     return (
-        <header className='relative'>
+        <header className='relative flex justify-center'>
             <If condition={!isMobile}>
                 <Then>
                     <div
                         className={classNames(
-                            "flex justify-between fixed left-0 right-0 top-0  z-50  h-[72px] py-0 pl-8 pr-[40px]  bg-base-1 transition-all duration-300 xl:max-w-full max-w-[375px]",
+                            "flex items-center xl:gap-[72px] fixed top-5 z-50  h-[72px] py-0 px-8  bg-base-200 rounded-full transition-all duration-300",
                             {
-                                "transform -translate-y-full": !showNav
+                                "transform -translate-y-[130%]": !showNav
                             }
                         )}
+                        style={{
+                            backdropFilter: "blur(8px)"
+                        }}
                     >
-                        <div className='inline-flex items-center gap-1.5'>
-                            <div className='flex flex-row gap-3 items-center'>
-                                <Icons icon='LogoChamjo' width={79} height={24} />
-                                <p className='opacity-50 flex flex-row text-base-4'>&#x2022;</p>
-                                <Image src='/next/assets/images/star.svg' alt='' width={24} height={24} />
-                            </div>
-
-                            <Link
-                                href='https://www.producthunt.com/products/chamjo#chamjo'
-                                target='_blank'
-                                className={`${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6 hidden xl:flex flex-row items-center gap-1 `}
-                            >
-                                #8 on Product Hunt
-                                <span>
-                                    <Icons icon='ArrowNavbar' width={9} height={9} />
-                                </span>
-                            </Link>
-                        </div>
-
-                        <div className='xl:inline-flex hidden items-center gap-6'>
+                        <Link href='/' className=''>
+                            <Icons icon='LogoChamjo' width={79} height={24} className='cursor-pointer' />
+                        </Link>
+                        <div className='xl:flex hidden flex-row gap-6'>
                             {itemNav.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className='inline-block relative z-10 dropdown'
-                                    id={item.title === "About Us" ? "about" : ""}
-                                >
-                                    <span
-                                        className={`${inter.className} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
-                                    >
+                                <div key={index} className='inline-block relative z-10'>
+                                    <span className='font-sans font-normal text-sm !leading-[22px] text-base-800 hover:text-primary-5 cursor-pointer'>
                                         {item.title}
                                     </span>
-                                    <ul className='dropdown-menu rounded-xl list-none py-3 px-[18px] hidden flex-col absolute justify-center ml-[-50px] gap-[14px] bg-base-1'>
-                                        {item.item.map((subItem, index) => (
-                                            <li key={index} className='list-link'>
-                                                <span
-                                                    className='link-a'
-                                                    onClick={() => {
-                                                        window.open(subItem.url, "popup", "width=600, height=600")
-                                                    }}
-                                                >
-                                                    {subItem.title}
-                                                    <Icons icon='ArrowNavbar' width={9} height={9} />
-                                                </span>
-                                            </li>
-                                        ))}
-                                    </ul>
                                 </div>
                             ))}
-
-                            <span
-                                className={`${inter.className} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
-                                onClick={() => {
-                                    if (!isLoggedIn) {
-                                        setOpenModal(true)
-                                    } else {
-                                        window.open(
-                                            "https://forms.gle/DxFDvVu3irnTW6u58",
-                                            "popup",
-                                            "width=600, height=600"
-                                        )
-                                    }
-                                }}
+                        </div>
+                        <div className='xl:flex hidden flex-row items-center gap-8'>
+                            <CollapseMenu
+                                open={showCountry}
+                                onChange={setShowCountry}
+                                overlay={
+                                    <div className='flex flex-col gap-4 py-6 px-5 '>
+                                        <span className='text-center font-sans font-medium text-base-900 text-[16px] !leading-[24px]'>
+                                            Select app country
+                                        </span>
+                                        <div className='grid grid-cols-5 gap-4'>
+                                            {country?.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    onClick={() => {
+                                                        router.replace(`?country=${item?.name}`)
+                                                        setSelectedCountry(item?.name)
+                                                        setShowCountry(false)
+                                                    }}
+                                                    className='flex flex-col items-center p-5 bg-base-200 rounded-xl cursor-pointer'
+                                                >
+                                                    <p className='font-sans font-normal text-base-900 text-sm !leading-[24px]'>
+                                                        {item?.name}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                }
                             >
-                                Request
-                            </span>
-                            <span
-                                className={`${inter.className} font-sans font-normal text-sm !leading-[22px] text-base-7 hover:text-primary-5 cursor-pointer`}
-                                onClick={() => {
-                                    if (!isLoggedIn) {
-                                        setOpenModal(true)
-                                    } else {
-                                        window.open("https://t.me/designfellowid", "popup", "width=600, height=600")
-                                    }
-                                }}
-                            >
-                                Join Community
-                            </span>
+                                <div className='flex flex-row items-center gap-2 text-base-800 hover:text-primary-500 cursor-pointer'>
+                                    <span className='font-sans font-normal text-sm !leading-[22px]'>
+                                        {selectedCountry}
+                                    </span>
+                                    <Icons
+                                        icon='ChevronDown'
+                                        width={16}
+                                        height={16}
+                                        className={classNames("transition-transform duration-300 rotate-0 ", {
+                                            "!rotate-180": showCountry
+                                        })}
+                                    />
+                                </div>
+                            </CollapseMenu>
                             <If condition={isLoggedIn}>
                                 <Then>
                                     <div className='relative'>
                                         <div
                                             className={classNames(
-                                                "after-login w-[80px] h-[40px] flex flex-row items-center px-2 py-2.5 bg-base-3 rounded-[48px] cursor-pointer ",
+                                                "after-login w-[80px] h-[40px] flex flex-row items-center px-2 py-2.5 bg-base-300 rounded-[48px] cursor-pointer ",
                                                 {
                                                     "bg-primary-5 bg-opacity-[8%]": isOpenProfile
                                                 }
@@ -289,7 +265,7 @@ const Navbar = () => {
                                                         "!border-l-primary-4": isOpenProfile
                                                     }
                                                 )}
-                                                className={classNames("rotate-90 text-base-5", {
+                                                className={classNames("rotate-90 text-base-800", {
                                                     "!text-primary-4 !rotate-[-90deg]": isOpenProfile
                                                 })}
                                             />
@@ -303,7 +279,7 @@ const Navbar = () => {
                                                     transition={{ duration: 0.3 }}
                                                     // isOpenProfile={isOpenProfile}
                                                     id='profile'
-                                                    className='w-[223px] h-[207px] overflow-hidden rounded flex-col absolute justify-center right-1.5 mt-1 top-full gap-[14px] bg-base-1 shadow-[ 0px 8px 44px rgba(3, 21, 49, 0.06)]'
+                                                    className='w-[223px] h-[207px] overflow-hidden rounded flex-col absolute justify-center right-1.5 mt-1 top-full gap-[14px] bg-base-100 shadow-[0px_8px_44px_rgba(3,21,49,0.06)]'
                                                 >
                                                     <div className='w-full relative bg-[#FABBAA] rounded-t py-3 px-[18px]'>
                                                         <If condition={loading}>
@@ -348,10 +324,10 @@ const Navbar = () => {
                                                     </div>
                                                     <div className='flex flex-col p-[18px]'>
                                                         <div className='flex flex-col gap-0.5 pb-3.5 border-b border-b-base-3'>
-                                                            <span className='text-[16px] font-medium text-base-8 leading-6 w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
+                                                            <span className='text-[16px] font-medium text-base-900 leading-6 w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
                                                                 {name}
                                                             </span>
-                                                            <span className='text-[14px] font-normal text-base-7 leading-[22px]  w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
+                                                            <span className='text-[14px] font-normal text-base-800 leading-[22px]  w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
                                                                 {email}
                                                             </span>
                                                         </div>
@@ -374,8 +350,13 @@ const Navbar = () => {
                                         className=' flex flex-row items-center gap-[10px] pl-4 pr-3.5 py-1'
                                         onClick={handleOpenModal}
                                     >
-                                        <span className='text-base-1 text-[14px] leading-6'>Login</span>
-                                        <Icons icon='ArrowRightCircle' width={20} height={20} className='text-base-1' />
+                                        <span className='text-base-100 text-[14px] leading-6'>Login</span>
+                                        <Icons
+                                            icon='ArrowRightCircle'
+                                            width={20}
+                                            height={20}
+                                            className='text-base-100'
+                                        />
                                     </Button>
                                 </Else>
                             </If>
@@ -393,33 +374,27 @@ const Navbar = () => {
                     </When>
                 </Then>
                 <Else>
-                    <div className='flex justify-between py-3.5 px-4 my-0 mx-auto fixed left-0 right-0 bg-base-1 z-50  '>
-                        <div className='inline-flex items-center gap-1.5'>
-                            <div className='flex flex-row gap-2 items-center'>
-                                {/* <Link href='/'> */}
-                                <Icons icon='LogoChamjo' wrapperClassname='w-[66px] h-5' width={66} height={20} />
-                                {/* </Link> */}
-                                <p className='opacity-50 flex flex-row text-base-4'>&#x2022;</p>
-                                <Image src='/next/assets/images/star.svg' alt='' width={24} height={24} />
-                            </div>
-
-                            <Link
-                                href='https://www.producthunt.com/products/chamjo#chamjo'
-                                target='_blank'
-                                className={`${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] hover:text-base-6  flex-row items-center gap-0.5 `}
-                            >
-                                #8{" "}
-                                <span>
-                                    <Icons icon='ArrowNavbar' width={9} height={9} />
-                                </span>
-                            </Link>
-                        </div>
+                    <div
+                        className={classNames(
+                            "flex items-center justify-between w-[375px] fixed z-50 top-3 py-3  px-4 bg-base-200 rounded-full transition-all duration-300",
+                            {
+                                "transform -translate-y-[130%]": !showNav,
+                                "blur-0 rounded-none": dropdown
+                            }
+                        )}
+                        style={{
+                            backdropFilter: "blur(8px)"
+                        }}
+                    >
+                        <Link href='/'>
+                            <Icons icon='LogoChamjo' wrapperClassname='w-[66px] h-5' width={66} height={20} />
+                        </Link>
                         <div className='flex flex-row items-center gap-3'>
                             <When condition={isLoggedIn}>
                                 <div className='relative'>
                                     <div
                                         className={classNames(
-                                            "w-[36px] h-[36px] flex flex-row items-center  bg-base-3 rounded-[48px] cursor-pointer",
+                                            "w-[36px] h-[36px] flex flex-row items-center  bg-base-300 rounded-[48px] cursor-pointer",
                                             {
                                                 "bg-primary-5 border border-primary-4 bg-opacity-[8%]": isOpenProfile
                                             }
@@ -452,7 +427,7 @@ const Navbar = () => {
                                                 animate={{ y: 0, opacity: 1 }}
                                                 exit={{ y: -50, opacity: 0 }}
                                                 transition={{ duration: 0.3 }}
-                                                className='w-[343px] h-[207px] overflow-hidden rounded flex-col absolute justify-center right-[-48px] mt-1 top-full gap-[14px] bg-base-1'
+                                                className='w-[343px] h-[207px] overflow-hidden rounded flex-col absolute justify-center right-[-48px] mt-1 top-full gap-[14px] bg-base-100'
                                                 id='profile'
                                                 style={{
                                                     boxShadow: "0px 8px 44px rgba(3, 21, 49, 0.06);"
@@ -497,10 +472,10 @@ const Navbar = () => {
                                                 </div>
                                                 <div className='flex flex-col p-[18px] '>
                                                     <div className='flex flex-col gap-0.5 pb-3.5 border-b border-b-base-3'>
-                                                        <span className='text-[16px] font-medium text-base-8 leading-6 max-w-[307px] whitespace-nowrap overflow-hidden text-ellipsis'>
+                                                        <span className='text-[16px] font-medium text-base-900 leading-6 max-w-[307px] whitespace-nowrap overflow-hidden text-ellipsis'>
                                                             {name}
                                                         </span>
-                                                        <span className='text-sm font-normal text-base-7 !leading-[22px]  max-w-[307px] whitespace-nowrap overflow-hidden text-ellipsis'>
+                                                        <span className='text-sm font-normal text-base-800 !leading-[22px]  max-w-[307px] whitespace-nowrap overflow-hidden text-ellipsis'>
                                                             {email}
                                                         </span>
                                                     </div>
@@ -549,7 +524,7 @@ const Navbar = () => {
                                             setDropdown(true)
                                         }}
                                     >
-                                        <Icons icon='More' />
+                                        <Icons icon='List' className='text-base-100' />
                                     </Button>
                                 </Else>
                             </If>
@@ -562,101 +537,71 @@ const Navbar = () => {
                                 animate={{ y: 0, opacity: 1 }}
                                 exit={{ y: -50, opacity: 0 }}
                                 transition={{ duration: 0.3 }}
-                                className='flex flex-col w-full h-[100vh] z-40 max-w-[375px] pt-[64px] pb-4 fixed mx-auto left-0 right-0  bg-base-1 overflow-scroll'
+                                className='flex flex-col w- max-w-[375px] h-[100vh] z-40 pt-[72px] pb-4 fixed mx-auto left-0 right-0 bg-base-100 overflow-scroll'
                             >
-                                <div className='w-full h-1.5 bg-base-2' />
-                                <If condition={!isLoggedIn}>
-                                    <Then>
-                                        <div className='flex flex-col gap-4 py-6 px-5'>
-                                            <Button
-                                                className='!px-3.5  !rounded-lg !flex-row !justify-center relative'
-                                                onClick={signInWithGoogle}
-                                                style={{
-                                                    boxShadow: "0px 6px 12px -5px rgba(224, 99, 67, 0.25)",
-                                                    height: 39
-                                                }}
-                                            >
-                                                <span className=' font-medium text-[14px] text-[#fff] w-full'>
-                                                    Login
-                                                </span>
-                                                <Icons icon='ArrowRightCircle' width={20} height={20} />
-                                            </Button>
-                                        </div>
-                                        <div className='w-[90%] h-[1px] bg-base-2 mx-auto' />
-                                    </Then>
-                                </If>
-                                {/* item navbar */}
+                                <div className='w-full h-[1px] bg-base-300' />
 
-                                {itemNav.map((item, index) => (
-                                    <>
-                                        <div className='flex flex-col gap-4 py-6 px-5'>
-                                            <p
-                                                className={`${inter.className} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
-                                            >
-                                                {item.title}
-                                            </p>
-                                            <ul className='list-none p-0 flex flex-col gap-4'>
-                                                {item.item.map((subItem, index) => (
-                                                    <a
-                                                        key={index}
-                                                        className={`w-full ${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
-                                                    >
-                                                        {subItem.title === "T&Cs"
-                                                            ? "Terms and conditions"
-                                                            : subItem.title}
-                                                        <Icons icon='ArrowNavbar' width={9} height={9} />
-                                                    </a>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                        <div className='w-[90%] h-[1px] bg-base-2 mx-auto' />
-                                    </>
-                                ))}
-                                <div className='flex flex-col gap-4 py-6 px-5'>
-                                    <p
-                                        className={`${inter.className} font-sans font-normal text-base-5 text-sm !leading-[24px]`}
-                                    >
-                                        More
-                                    </p>
-                                    <ul className='list-none p-0 flex flex-col gap-4'>
-                                        <a
-                                            className={`w-full ${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
-                                            onClick={() => {
-                                                if (!isLoggedIn) {
-                                                    setDropdown(false)
-                                                    setBottomSheet(true)
-                                                } else {
-                                                    window.open(
-                                                        "https://forms.gle/DxFDvVu3irnTW6u58",
-                                                        "popup",
-                                                        "width=600, height=600"
-                                                    )
-                                                }
-                                            }}
-                                        >
-                                            Request <Icons icon='ArrowNavbar' width={9} height={9} />
-                                        </a>
-                                    </ul>
-                                    <ul className='list-none p-0 flex flex-col gap-4'>
-                                        <a
-                                            className={`w-full ${inter.className} font-sans font-normal text-base-7 text-sm !leading-[22px] flex justify-between items-center cursor-pointer hover:text-primary-5 active:text-primary-5 focus:text-primary-5`}
-                                            onClick={() => {
-                                                if (!isLoggedIn) {
-                                                    setDropdown(false)
-                                                    setBottomSheet(true)
-                                                } else {
-                                                    window.open(
-                                                        "https://t.me/designfellowid",
-                                                        "popup",
-                                                        "width=600, height=600"
-                                                    )
-                                                }
-                                            }}
-                                        >
-                                            Join Community <Icons icon='ArrowNavbar' width={9} height={9} />
-                                        </a>
-                                    </ul>
+                                {/* item navbar */}
+                                <div className='flex flex-col gap-6 pt-6'>
+                                    {itemNav.map((item, index) => (
+                                        <p className='font-sans font-normal text-base-800 text-sm !leading-[24px] text-center'>
+                                            {item.title}
+                                        </p>
+                                    ))}
                                 </div>
+                                {/* <CollapseMenu
+                                    open={showCountry}
+                                    onChange={setShowCountry}
+                                    overlay={
+                                        <div className='flex flex-col gap-4 py-6 px-5 '>
+                                            <span className='text-center font-sans font-medium text-base-900 text-[16px] !leading-[24px]'>
+                                                Select app country
+                                            </span>
+                                            <div className='grid grid-cols-5 gap-4'>
+                                                {country?.map((item, index) => (
+                                                    <div
+                                                        key={index}
+                                                        onClick={() => {
+                                                            router.replace(`?country=${item?.name}`)
+                                                            setSelectedCountry(item?.name)
+                                                            setShowCountry(false)
+                                                        }}
+                                                        className='flex flex-col items-center p-5 bg-base-200 rounded-xl cursor-pointer'
+                                                    >
+                                                        <p className='font-sans font-normal text-base-900 text-sm !leading-[24px]'>
+                                                            {item?.name}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    }
+                                >
+                                    <div className='flex flex-row items-center justify-center pt-6 gap-2 text-base-800 hover:text-primary-500 cursor-pointer'>
+                                        <span className='font-sans font-normal text-sm !leading-[22px]'>
+                                            {selectedCountry}
+                                        </span>
+                                        <Icons
+                                            icon='ChevronDown'
+                                            width={16}
+                                            height={16}
+                                            className={classNames("transition-transform duration-300 rotate-0 ", {
+                                                "!rotate-180": showCountry
+                                            })}
+                                        />
+                                    </div>
+                                </CollapseMenu> */}
+                                <When condition={!isLoading}>
+                                    <Button className='mt-6' onClick={signInWithGoogle}>
+                                        <span className=' font-medium text-[14px] text-base-100 w-full'>Login</span>
+                                        <Icons
+                                            icon='ChevronLeft'
+                                            width={20}
+                                            height={20}
+                                            className='text-base-100 rotate-180'
+                                        />
+                                    </Button>
+                                </When>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -665,7 +610,7 @@ const Navbar = () => {
                         onDismiss={() => setBottomSheet(false)}
                         contentClassName='max-h-[324px] !max-w-[375px]'
                         header={
-                            <span className='font-medium text-3 leading-6 text-base-9 text-center'>
+                            <span className='font-medium text-3 leading-6 text-base-900 text-center'>
                                 Login or Sign up
                             </span>
                         }
@@ -674,25 +619,23 @@ const Navbar = () => {
                             <div className='flex flex-col gap-8 w-full'>
                                 <div className='flex flex-col gap-4 items-center'>
                                     <Icons icon='IlusColor' width={134} height={67} />
-                                    <span
-                                        className={`${inter.className} font-sans text-1 leading-[18px] text-base-6 text-center w-[288px]`}
-                                    >
+                                    <span className='font-sans text-1 leading-[18px] text-base-700 text-center w-[288px]'>
                                         You can access and discover more app patterns by logging in or signing up
                                     </span>
                                 </div>
                                 <div className='flex flex-col items-center gap-4'>
                                     <Button
-                                        className={`!border-none !bg-base-3 !text-base-9 gap-2 text-2 justify-center ${inter.className} font-sans !leading-[22px] hover:text-base-3`}
+                                        className='!border-none !bg-base-400 !text-base-900 gap-2 text-2 justify-center font-sans !leading-[22px] hover:text-base-400'
                                         block
                                         onClick={signInWithGoogle}
                                     >
                                         <Icons icon='GoogleColor' />
                                         Continue with google
                                     </Button>
-                                    <p className={`text-base-6 text-1 ${inter.className} font-sans text-center`}>
+                                    <p className='text-base-700 text-1 font-sans text-center'>
                                         By continuing, you agree to our{" "}
                                         <span
-                                            className='text-[#424242] font-medium cursor-pointer'
+                                            className='text-base-900 font-medium cursor-pointer'
                                             onClick={() => {
                                                 window.open(
                                                     "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9",
@@ -705,7 +648,7 @@ const Navbar = () => {
                                         </span>{" "}
                                         and{" "}
                                         <span
-                                            className='text-[#424242] font-medium cursor-pointer'
+                                            className='text-base-900 font-medium cursor-pointer'
                                             onClick={() => {
                                                 window.open(
                                                     "https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197",

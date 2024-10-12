@@ -13,3 +13,12 @@
         padding-top: 40px;
     }
 }
+
+a {
+    width: initial;
+    height: initial;
+    display: inherit;
+
+    text-decoration: none;
+}
+

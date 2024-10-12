@@ -94,28 +94,24 @@
 
 .hero-wrapper {
     background-color: var(--base-1);
-    height: calc(100vh - 72px);
+
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding-top: 128px;
-    margin-top: 72px;
+    padding-top: 176px;
+    padding-bottom: 80px;
     position: relative;
-    background-image: url("https://ndbqcbbgigoygotysyae.supabase.co/storage/v1/object/public/homepage/Hero.svg");
     background-size: cover;
     background-position: center;
     @media (max-width: 1066px) {
         max-width: 375px;
-        height: calc(100vh - 60px);
         margin-top: 0;
-        margin-bottom: 24px;
         margin-left: auto;
         margin-right: auto;
-        padding-top: 140px;
+        padding-top: 136px;
+        padding-bottom: 64px;
         gap: 24px;
-        top: 64px;
-        background-image: url("https://ndbqcbbgigoygotysyae.supabase.co/storage/v1/object/public/homepage/heromobile.svg");
     }
     @media screen and (max-width: 425px) {
         max-width: 100%;
