@@ -7,9 +7,8 @@ import BackToTop from "@components/BackToTop"
 export const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] })
 
 export const metadata: Metadata = {
-    title: "Chamjo | Discover Asia-based App Patterns",
-    description:
-        "Bored of using Airbnb, Doordash, and Yadayadayada for inspiration? Say no more! Here you can be inspired by the Asian-based App Patterns that could be your next favorite app."
+    title: "Chamjo | The ultimate UX inspiration hub for local apps and competitors",
+    description: "Ultimate UX inspiration hub for local apps and competitors"
 }
 
 export default function RootLayout({
@@ -23,7 +22,7 @@ export default function RootLayout({
                 <link
                     rel='icon'
                     type='image/png'
-                    href='https://api.chamjo.design/storage/v1/object/public/icon/favicon.ico'
+                    href='https://ndbqcbbgigoygotysyae.supabase.co/storage/v1/object/public/icon/favicon.ico'
                 />
                 <Navbar />
                 {children}

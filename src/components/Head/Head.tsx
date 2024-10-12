@@ -7,18 +7,18 @@ interface HeadProps extends React.PropsWithChildren<{}> {
 }
 
 const Head: React.FC = ({
-    title = "Chamjo | Discover Asia-based App Patterns",
+    title = "Chamjo | The ultimate UX inspiration hub for local apps and competitors",
     titleSuffix,
-    description = "Bored of using Airbnb, Doordash, and Yadayadayada for inspiration? Say no more! Here you can be inspired by the Asian-based App Patterns that could be your next favorite app.",
+    description = "Ultimate UX inspiration hub for local apps and competitors",
     children
 }: HeadProps) => {
-    let fullTitle = `${title} - Chamjo | Discover Asia-based App Patterns`
+    let fullTitle = `${title} - Chamjo | The ultimate UX inspiration hub for local apps and competitors`
 
     if (titleSuffix) {
         fullTitle = `${fullTitle} - ${titleSuffix}`
     }
 
-    const iconUrl = "https://api.chamjo.design/storage/v1/object/public/icon/logo.png"
+    const iconUrl = "https://ndbqcbbgigoygotysyae.supabase.co/storage/v1/object/public/icon/favicon.ico"
     return (
         <NextHead>
             <meta
