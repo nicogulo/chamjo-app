@@ -49,7 +49,7 @@ const BottomSheet = ({
                 <Drawer.Overlay onClick={onDismiss} className={classNames("fixed inset-0 bg-black/40", `z-[99]`)} />
                 <Drawer.Content
                     className={classNames(
-                        " bg-base-1 flex flex-col rounded-t-md mt-24 fixed bottom-0 left-0 right-0 mx-auto h-full max-h-[96%]",
+                        " bg-base-100 flex flex-col rounded-t-md mt-24 fixed bottom-0 left-0 right-0 mx-auto h-full max-h-[96%]",
                         `z-[999]`,
                         contentClassName
                     )}
