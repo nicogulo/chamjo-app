@@ -183,7 +183,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
 
     return (
         <>
-            <div className='pb-9 pt-10 w-[256px] bg-base-1 xl:block hidden'>
+            <div className='pb-9 pt-10 w-[256px] bg-base-100 xl:block hidden'>
                 {/* Sidebar */}
                 <If condition={isLoadingCategory}>
                     <Then>

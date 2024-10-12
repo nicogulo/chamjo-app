@@ -75,7 +75,7 @@ const Filter = ({ itemFilter, loading, onChange, total, categoryParams }: Props)
     return (
         <>
             <span className='filter' onClick={() => setIsFilter(!isFilter)}>
-                <span className={`text-base-7 text-2 !leading-[22px] ${inter.className}`}>Category</span>
+                <span className='text-base-7 text-2 !leading-[22px]'>Category</span>
                 <Icons icon='Filter' />
             </span>
             <div
@@ -90,7 +90,7 @@ const Filter = ({ itemFilter, loading, onChange, total, categoryParams }: Props)
                     </div>
                 </div>
                 <div className='w-full pt-6 pb-8 px-[20px] overflow-scroll'>
-                    <span className={`text-2 leading-6 text-base-5 ${inter.className}`}>Categories</span>
+                    <span className='text-2 leading-6 text-base-5'>Categories</span>
                     {itemFilter.map((item, index) => {
                         const imageActive = item.imageActive || ""
                         const imageInactive = item.imageInactive || ""
@@ -112,7 +112,7 @@ const Filter = ({ itemFilter, loading, onChange, total, categoryParams }: Props)
                                     />
 
                                     <span
-                                        className={classNames(`${inter.className} text-2 leading-[22px] text-base-7`, {
+                                        className={classNames("text-2 leading-[22px] text-base-7", {
                                             "text-primary-5": index === clickedId
                                         })}
                                     >

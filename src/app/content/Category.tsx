@@ -74,7 +74,7 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
                                 />
                                 <span
                                     className={classNames(
-                                        `${inter.className} text-base-7 text-[14px] text-left whitespace-nowrap w-[100px] overflow-hidden text-ellipsis`,
+                                        "text-base-7 text-[14px] text-left whitespace-nowrap w-[100px] overflow-hidden text-ellipsis",
                                         {
                                             "text-primary-5": index === clickedId
                                         }
