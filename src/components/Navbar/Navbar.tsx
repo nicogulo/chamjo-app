@@ -127,7 +127,7 @@ const Navbar = () => {
         },
         {
             title: "Library",
-            link: "/dashboard"
+            link: "/browse"
         },
         {
             title: "FAQ",

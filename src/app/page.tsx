@@ -7,6 +7,9 @@ import Benchmark from "./home/components/Benchmark"
 
 import Faq from "./home/components/Faq"
 import CTA from "./home/components/CTA"
+import Navbar from "@components/Navbar"
+import Footer from "@components/Footer"
+import BackToTop from "@components/BackToTop"
 
 interface HomeProps {
     searchParams?: { [key: string]: string }
@@ -16,15 +19,20 @@ const Home = async ({ searchParams }: HomeProps) => {
     const country = searchParams?.country
 
     return (
-        <main className='min-h-screen max-xl:max-w-[375px] max-xl:mx-auto'>
-            <Hero />
-            <Content />
-            <Trusted />
-            <Benefit />
-            <Benchmark country={country} />
-            <Faq />
-            <CTA />
-        </main>
+        <>
+            <Navbar />
+            <main className='min-h-screen max-xl:max-w-[375px] max-xl:mx-auto'>
+                <Hero />
+                <Content />
+                <Trusted />
+                <Benefit />
+                <Benchmark country={country} />
+                <Faq />
+                <CTA />
+                <Footer />
+            </main>
+            <BackToTop />
+        </>
     )
 }
 

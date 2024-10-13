@@ -72,7 +72,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
             setLoadingCategory(true)
 
             const response = await fetchAPI({
-                url: "/rest/v1/AppCategory",
+                url: "AppCategory",
                 method: "GET",
                 params: {
                     select: "*",
@@ -121,7 +121,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
             }
 
             const response = await fetchAPI({
-                url: "/rest/v1/Application",
+                url: "Application",
                 method: "GET",
                 params: params
             })
@@ -182,8 +182,8 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
     }, [])
 
     return (
-        <>
-            <div className='pb-9 pt-10 w-[256px] bg-base-100 xl:block hidden'>
+        <div className='flex'>
+            <div className='max-w-[280px] w-full p-4 bg-base-100 xl:block hidden overflow-scroll h-[calc(100vh-72px)] border-r border-r-base-400'>
                 {/* Sidebar */}
                 <If condition={isLoadingCategory}>
                     <Then>
@@ -205,7 +205,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
 
                 {/* End Sidebar */}
             </div>
-            <div className='wrapper-card'>
+            <div className='wrapper-card px-6'>
                 <div className='wrapper-title'>
                     <span className='title' id='title'>
                         Browse <span className='text-base-5'>in </span>{" "}
@@ -223,7 +223,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                                 </div>
                             </Then>
                             <Else>
-                                <span className='total-data bg-primary-5 text-base-1'>{totalData}</span>
+                                <span className='total-data bg-primary-500 text-base-1'>{totalData}</span>
                             </Else>
                         </If>
                     </span>
@@ -246,7 +246,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                     value={searchValue}
                 />
             </div>
-        </>
+        </div>
     )
 }
 

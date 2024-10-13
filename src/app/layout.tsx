@@ -25,10 +25,8 @@ export default function RootLayout({
                     type='image/png'
                     href='https://ndbqcbbgigoygotysyae.supabase.co/storage/v1/object/public/icon/favicon.ico'
                 />
-                <Navbar />
+
                 {children}
-                <Footer />
-                <BackToTop />
             </body>
         </html>
     )

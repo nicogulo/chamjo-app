@@ -12,6 +12,7 @@
 
 .wrapper-card {
     width: 100%;
+    height: calc(100vh - 72px);
     @media screen and (max-width: 1066px) {
         max-width: 375px;
         margin-left: auto;
@@ -20,7 +21,7 @@
 }
 
 .wrapper-title {
-    padding-top: 40px;
+    padding-top: 24px;
     padding-bottom: 20px;
     @media screen and (max-width: 1066px) {
         padding-top: 24px;
@@ -111,7 +112,7 @@
     padding-left: 28px;
     padding-right: 14px;
     border: none;
-    border-radius: 60px;
+    border-radius: 12px;
     max-width: 1066px;
     font-size: 14px;
     line-height: 22px;

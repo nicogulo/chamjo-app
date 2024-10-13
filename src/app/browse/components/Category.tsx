@@ -2,15 +2,13 @@
 
 import React, { useEffect, useState } from "react"
 import Image from "next/image"
-import { Inter } from "next/font/google"
-
-import { CategoryModel } from "./MainPage"
-import classNames from "classnames"
-import { Else, If, Then, When } from "@components/If"
 import { useRouter } from "next/navigation"
+import classNames from "classnames"
+
+import { Else, If, Then, When } from "@components/If"
 import Loader from "@components/Loader"
 
-const inter = Inter({ subsets: ["latin"] })
+import { CategoryModel } from "./MainPage"
 
 interface CategoryProps {
     category: CategoryModel[] | null
@@ -50,7 +48,7 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
                     <div>
                         <button
                             className={classNames(
-                                " text-sm font-normal !leading-6 cursor-pointer w-[203px] h-12 px-4 focus:outline-none flex items-center justify-between outline-none my-1 active:focus:outline-none hover:bg-[#EBECF0] bg-opacity-70 hover:outline-none hover:rounded-lg",
+                                " text-body-md text-base-800 cursor-pointer w-full h-12 px-4 focus:outline-none flex items-center justify-between outline-none my-1 active:focus:outline-none hover:bg-base-300 bg-opacity-70 hover:outline-none hover:rounded-lg",
                                 {
                                     "category-active": index === clickedId
                                 }
@@ -60,12 +58,12 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
                                 handleClick(event, index)
                                 onChange?.(item.appCategoryName ?? "")
                                 router.push(
-                                    `/?category=${item.appCategoryName}&id=${item.id}${searchParams ? `&search=${searchParams}` : ""}`,
+                                    `/browse?category=${item.appCategoryName}&id=${item.id}${searchParams ? `&search=${searchParams}` : ""}`,
                                     { scroll: false }
                                 )
                             }}
                         >
-                            <div className='flex flex-row gap-[10px]'>
+                            <div className='flex flex-row items-center gap-3'>
                                 <Image
                                     src={index === clickedId ? imageActive : imageInactive}
                                     alt=''
@@ -74,7 +72,7 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
                                 />
                                 <span
                                     className={classNames(
-                                        "text-base-7 text-[14px] text-left whitespace-nowrap w-[100px] overflow-hidden text-ellipsis",
+                                        "text-base-800 text-body-md text-left whitespace-nowrap w-[100px] overflow-hidden text-ellipsis",
                                         {
                                             "text-primary-5": index === clickedId
                                         }
