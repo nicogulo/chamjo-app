@@ -11,10 +11,8 @@ import Traveloka from "../svgx/Traveloka"
 const Trusted = () => {
     return (
         <section className='xl:pb-[60px] pb-12'>
-            <Container className='flex flex-col gap-6 justify-center items-center xl'>
-                <span className='text-base-800 xl:text-3 text-sm xl:leading-[30px] leading-[17px]'>
-                    Trusted by people at
-                </span>
+            <Container className='flex flex-col gap-6 justify-center items-center'>
+                <span className='text-base-800 xl:text-body-lg text-body-md '>Trusted by people at</span>
                 <div className='xl:flex xl:flex-row xl:flex-wrap grid grid-cols-3 grid-rows-2 justify-items-center gap-x-8 gap-y-7 items-center justify-center xl:gap-[50px] '>
                     <Google className=' xl:scale-100 scale-75 w-fit h-full' />
                     <FlipKart className=' xl:scale-100 scale-75 w-fit h-full' />

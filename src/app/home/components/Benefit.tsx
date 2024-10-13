@@ -13,10 +13,10 @@ const Benefit = () => {
             <Container className='flex flex-col !items-center !justify-center xl:gap-[120px] gap-8'>
                 <div className='flex xl:flex-row flex-col-reverse xl:items-center xl:justify-center xl:gap-6 gap-4'>
                     <div className='flex flex-col xl:gap-4 gap-2 xl:max-w-[417px] xl:max-h-[408px]'>
-                        <span className='xl:text-13 text-5 xl:leading-[43px] leading-6 font-semibold text-base-900'>
+                        <span className='xl:text-heading-md text-body-2xl  font-semibold text-base-900'>
                             Benchmark your local app
                         </span>
-                        <span className='xl:text-4 text-2 xl:leading-6 leading-[21px] font-normal text-base-800'>
+                        <span className='xl:text-body-lg text-body-md text-base-800'>
                             Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam.
                         </span>
@@ -34,10 +34,10 @@ const Benefit = () => {
                 </div>
                 <div className='flex xl:flex-row-reverse flex-col-reverse xl:items-center xl:justify-center xl:gap-6 gap-8'>
                     <div className='flex flex-col xl:gap-4 gap-2 xl:max-w-[417px] xl:max-h-[408px]'>
-                        <span className='xl:text-13 text-5 xl:leading-[43px] leading-6 font-semibold text-base-900'>
+                        <span className='xl:text-heading-md text-body-2xl  font-semibold text-base-900'>
                             Save time on benchmarking
                         </span>
-                        <span className='xl:text-4 text-2 xl:leading-6 leading-[21px] font-normal text-base-800'>
+                        <span className='xl:text-body-lg text-body-md text-base-800'>
                             Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam.
                         </span>
@@ -55,10 +55,10 @@ const Benefit = () => {
                 </div>
                 <div className='flex xl:flex-row flex-col-reverse xl:items-center xl:justify-center xl:gap-6 gap-8'>
                     <div className='flex flex-col xl:gap-4 gap-2 xl:max-w-[417px] xl:max-h-[408px]'>
-                        <span className='xl:text-13 text-5 xl:leading-[43px] leading-6 font-semibold text-base-900'>
+                        <span className='xl:text-heading-md text-body-2xl  font-semibold text-base-900'>
                             Benchmark hard-to-discover flow
                         </span>
-                        <span className='xl:text-4 text-2 xl:leading-6 leading-[21px] font-normal text-base-800'>
+                        <span className='xl:text-body-lg text-body-md text-base-800'>
                             Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam.
                         </span>

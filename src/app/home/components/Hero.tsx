@@ -17,7 +17,7 @@ import useAuth from "@hooks/useAuth"
 const Hero = () => {
     const [open, setOpen] = useState(false)
     const { isLoggedIn } = useAuth()
-    console.log(isLoggedIn)
+
     const signInWithGoogle = async () => {
         const { error, data } = await supabaseAuth.auth.signInWithOAuth({
             provider: "google",
@@ -46,7 +46,7 @@ const Hero = () => {
                 <Link
                     href='https://www.producthunt.com/products/chamjo#chamjo'
                     target='_blank'
-                    className='font-sans font-normal text-base-900 xl:text-3 text-sm !leading-[22px] hover:text-base-6 flex flex-row items-center gap-1 border border-base-400 py-2 px-5 rounded-lg'
+                    className='font-sans font-normal text-base-900 xl:text-body-lg text-body-md hover:text-base-6 flex flex-row items-center gap-1 border border-base-400 py-2 px-5 rounded-lg'
                 >
                     <Image src='/next/assets/images/star.svg' alt='' width={24} height={24} />
                     #8 on Product Hunt
@@ -54,18 +54,25 @@ const Hero = () => {
                         <Icons icon='ArrowNavbar' width={9} height={9} />
                     </span>
                 </Link>
-                <h1 className='xl:text-[56px] text-13 font-semibold xl:leading-[64px] leading-[41px] text-center'>
+                <h1 className='xl:text-heading-xl text-heading-md font-semibold  text-center'>
                     Your Local Apps <br />
                     Research Companion
                 </h1>
 
-                <p className=' text-base-800  font-normal xl:text-4 text-3 text-center xl:max-w-[587px] xl:leading-[27px] leading-6'>
+                <p className=' text-base-800 font-normal xl:text-body-xl text-body-lg text-center xl:max-w-[587px]'>
                     Explore apps from different countries, offering you insights into <br className='xl:block hidden' />
                     regional standards across the globe.
                 </p>
             </div>
-            <Button onClick={handleOpenModal} className='!rounded-xl !h-fit font-semibold'>
-                Sign up for free
+            <Button
+                onClick={() => {
+                    if (!isLoggedIn) {
+                        handleOpenModal()
+                    }
+                }}
+                className='!rounded-xl !h-fit font-semibold xl:text-body-xl text-body-lg'
+            >
+                {isLoggedIn ? "Go to dashboard" : "Sign up for free"}
             </Button>
             {open && <ModalLogin openModal={open} setOpenModal={setOpen} signInWithGoogle={signInWithGoogle} />}
         </section>

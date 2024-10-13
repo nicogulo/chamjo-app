@@ -19,7 +19,7 @@ const Collapse = ({ title, isExpanded, onToggle, children }: CollapseProps) => {
 
     return (
         <div
-            className={classNames("flex flex-col  w-full bg-base-50 py-6 px-8 rounded-xl", {
+            className={classNames("flex flex-col w-full bg-base-50 py-6 px-8 rounded-xl", {
                 "gap-2": isExpanded
             })}
         >
@@ -27,7 +27,7 @@ const Collapse = ({ title, isExpanded, onToggle, children }: CollapseProps) => {
                 className='flex items-center justify-between w-full cursor-pointer '
                 onClick={getToggleProps({ onClick: onToggle }).onClick}
             >
-                <span className='xl:text-lg leading-[27px] text-base-900'>{title}</span>
+                <span className='text-body-xl font-semibold text-base-900'>{title}</span>
                 <Icons
                     icon='ChevronDown'
                     width={20}
@@ -36,7 +36,7 @@ const Collapse = ({ title, isExpanded, onToggle, children }: CollapseProps) => {
                     style={{ transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)" }}
                 />
             </div>
-            <div {...getCollapseProps()} className='text-3 leading-4 text-base-800'>
+            <div {...getCollapseProps()} className='text-body-lg text-base-800'>
                 {children}
             </div>
         </div>
@@ -50,27 +50,26 @@ const Faq = () => {
         setExpandedIndex(expandedIndex === index ? null : index)
     }
 
-    // faqs chamjo.design
     const faqs = [
         {
             question: "What is Chamjo?",
-            answer: "Chamjo is a design system that helps you to build a website faster and easier."
+            answer: "Chamjo is a screenshot and pattern library for local apps. Providing valuable resources for designers, developers, and businesses to understand current trends and strategies."
         },
         {
-            question: "How to use Chamjo?",
-            answer: "You can use Chamjo by installing the package from npm."
+            question: "Is Chamjo owns the copyright?",
+            answer: "Chamjo does not own the copyright to any of the screenshots. All screenshots are copyrighted by their respective owners."
         },
         {
-            question: "Is Chamjo free?",
-            answer: "Yes, Chamjo is free and open-source."
+            question: "How to contact Chamjo support?",
+            answer: `<span>Need help? Don't hesitate to contact our support team at <a href="mailto:support@chamjo.design" class='underline'>support@chamjo.design.</a> We're here to solve your problems!</span>`
         },
         {
-            question: "Can I contribute to Chamjo?",
-            answer: "Yes, you can contribute to Chamjo on GitHub."
+            question: "How to change the region?",
+            answer: "To change your region, please use the dropdown menu in our navigation bar."
         },
         {
-            question: "How to report a bug?",
-            answer: "You can report a bug on GitHub."
+            question: "Is the subscription refundable?",
+            answer: `You can request a refund by explaining what you were hoping for. Our support team is here to assist you in finding a solution or processing your refund. Just send an email to <a href="mailto:support@chamjo.design" class='underline'>support@chamjo.design.</a>`
         }
     ]
 
@@ -79,15 +78,15 @@ const Faq = () => {
             <Container className='flex flex-col xl:gap-[60px] gap-12'>
                 <div className='flex flex-col items-center gap-3'>
                     <div className='rounded-full bg-base-300 py-2.5 px-5 w-fit'>
-                        <span className='uppercase text-primary-500 xl:text-sm text-xs xl:leading-[22px] leading-[19px] font-semibold'>
+                        <span className='uppercase text-primary-500 xl:text-body-md text-body-xs font-semibold'>
                             Frequently asked questions
                         </span>
                     </div>
                     <div className='flex flex-col items-center gap-4'>
-                        <span className='text-base-900 xl:text-19 text-11 xl:leading-[55px] leading-[36px] font-semibold xl:max-w-[636px] text-center'>
+                        <span className='text-base-900 xl:text-heading-lg text-heading-sm font-semibold xl:max-w-[636px] text-center'>
                             Questions and curiosities
                         </span>
-                        <span className='text-base-800 xl:text-lg text-3 leading-4 xl:max-w-[416px] text-center font-normal'>
+                        <span className='text-base-800 xl:text-body-xl text-body-lg xl:max-w-[416px] text-center font-normal'>
                             Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam.
                         </span>
@@ -101,7 +100,7 @@ const Faq = () => {
                             isExpanded={expandedIndex === index}
                             onToggle={() => handleToggle(index)}
                         >
-                            {faq.answer}
+                            <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
                         </Collapse>
                     ))}
                 </div>

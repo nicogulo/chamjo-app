@@ -25,6 +25,7 @@ const IconComponents = {
     CheckList: lazy(() => import("./Checklist")),
     Chevron: lazy(() => import("./Chevron")),
     ChevronLeft: lazy(() => import("./ChevronLeft")),
+    ChevronRight: lazy(() => import("./ChevronRight")),
     ChevronDown: lazy(() => import("./ChevronDown")),
     Close: lazy(() => import("./Close")),
     CloseCircle: lazy(() => import("./CloseCircle")),

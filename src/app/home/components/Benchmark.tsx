@@ -15,15 +15,15 @@ const Benchmark: React.FC<Props> = ({ country }) => {
             <Container className='flex flex-col xl:gap-[60px] gap-12'>
                 <div className='flex flex-col xl:items-start items-center gap-3'>
                     <div className='rounded-full bg-base-300 py-2.5 px-5 w-fit'>
-                        <span className='uppercase text-primary-500 xl:text-sm text-xs xl:leading-[22px] leading-[19px] font-semibold'>
+                        <span className='uppercase text-primary-500 xl:text-body-md text-body-xs font-semibold'>
                             collections
                         </span>
                     </div>
                     <div className='flex xl:flex-row flex-col xl:items-end items-center xl:gap-6 gap-4'>
-                        <span className='text-base-900 xl:text-19 text-11 xl:leading-[55px] leading-[36px] font-semibold xl:max-w-[636px] xl:text-left text-center'>
+                        <span className='text-base-900 xl:text-heading-lg text-heading-sm font-semibold xl:max-w-[636px] xl:text-left text-center'>
                             Benchmark these popular apps from {country ?? "Indonesia"}
                         </span>
-                        <span className='text-base-800 xl:text-lg text-3 leading-4 xl:max-w-[416px] xl:text-left text-center'>
+                        <span className='text-base-800 xl:text-body-xl text-body-lg xl:max-w-[416px] xl:text-left text-center'>
                             Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam.
                         </span>

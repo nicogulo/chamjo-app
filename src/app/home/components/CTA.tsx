@@ -48,14 +48,14 @@ const CTA = () => {
         >
             <Container className='flex flex-col items-center gap-8'>
                 <div className='flex flex-col items-center gap-3'>
-                    <span className='text-base-50 xl:text-19 text-11 xl:leading-[55px] leading-[36px] font-semibold xl:max-w-[636px] text-center'>
+                    <span className='text-base-50 xl:text-heading-lg text-heading-md font-semibold xl:max-w-[636px] text-center'>
                         Interested in Chamjo?
                     </span>
-                    <span className='text-base-50 xl:text-lg text-3 leading-4 xl:max-w-[416px] text-center font-normal'>
+                    <span className='text-base-50 xl:text-body-xl text-body-lg xl:max-w-[416px] text-center font-normal'>
                         Unlock exclusive screenshots that will elevate your benchmark process.
                     </span>
                 </div>
-                <Button className='w-fit !h-full' onClick={handleOpenModal}>
+                <Button className='w-fit !h-full text-body-xl font-semibold' onClick={handleOpenModal}>
                     Sign up for free
                 </Button>
             </Container>

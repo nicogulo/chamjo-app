@@ -37,9 +37,6 @@ const Navbar = () => {
     const [bottomSheet, setBottomSheet] = useState(false)
     const [scrollPos, setScrollPos] = useState(0)
     const [showNav, setShowNav] = useState(true)
-    const [country, setCountry] = useState<CountryProps[]>()
-    const [selectedCountry, setSelectedCountry] = useState<string | null>("Indonesia")
-    const [showCountry, setShowCountry] = useState(false)
 
     const { profile, loading } = useProfile()
     const { isLoggedIn } = useAuth()
@@ -48,21 +45,6 @@ const Navbar = () => {
     const name = profile?.user_metadata.name
     const email = profile?.user_metadata.email
     const avatar = profile?.user_metadata.avatar_url
-
-    const getCountry = async () => {
-        try {
-            const res = await fetchAPI({
-                url: "/country",
-                method: "GET",
-                params: {
-                    select: "*"
-                }
-            })
-            setCountry(res?.data as CountryProps[])
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const signInWithGoogle = async () => {
         const { error, data } = await supabaseAuth.auth.signInWithOAuth({
@@ -137,19 +119,12 @@ const Navbar = () => {
         }
     }, [openModal])
 
-    useEffect(() => {
-        getCountry()
-    }, [])
-
     const itemNav = [
         {
             title: "Benefit"
         },
         {
             title: "Library"
-        },
-        {
-            title: "Available Country"
         },
         {
             title: "FAQ"
@@ -177,57 +152,13 @@ const Navbar = () => {
                         <div className='xl:flex hidden flex-row gap-6'>
                             {itemNav.map((item, index) => (
                                 <div key={index} className='inline-block relative z-10'>
-                                    <span className='font-sans font-normal text-sm !leading-[22px] text-base-800 hover:text-primary-5 cursor-pointer'>
+                                    <span className='font-normal text-body-md text-base-800 hover:text-primary-500 cursor-pointer'>
                                         {item.title}
                                     </span>
                                 </div>
                             ))}
                         </div>
                         <div className='xl:flex hidden flex-row items-center gap-8'>
-                            <CollapseMenu
-                                open={showCountry}
-                                onChange={setShowCountry}
-                                overlay={
-                                    <div className='flex flex-col gap-4 py-6 px-5 '>
-                                        <span className='text-center font-sans font-medium text-base-900 text-[16px] !leading-[24px]'>
-                                            Select app country
-                                        </span>
-                                        <div className='grid grid-cols-5 gap-4'>
-                                            {country?.map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    onClick={() => {
-                                                        router.replace(`?country=${item?.name}`, {
-                                                            scroll: false
-                                                        })
-                                                        setSelectedCountry(item?.name)
-                                                        setShowCountry(false)
-                                                    }}
-                                                    className='flex flex-col items-center p-5 bg-base-200 rounded-xl cursor-pointer'
-                                                >
-                                                    <p className='font-sans font-normal text-base-900 text-sm !leading-[24px]'>
-                                                        {item?.name}
-                                                    </p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                }
-                            >
-                                <div className='flex flex-row items-center gap-2 text-base-800 hover:text-primary-500 cursor-pointer'>
-                                    <span className='font-sans font-normal text-sm !leading-[22px]'>
-                                        {selectedCountry}
-                                    </span>
-                                    <Icons
-                                        icon='ChevronDown'
-                                        width={16}
-                                        height={16}
-                                        className={classNames("transition-transform duration-300 rotate-0 ", {
-                                            "!rotate-180": showCountry
-                                        })}
-                                    />
-                                </div>
-                            </CollapseMenu>
                             <If condition={isLoggedIn}>
                                 <Then>
                                     <div className='relative'>
@@ -349,16 +280,11 @@ const Navbar = () => {
                                 </Then>
                                 <Else>
                                     <Button
-                                        className=' flex flex-row items-center gap-[10px] pl-4 pr-3.5 py-1'
+                                        className=' flex flex-row items-center gap-1 py-3 !px-4'
                                         onClick={handleOpenModal}
                                     >
-                                        <span className='text-base-100 text-[14px] leading-6'>Login</span>
-                                        <Icons
-                                            icon='ArrowRightCircle'
-                                            width={20}
-                                            height={20}
-                                            className='text-base-100'
-                                        />
+                                        <span className='text-base-100 text-body-md'>Login</span>
+                                        <Icons icon='ChevronRight' width={16} height={16} className='text-base-100' />
                                     </Button>
                                 </Else>
                             </If>
@@ -539,70 +465,23 @@ const Navbar = () => {
                                 animate={{ y: 0, opacity: 1 }}
                                 exit={{ y: -50, opacity: 0 }}
                                 transition={{ duration: 0.3 }}
-                                className='flex flex-col w- max-w-[375px] h-[100vh] z-40 pt-[72px] pb-4 fixed mx-auto left-0 right-0 bg-base-100 overflow-scroll'
+                                className='flex flex-col  max-w-[375px] h-[100vh] z-40 pt-[72px] pb-4 fixed mx-auto left-0 right-0 bg-base-100 overflow-scroll'
                             >
                                 <div className='w-full h-[1px] bg-base-300' />
 
                                 {/* item navbar */}
                                 <div className='flex flex-col gap-6 pt-6'>
                                     {itemNav.map((item, index) => (
-                                        <p className='font-sans font-normal text-base-800 text-sm !leading-[24px] text-center'>
+                                        <p className='font-sans font-normal text-base-800 text-body-md text-center'>
                                             {item.title}
                                         </p>
                                     ))}
                                 </div>
-                                {/* <CollapseMenu
-                                    open={showCountry}
-                                    onChange={setShowCountry}
-                                    overlay={
-                                        <div className='flex flex-col gap-4 py-6 px-5 '>
-                                            <span className='text-center font-sans font-medium text-base-900 text-[16px] !leading-[24px]'>
-                                                Select app country
-                                            </span>
-                                            <div className='grid grid-cols-5 gap-4'>
-                                                {country?.map((item, index) => (
-                                                    <div
-                                                        key={index}
-                                                        onClick={() => {
-                                                            router.replace(`?country=${item?.name}`, {
-                                                                scroll: false})
-                                                            setSelectedCountry(item?.name)
-                                                            setShowCountry(false)
-                                                        }}
-                                                        className='flex flex-col items-center p-5 bg-base-200 rounded-xl cursor-pointer'
-                                                    >
-                                                        <p className='font-sans font-normal text-base-900 text-sm !leading-[24px]'>
-                                                            {item?.name}
-                                                        </p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    }
-                                >
-                                    <div className='flex flex-row items-center justify-center pt-6 gap-2 text-base-800 hover:text-primary-500 cursor-pointer'>
-                                        <span className='font-sans font-normal text-sm !leading-[22px]'>
-                                            {selectedCountry}
-                                        </span>
-                                        <Icons
-                                            icon='ChevronDown'
-                                            width={16}
-                                            height={16}
-                                            className={classNames("transition-transform duration-300 rotate-0 ", {
-                                                "!rotate-180": showCountry
-                                            })}
-                                        />
-                                    </div>
-                                </CollapseMenu> */}
+
                                 <When condition={!isLoading}>
                                     <Button className='mt-6' onClick={signInWithGoogle}>
                                         <span className=' font-medium text-[14px] text-base-100 w-full'>Login</span>
-                                        <Icons
-                                            icon='ChevronLeft'
-                                            width={20}
-                                            height={20}
-                                            className='text-base-100 rotate-180'
-                                        />
+                                        <Icons icon='ChevronRight' width={16} height={16} className='text-base-100' />
                                     </Button>
                                 </When>
                             </motion.div>
