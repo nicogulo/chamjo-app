@@ -1,6 +1,7 @@
-import Container from "@components/Container"
-import { inter } from "app/layout"
 import React from "react"
+
+import Container from "@components/Container"
+
 import Google from "../svgx/Google"
 import FlipKart from "../svgx/FlipKart"
 import Gojek from "../svgx/Gojek"

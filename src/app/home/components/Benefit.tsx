@@ -1,5 +1,4 @@
 import React from "react"
-import { inter } from "app/layout"
 
 import Container from "@components/Container"
 import BenefitImage1 from "../images/benefit-1.webp"
