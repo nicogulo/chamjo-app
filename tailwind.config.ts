@@ -57,25 +57,83 @@ const config: Config = {
                 }
             },
             fontSize: {
-                1: "12px",
-                2: "14px",
-                3: "16px",
-                4: "18px",
-                5: "20px",
-                6: "22px",
-                7: "24px",
-                8: "26px",
-                9: "28px",
-                10: "30px",
-                11: "32px",
-                12: "34px",
-                13: "36px",
-                14: "38px",
-                15: "40px",
-                16: "42px",
-                17: "44px",
-                18: "46px",
-                19: "48px"
+                "body-xs": [
+                    "10px",
+                    {
+                        lineHeight: "16px",
+                        letterSpacing: "0"
+                    }
+                ],
+                "body-sm": [
+                    "12px",
+                    {
+                        lineHeight: "16px",
+                        letterSpacing: "0"
+                    }
+                ],
+                "body-md": [
+                    "14px",
+                    {
+                        lineHeight: "20px",
+                        letterSpacing: "0"
+                    }
+                ],
+                "body-lg": [
+                    "16px",
+                    {
+                        lineHeight: "24px",
+                        letterSpacing: "0"
+                    }
+                ],
+                "body-xl": [
+                    "18px",
+                    {
+                        lineHeight: "24px",
+                        letterSpacing: "0"
+                    }
+                ],
+                "body-2xl": [
+                    "20px",
+                    {
+                        lineHeight: "24px",
+                        letterSpacing: "0"
+                    }
+                ],
+                "heading-xs": [
+                    "24px",
+                    {
+                        lineHeight: "32px",
+                        letterSpacing: "-0.02em"
+                    }
+                ],
+                "heading-sm": [
+                    "32px",
+                    {
+                        lineHeight: "40px",
+                        letterSpacing: "-0.02em"
+                    }
+                ],
+                "heading-md": [
+                    "36px",
+                    {
+                        lineHeight: "48px",
+                        letterSpacing: "-0.02em"
+                    }
+                ],
+                "heading-lg": [
+                    "48px",
+                    {
+                        lineHeight: "64px",
+                        letterSpacing: "-0.02em"
+                    }
+                ],
+                "heading-xl": [
+                    "56px",
+                    {
+                        lineHeight: "72px",
+                        letterSpacing: "-0.02em"
+                    }
+                ]
             },
             fontFamily: {
                 generalSans: "'Inter',' sans-serif'"
