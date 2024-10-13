@@ -12,7 +12,13 @@ interface CollapseMenuProps extends React.PropsWithChildren {
     dataTestId?: string
 }
 
-const CollapseMenu: React.FC<CollapseMenuProps> = ({ open: openProp, onChange, children, overlay, dataTestId }) => {
+const CollapseMenu: React.FC<CollapseMenuProps> = ({
+    open: openProp = false,
+    onChange,
+    children,
+    overlay,
+    dataTestId = "chamjo-collapse-menu"
+}) => {
     const pathname = usePathname()
     const [open, setOpen] = useState(openProp)
     const [height, setHeight] = useState<number | undefined>(open ? undefined : 0)
@@ -80,12 +86,6 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({ open: openProp, onChange, c
             </div>
         </OutsideClickHandler>
     )
-}
-
-CollapseMenu.defaultProps = {
-    open: false,
-    onChange: () => {},
-    dataTestId: "reku-collapse-menu"
 }
 
 export default memo(CollapseMenu)

@@ -12,10 +12,12 @@ import Button from "@components/Button"
 import Icons from "@components/Icons"
 import { removeClickedCard } from "@components/Navbar/utils/clikced-card"
 import ModalLogin from "@components/Navbar/components/ModalLogin"
+import useAuth from "@hooks/useAuth"
 
 const Hero = () => {
     const [open, setOpen] = useState(false)
-
+    const { isLoggedIn } = useAuth()
+    console.log(isLoggedIn)
     const signInWithGoogle = async () => {
         const { error, data } = await supabaseAuth.auth.signInWithOAuth({
             provider: "google",
