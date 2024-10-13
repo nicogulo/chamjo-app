@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import Navbar from "@components/Navbar"
 import BackToTop from "@components/BackToTop"
+import Footer from "@components/Footer"
 
 export const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] })
 
@@ -26,6 +27,7 @@ export default function RootLayout({
                 />
                 <Navbar />
                 {children}
+                <Footer />
                 <BackToTop />
             </body>
         </html>
