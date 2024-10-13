@@ -25,6 +25,7 @@ import "./module.css"
 import { removeClickedCard } from "./utils/clikced-card"
 import ModalLogin from "./components/ModalLogin"
 import CollapseMenu from "./components/CollapseMenu"
+import Profile from "./components/Profile"
 
 type CountryProps = Database["public"]["Tables"]["country"]["Row"]
 
@@ -121,15 +122,29 @@ const Navbar = () => {
 
     const itemNav = [
         {
-            title: "Benefit"
+            title: "Benefit",
+            link: "#benefit"
         },
         {
-            title: "Library"
+            title: "Library",
+            link: "/dashboard"
         },
         {
-            title: "FAQ"
+            title: "FAQ",
+            link: "#faq"
         }
     ]
+
+    const handleClickNav = (e: React.MouseEvent<HTMLSpanElement>, link: string) => {
+        if (link.startsWith("#")) {
+            e.preventDefault()
+            const targetId = link.substring(1)
+            const targetElement = document.getElementById(targetId)
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: "smooth" })
+            }
+        }
+    }
 
     return (
         <header className='relative flex justify-center'>
@@ -152,9 +167,14 @@ const Navbar = () => {
                         <div className='xl:flex hidden flex-row gap-6'>
                             {itemNav.map((item, index) => (
                                 <div key={index} className='inline-block relative z-10'>
-                                    <span className='font-normal text-body-md text-base-800 hover:text-primary-500 cursor-pointer'>
-                                        {item.title}
-                                    </span>
+                                    <Link href={item.link}>
+                                        <span
+                                            className='font-normal text-body-md text-base-800 hover:text-primary-500 cursor-pointer'
+                                            onClick={(e) => handleClickNav(e, item.link)}
+                                        >
+                                            {item.title}
+                                        </span>
+                                    </Link>
                                 </div>
                             ))}
                         </div>
@@ -172,14 +192,14 @@ const Navbar = () => {
                                             onClick={handleProfile}
                                         >
                                             <div className='pr-1 w-full h-full'>
-                                                <If condition={loading}>
+                                                <If condition={isLoading}>
                                                     <Then>
                                                         <Skeleton circle width={20} height={20} />
                                                     </Then>
                                                     <Else>
                                                         <Image
                                                             src={avatar as string}
-                                                            alt={name}
+                                                            alt={name as string}
                                                             width={20}
                                                             height={20}
                                                             className='rounded-full'
@@ -203,79 +223,15 @@ const Navbar = () => {
                                                 })}
                                             />
                                         </div>
-                                        <When condition={isOpenProfile}>
-                                            <AnimatePresence>
-                                                <motion.div
-                                                    initial={{ y: -50, opacity: 0 }}
-                                                    animate={{ y: 0, opacity: 1 }}
-                                                    exit={{ y: -50, opacity: 0 }}
-                                                    transition={{ duration: 0.3 }}
-                                                    // isOpenProfile={isOpenProfile}
-                                                    id='profile'
-                                                    className='w-[223px] h-[207px] overflow-hidden rounded flex-col absolute justify-center right-1.5 mt-1 top-full gap-[14px] bg-base-100 shadow-[0px_8px_44px_rgba(3,21,49,0.06)]'
-                                                >
-                                                    <div className='w-full relative bg-[#FABBAA] rounded-t py-3 px-[18px]'>
-                                                        <If condition={loading}>
-                                                            <Then>
-                                                                <Skeleton circle width={40} height={40} />
-                                                            </Then>
-                                                            <Else>
-                                                                <div
-                                                                    className='w-10 h-10 rounded-full'
-                                                                    style={{
-                                                                        border: "4px solid rgba(0, 0, 0, 0.05)"
-                                                                    }}
-                                                                >
-                                                                    <Image
-                                                                        src={avatar as string}
-                                                                        alt={name}
-                                                                        width={40}
-                                                                        height={40}
-                                                                        className='rounded-full'
-                                                                    />
-                                                                </div>
-                                                            </Else>
-                                                        </If>
-                                                        <Icons
-                                                            icon='Art1'
-                                                            width={33}
-                                                            height={38}
-                                                            wrapperClassname='absolute top-[22px] left-[78px]'
-                                                        />
-                                                        <Icons
-                                                            icon='Art2'
-                                                            width={33}
-                                                            height={38}
-                                                            wrapperClassname='absolute top-[0px] left-[147px]'
-                                                        />
-                                                        <Icons
-                                                            icon='Art3'
-                                                            width={33}
-                                                            height={38}
-                                                            wrapperClassname='absolute top-[38px] right-[14px]'
-                                                        />
-                                                    </div>
-                                                    <div className='flex flex-col p-[18px]'>
-                                                        <div className='flex flex-col gap-0.5 pb-3.5 border-b border-b-base-3'>
-                                                            <span className='text-[16px] font-medium text-base-900 leading-6 w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
-                                                                {name}
-                                                            </span>
-                                                            <span className='text-[14px] font-normal text-base-800 leading-[22px]  w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
-                                                                {email}
-                                                            </span>
-                                                        </div>
-
-                                                        <div
-                                                            className='action flex flex-row items-center gap-3.5 pt-3.5 cursor-pointer'
-                                                            onClick={logout}
-                                                        >
-                                                            <Icons icon='Logout' width={20} height={20} />{" "}
-                                                            <p>{isLoading ? "loading..." : "Logout"}</p>
-                                                        </div>
-                                                    </div>
-                                                </motion.div>
-                                            </AnimatePresence>
-                                        </When>
+                                        <Profile
+                                            avatar={avatar}
+                                            email={email}
+                                            name={name}
+                                            isLoading={loading}
+                                            isOpen={isOpenProfile}
+                                            handleProfile={handleProfile}
+                                            logout={logout}
+                                        />
                                     </div>
                                 </Then>
                                 <Else>
@@ -348,76 +304,15 @@ const Navbar = () => {
                                             </Else>
                                         </If>
                                     </div>
-                                    <AnimatePresence>
-                                        {isOpenProfile && (
-                                            <motion.div
-                                                initial={{ y: -50, opacity: 0 }}
-                                                animate={{ y: 0, opacity: 1 }}
-                                                exit={{ y: -50, opacity: 0 }}
-                                                transition={{ duration: 0.3 }}
-                                                className='w-[343px] h-[207px] overflow-hidden rounded flex-col absolute justify-center right-[-48px] mt-1 top-full gap-[14px] bg-base-100'
-                                                id='profile'
-                                                style={{
-                                                    boxShadow: "0px 8px 44px rgba(3, 21, 49, 0.06);"
-                                                }}
-                                            >
-                                                <div className='w-full relative bg-[#FABBAA] rounded-t py-3 px-[18px]'>
-                                                    <If condition={loading}>
-                                                        <Then>
-                                                            <div className='flex items-center justify-center w-full h-full '>
-                                                                <Skeleton circle width={40} height={40} />
-                                                            </div>
-                                                        </Then>
-                                                        <Else>
-                                                            <Image
-                                                                src={avatar as string}
-                                                                alt={name}
-                                                                width={24}
-                                                                height={24}
-                                                                className='rounded-full'
-                                                            />
-                                                        </Else>
-                                                    </If>
-
-                                                    <Icons
-                                                        icon='Art1'
-                                                        width={33}
-                                                        height={38}
-                                                        wrapperClassname='absolute top-[22px] left-[78px]'
-                                                    />
-                                                    <Icons
-                                                        icon='Art2'
-                                                        width={33}
-                                                        height={38}
-                                                        wrapperClassname='absolute top-[0px] left-[147px]'
-                                                    />
-                                                    <Icons
-                                                        icon='Art3'
-                                                        width={33}
-                                                        height={38}
-                                                        wrapperClassname='absolute top-[38px] right-[14px]'
-                                                    />
-                                                </div>
-                                                <div className='flex flex-col p-[18px] '>
-                                                    <div className='flex flex-col gap-0.5 pb-3.5 border-b border-b-base-3'>
-                                                        <span className='text-[16px] font-medium text-base-900 leading-6 max-w-[307px] whitespace-nowrap overflow-hidden text-ellipsis'>
-                                                            {name}
-                                                        </span>
-                                                        <span className='text-sm font-normal text-base-800 !leading-[22px]  max-w-[307px] whitespace-nowrap overflow-hidden text-ellipsis'>
-                                                            {email}
-                                                        </span>
-                                                    </div>
-                                                    <div
-                                                        className='action flex flex-row items-center gap-3.5 pt-3.5 cursor-pointer'
-                                                        onClick={logout}
-                                                    >
-                                                        <Icons icon='Logout' width={20} height={20} />{" "}
-                                                        <p>{isLoading ? "loading..." : "Logout"}</p>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                    <Profile
+                                        avatar={avatar}
+                                        email={email}
+                                        name={name}
+                                        isLoading={loading}
+                                        isOpen={isOpenProfile}
+                                        handleProfile={handleProfile}
+                                        logout={logout}
+                                    />
                                 </div>
                             </When>
 
@@ -478,7 +373,7 @@ const Navbar = () => {
                                     ))}
                                 </div>
 
-                                <When condition={!isLoading}>
+                                <When condition={!isLoggedIn}>
                                     <Button className='mt-6' onClick={signInWithGoogle}>
                                         <span className=' font-medium text-[14px] text-base-100 w-full'>Login</span>
                                         <Icons icon='ChevronRight' width={16} height={16} className='text-base-100' />

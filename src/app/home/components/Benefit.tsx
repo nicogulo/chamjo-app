@@ -9,7 +9,7 @@ import Image from "next/image"
 
 const Benefit = () => {
     return (
-        <section className='bg-base-50 xl:py-[120px] py-8'>
+        <section className='bg-base-50 xl:py-[120px] py-8' id='benefit'>
             <Container className='flex flex-col !items-center !justify-center xl:gap-[120px] gap-8'>
                 <div className='flex xl:flex-row flex-col-reverse xl:items-center xl:justify-center xl:gap-6 gap-4'>
                     <div className='flex flex-col xl:gap-4 gap-2 xl:max-w-[417px] xl:max-h-[408px]'>

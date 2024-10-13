@@ -74,7 +74,7 @@ const Faq = () => {
     ]
 
     return (
-        <section className='xl:pb-[120px] pb-20'>
+        <section className='xl:pb-[120px] pb-20' id='faq'>
             <Container className='flex flex-col xl:gap-[60px] gap-12'>
                 <div className='flex flex-col items-center gap-3'>
                     <div className='rounded-full bg-base-300 py-2.5 px-5 w-fit'>
