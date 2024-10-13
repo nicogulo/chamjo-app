@@ -29,7 +29,7 @@ const BackToTop = () => {
     }, [])
 
     return (
-        <div className='fixed max-xl:flex max-xl:items-center max-xl:justify-center bottom-9 xl:right-[5%] max-xl:w-full'>
+        <div className='xl:fixed max-xl:flex max-xl:items-center max-xl:justify-center bottom-9 xl:right-[5%] max-xl:w-full xl:py-0 py-9'>
             {isVisible && (
                 <button
                     onClick={scrollToTop}

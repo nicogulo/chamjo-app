@@ -53,7 +53,7 @@ const Faq = () => {
     const faqs = [
         {
             question: "What is Chamjo?",
-            answer: "Chamjo is a screenshot and pattern library for local apps. Providing valuable resources for designers, developers, and businesses to understand current trends and strategies."
+            answer: "Chamjo is a platform that provides UI screenshots of apps from your region, starting with Indonesia, the UAE, and other countries. Chamjo does not sell or own these screenshots, it only offers app screenshots used for research purposes."
         },
         {
             question: "Is Chamjo owns the copyright?",
@@ -64,12 +64,8 @@ const Faq = () => {
             answer: `<span>Need help? Don't hesitate to contact our support team at <a href="mailto:support@chamjo.design" class='underline'>support@chamjo.design.</a> We're here to solve your problems!</span>`
         },
         {
-            question: "How to change the region?",
-            answer: "To change your region, please use the dropdown menu in our navigation bar."
-        },
-        {
-            question: "Is the subscription refundable?",
-            answer: `You can request a refund by explaining what you were hoping for. Our support team is here to assist you in finding a solution or processing your refund. Just send an email to <a href="mailto:support@chamjo.design" class='underline'>support@chamjo.design.</a>`
+            question: "In which countries does Chamjo provide local app screenshots?",
+            answer: "Chamjo providing the local app screenshots from Indonesia, United Arab Emirates, and International."
         }
     ]
 

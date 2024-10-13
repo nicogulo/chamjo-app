@@ -365,11 +365,20 @@ const Navbar = () => {
                                 <div className='w-full h-[1px] bg-base-300' />
 
                                 {/* item navbar */}
-                                <div className='flex flex-col gap-6 pt-6'>
+
+                                <div className='flex flex-col items-center gap-6 pt-6'>
                                     {itemNav.map((item, index) => (
-                                        <p className='font-sans font-normal text-base-800 text-body-md text-center'>
-                                            {item.title}
-                                        </p>
+                                        <Link href={item.link}>
+                                            <span
+                                                className='font-normal text-body-md text-base-800 hover:text-primary-500 text-center cursor-pointer'
+                                                onClick={(e) => {
+                                                    handleClickNav(e, item.link)
+                                                    setDropdown(false)
+                                                }}
+                                            >
+                                                {item.title}
+                                            </span>
+                                        </Link>
                                     ))}
                                 </div>
 
