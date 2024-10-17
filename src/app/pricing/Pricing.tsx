@@ -71,7 +71,7 @@ const Pricing = () => {
             <Script
                 type='text/javascript'
                 src='https://app.sandbox.midtrans.com/snap/snap.js'
-                data-client-key='SB-Mid-client-MB69pBRyeOPqWlRv'
+                data-client-key={process.env.MIDTRANS_CLIENT_KEY}
             />
         </>
     )

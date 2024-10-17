@@ -5,8 +5,8 @@ import Midtrans from "midtrans-client"
 
 let snap = new Midtrans.Snap({
     isProduction: false,
-    serverKey: "SB-Mid-server-RjkWKxAjV7-0mmKbdAtO5Oit",
-    clientKey: "SB-Mid-client-MB69pBRyeOPqWlRv"
+    serverKey: process.env.MIDTRANS_SERVER_KEY,
+    clientKey: process.env.MIDTRANS_CLIENT_KEY
 })
 
 const PRICE = {
