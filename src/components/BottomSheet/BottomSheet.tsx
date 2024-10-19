@@ -49,15 +49,15 @@ const BottomSheet = ({
                 <Drawer.Overlay onClick={onDismiss} className={classNames("fixed inset-0 bg-black/40", `z-[99]`)} />
                 <Drawer.Content
                     className={classNames(
-                        " bg-base-100 flex flex-col rounded-t-md mt-24 fixed bottom-0 left-0 right-0 mx-auto h-full max-h-[96%]",
+                        " bg-base-100 flex flex-col rounded-t-2xl fixed bottom-0 left-0 right-0 mx-auto max-h-[96%]",
                         `z-[999]`,
                         contentClassName
                     )}
                 >
                     <When condition={!!header}>
-                        <div className={classNames("p-3 flex justify-center", headerClassName)}>{header}</div>
+                        <div className={classNames("pt-4 flex justify-center", headerClassName)}>{header}</div>
                     </When>
-                    <div className={classNames("p-3", wrapperClassName)}>{children}</div>
+                    <div className={classNames("p-[18px]", wrapperClassName)}>{children}</div>
                 </Drawer.Content>
             </Drawer.Portal>
         </Drawer.Root>

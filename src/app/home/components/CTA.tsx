@@ -46,7 +46,7 @@ const CTA = () => {
                 background: "linear-gradient(180deg, #3D3C3D 0%, #302F30 14.17%, #272627 50.11%)"
             }}
         >
-            <Container className='flex flex-col items-center gap-8'>
+            <Container className='relative z-10 flex flex-col items-center gap-8'>
                 <div className='flex flex-col items-center gap-3'>
                     <span className='text-base-50 xl:text-heading-lg text-heading-md font-semibold xl:max-w-[636px] text-center'>
                         Interested in Chamjo?

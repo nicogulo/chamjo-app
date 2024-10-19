@@ -263,12 +263,12 @@ const Navbar = () => {
                             "flex items-center justify-between w-[375px] fixed z-50 top-3 py-3  px-4 bg-base-200 rounded-full transition-all duration-300",
                             {
                                 "transform -translate-y-[130%]": !showNav,
-                                "blur-0 rounded-none": dropdown
+                                " rounded-none !bg-base-100": dropdown
                             }
                         )}
-                        style={{
-                            backdropFilter: "blur(8px)"
-                        }}
+                        // style={{
+                        //     backdropFilter: "blur(8px)"
+                        // }}
                     >
                         <Link href='/'>
                             <Icons icon='LogoChamjo' wrapperClassname='w-[66px] h-5' width={66} height={20} />
@@ -319,13 +319,12 @@ const Navbar = () => {
                             <If condition={dropdown}>
                                 <Then>
                                     <Button
-                                        className='gap-2.5 rounded-[10px] w-9 h-9 !p-1 !border-none'
+                                        className='gap-2.5 rounded-[10px] w-9 h-9 !p-1 !border-none bg-base-800'
                                         width={36}
                                         height={36}
                                         style={{
                                             boxShadow: "0px 6px 12px -5px rgba(3, 21, 49, 0.25)",
-                                            transition: "all 0.5s ease-out",
-                                            backgroundColor: "#031531"
+                                            transition: "all 0.5s ease-out"
                                         }}
                                         onClick={() => setDropdown(false)}
                                     >
@@ -383,7 +382,14 @@ const Navbar = () => {
                                 </div>
 
                                 <When condition={!isLoggedIn}>
-                                    <Button className='mt-6' onClick={signInWithGoogle}>
+                                    <Button
+                                        className='mt-6'
+                                        onClick={() => {
+                                            setDropdown(false)
+                                            console.log(dropdown)
+                                            setBottomSheet(true)
+                                        }}
+                                    >
                                         <span className=' font-medium text-[14px] text-base-100 w-full'>Login</span>
                                         <Icons icon='ChevronRight' width={16} height={16} className='text-base-100' />
                                     </Button>
@@ -391,65 +397,11 @@ const Navbar = () => {
                             </motion.div>
                         )}
                     </AnimatePresence>
-                    <BottomSheet
-                        open={bottomSheet}
-                        onDismiss={() => setBottomSheet(false)}
-                        contentClassName='max-h-[324px] !max-w-[375px]'
-                        header={
-                            <span className='font-medium text-3 leading-6 text-base-900 text-center'>
-                                Login or Sign up
-                            </span>
-                        }
-                    >
-                        <div className='flex flex-col px-1.5 pt-1 gap-[18px]'>
-                            <div className='flex flex-col gap-8 w-full'>
-                                <div className='flex flex-col gap-4 items-center'>
-                                    <Icons icon='IlusColor' width={134} height={67} />
-                                    <span className='font-sans text-1 leading-[18px] text-base-700 text-center w-[288px]'>
-                                        You can access and discover more app patterns by logging in or signing up
-                                    </span>
-                                </div>
-                                <div className='flex flex-col items-center gap-4'>
-                                    <Button
-                                        className='!border-none !bg-base-400 !text-base-900 gap-2 text-2 justify-center font-sans !leading-[22px] hover:text-base-400'
-                                        block
-                                        onClick={signInWithGoogle}
-                                    >
-                                        <Icons icon='GoogleColor' />
-                                        Continue with google
-                                    </Button>
-                                    <p className='text-base-700 text-1 font-sans text-center'>
-                                        By continuing, you agree to our{" "}
-                                        <span
-                                            className='text-base-900 font-medium cursor-pointer'
-                                            onClick={() => {
-                                                window.open(
-                                                    "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9",
-                                                    "popup",
-                                                    "width=600, height=600"
-                                                )
-                                            }}
-                                        >
-                                            Privacy Policy
-                                        </span>{" "}
-                                        and{" "}
-                                        <span
-                                            className='text-base-900 font-medium cursor-pointer'
-                                            onClick={() => {
-                                                window.open(
-                                                    "https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197",
-                                                    "popup",
-                                                    "width=600, height=600"
-                                                )
-                                            }}
-                                        >
-                                            T&Cs
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </BottomSheet>
+                    <ModalLogin
+                        signInWithGoogle={signInWithGoogle}
+                        openModal={bottomSheet}
+                        setOpenModal={setBottomSheet}
+                    />
                 </Else>
             </If>
         </header>
