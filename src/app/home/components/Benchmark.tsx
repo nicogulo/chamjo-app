@@ -11,7 +11,7 @@ interface Props {
 }
 const Benchmark: React.FC<Props> = ({ country }) => {
     return (
-        <section className='xl:py-[120px] py-8'>
+        <section className='xl:py-[120px] py-8' id='library'>
             <Container className='flex flex-col xl:gap-[60px] gap-12'>
                 <div className='flex flex-col xl:items-start items-center gap-3'>
                     <div className='rounded-full bg-base-300 py-2.5 px-5 w-fit'>
@@ -21,11 +21,11 @@ const Benchmark: React.FC<Props> = ({ country }) => {
                     </div>
                     <div className='flex xl:flex-row flex-col xl:items-end items-center xl:gap-6 gap-4'>
                         <span className='text-base-900 xl:text-heading-lg text-heading-sm font-semibold xl:max-w-[636px] xl:text-left text-center'>
-                            Benchmark these popular apps from {country ?? "Indonesia"}
+                            Explore local apps from Indonesia, UAE, and more
                         </span>
                         <span className='text-base-800 xl:text-body-xl text-body-lg xl:max-w-[416px] xl:text-left text-center'>
-                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam.
+                            Analyzing popular apps from your country can provide valuable inspiration and effective
+                            strategies tailored to your local target audience
                         </span>
                     </div>
                 </div>

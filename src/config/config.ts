@@ -1,3 +1,4 @@
+export const VERSION = "v3.0.0"
 export const APP_ENV = process.env.NEXT_APP_ENV
 export const API_URL = process.env.NEXT_PUBLIC_API_URL
 export const SUPABASE_URL = process.env.NEXT_SUPABASE_URL
