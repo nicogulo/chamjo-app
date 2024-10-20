@@ -4,11 +4,15 @@ import React, { memo, useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 import OutsideClickHandler from "react-outside-click-handler"
 import { Transition } from "react-transition-group"
+import { useMediaQuery } from "react-responsive"
+
+import classNames from "@utils/classnames"
 
 interface CollapseMenuProps extends React.PropsWithChildren {
     open?: boolean
     onChange?: (open: boolean) => void
     overlay: React.ReactNode
+    overlayClassName?: string
     dataTestId?: string
 }
 
@@ -17,12 +21,14 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({
     onChange,
     children,
     overlay,
+    overlayClassName,
     dataTestId = "chamjo-collapse-menu"
 }) => {
     const pathname = usePathname()
     const [open, setOpen] = useState(openProp)
     const [height, setHeight] = useState<number | undefined>(open ? undefined : 0)
     const ref = useRef<HTMLDivElement>(null)
+    const isMobile = useMediaQuery({ maxWidth: "1066px" })
 
     useEffect(() => {
         setOpen(openProp)
@@ -72,7 +78,13 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({
             </div>
 
             <div
-                className={`w-full absolute left-0 top-0  mt-[80px] transition-[height] duration-300 overflow-hidden z-[30] bg-base-100 rounded-xl`}
+                className={classNames(
+                    "w-full absolute left-0 top-0  mt-[80px] transition-[height] duration-300 overflow-hidden z-[30] bg-base-100 rounded-xl",
+                    overlayClassName,
+                    {
+                        "!h-[calc(100vh-72px)]": height && isMobile
+                    }
+                )}
                 style={{
                     boxShadow: "0px 8px 44px 0px rgba(3, 21, 49, 0.06)",
                     height

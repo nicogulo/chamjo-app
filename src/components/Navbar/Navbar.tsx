@@ -5,34 +5,27 @@ import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { useRouter } from "next/navigation"
 import classNames from "classnames"
 import Skeleton from "react-loading-skeleton"
 import { useMediaQuery } from "react-responsive"
 
-import fetchAPI, { supabaseAuth } from "@config/auth"
-import toast from "@utils/toast"
+import { login } from "app/action"
+
 import useAuth, { useProfile } from "@hooks/useAuth"
-import { getURL } from "@helpers/get-url"
-import { Database } from "@utils/supabase"
 
 import Icons from "@components/Icons"
 import { Else, If, Then, When } from "@components/If"
 import Button from "@components/Button"
-import BottomSheet from "@components/BottomSheet"
 
 import "./module.css"
-import { removeClickedCard } from "./utils/clikced-card"
+
 import ModalLogin from "./components/ModalLogin"
 import CollapseMenu from "./components/CollapseMenu"
 import Profile from "./components/Profile"
 
-type CountryProps = Database["public"]["Tables"]["country"]["Row"]
-
 const Navbar = () => {
-    const router = useRouter()
     const [openModal, setOpenModal] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+
     const [isOpenProfile, setOpenProfile] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [bottomSheet, setBottomSheet] = useState(false)
@@ -46,44 +39,6 @@ const Navbar = () => {
     const name = profile?.user_metadata.name
     const email = profile?.user_metadata.email
     const avatar = profile?.user_metadata.avatar_url
-
-    const signInWithGoogle = async () => {
-        const { error, data } = await supabaseAuth.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-                redirectTo: getURL()
-            }
-        })
-
-        if (data) {
-            removeClickedCard()
-            toast.loading(`Redirect to ${data.provider}`)
-        }
-
-        if (error) {
-            toast.error(error.message)
-        }
-    }
-
-    const logout = async () => {
-        try {
-            setIsLoading(true)
-            const { error } = await supabaseAuth.auth.signOut()
-            if (error) {
-                throw new Error(error.message)
-            } else {
-                toast.success("Logout success")
-
-                setTimeout(() => {
-                    window.location.reload()
-                }, 1000)
-            }
-            setIsLoading(false)
-        } catch (err: any) {
-            toast.error(err.message)
-            setIsLoading(false)
-        }
-    }
 
     const handleOpenModal = () => {
         setOpenModal(true)
@@ -181,58 +136,66 @@ const Navbar = () => {
                         <div className='xl:flex hidden flex-row items-center gap-8'>
                             <If condition={isLoggedIn}>
                                 <Then>
-                                    <div className='relative'>
-                                        <div
-                                            className={classNames(
-                                                "after-login w-[80px] h-[40px] flex flex-row items-center px-2 py-2.5 bg-base-300 rounded-[48px] cursor-pointer ",
-                                                {
-                                                    "bg-primary-5 bg-opacity-[8%]": isOpenProfile
-                                                }
-                                            )}
-                                            onClick={handleProfile}
-                                        >
-                                            <div className='pr-1 w-full h-full'>
-                                                <If condition={isLoading}>
-                                                    <Then>
-                                                        <Skeleton circle width={20} height={20} />
-                                                    </Then>
-                                                    <Else>
-                                                        <Image
-                                                            src={avatar as string}
-                                                            alt={name as string}
-                                                            width={20}
-                                                            height={20}
-                                                            className='rounded-full'
-                                                        />
-                                                    </Else>
-                                                </If>
+                                    <CollapseMenu
+                                        open={isOpenProfile}
+                                        onChange={setOpenProfile}
+                                        overlayClassName='!w-fit right-0 !left-[initial]'
+                                        overlay={
+                                            <div id='profile' className='flex justify-end w-full'>
+                                                <Profile
+                                                    avatar={avatar}
+                                                    email={email}
+                                                    name={name}
+                                                    isLoading={loading}
+                                                    handleProfile={handleProfile}
+                                                />
                                             </div>
-
-                                            <Icons
-                                                icon='ArrowRightCircle'
-                                                width={20}
-                                                height={20}
-                                                wrapperClassname={classNames(
-                                                    "iconsClassName pl-1 border-l border-l-base-4 border-opacity-30 w-full h-full transition-all ease-in-out",
+                                        }
+                                    >
+                                        <div className='relative'>
+                                            <div
+                                                className={classNames(
+                                                    "after-login w-[80px] h-[40px] flex flex-row items-center px-2 py-2.5 bg-base-300 rounded-[48px] cursor-pointer ",
                                                     {
-                                                        "!border-l-primary-4": isOpenProfile
+                                                        "bg-primary-5 bg-opacity-[8%]": isOpenProfile
                                                     }
                                                 )}
-                                                className={classNames("rotate-90 text-base-800", {
-                                                    "!text-primary-4 !rotate-[-90deg]": isOpenProfile
-                                                })}
-                                            />
+                                                onClick={handleProfile}
+                                            >
+                                                <div className='pr-1 w-full h-full'>
+                                                    <If condition={loading}>
+                                                        <Then>
+                                                            <Skeleton circle width={20} height={20} />
+                                                        </Then>
+                                                        <Else>
+                                                            <Image
+                                                                src={avatar as string}
+                                                                alt={name as string}
+                                                                width={20}
+                                                                height={20}
+                                                                className='rounded-full'
+                                                            />
+                                                        </Else>
+                                                    </If>
+                                                </div>
+
+                                                <Icons
+                                                    icon='ArrowRightCircle'
+                                                    width={20}
+                                                    height={20}
+                                                    wrapperClassname={classNames(
+                                                        "iconsClassName pl-1 border-l border-l-base-4 border-opacity-30 w-full h-full transition-all ease-in-out",
+                                                        {
+                                                            "!border-l-primary-4": isOpenProfile
+                                                        }
+                                                    )}
+                                                    className={classNames("rotate-90 text-base-800", {
+                                                        "!text-primary-4 !rotate-[-90deg]": isOpenProfile
+                                                    })}
+                                                />
+                                            </div>
                                         </div>
-                                        <Profile
-                                            avatar={avatar}
-                                            email={email}
-                                            name={name}
-                                            isLoading={loading}
-                                            isOpen={isOpenProfile}
-                                            handleProfile={handleProfile}
-                                            logout={logout}
-                                        />
-                                    </div>
+                                    </CollapseMenu>
                                 </Then>
                                 <Else>
                                     <Button
@@ -250,7 +213,8 @@ const Navbar = () => {
                     <When condition={openModal}>
                         <Then>
                             <ModalLogin
-                                signInWithGoogle={signInWithGoogle}
+                                // signInWithGoogle={signInWithGoogle}
+                                signInWithGoogle={login}
                                 openModal={openModal}
                                 setOpenModal={setOpenModal}
                             />
@@ -266,9 +230,6 @@ const Navbar = () => {
                                 " rounded-none !bg-base-100": dropdown
                             }
                         )}
-                        // style={{
-                        //     backdropFilter: "blur(8px)"
-                        // }}
                     >
                         <Link href='/'>
                             <Icons icon='LogoChamjo' wrapperClassname='w-[66px] h-5' width={66} height={20} />
@@ -309,9 +270,7 @@ const Navbar = () => {
                                         email={email}
                                         name={name}
                                         isLoading={loading}
-                                        isOpen={isOpenProfile}
                                         handleProfile={handleProfile}
-                                        logout={logout}
                                     />
                                 </div>
                             </When>
@@ -386,7 +345,6 @@ const Navbar = () => {
                                         className='mt-6'
                                         onClick={() => {
                                             setDropdown(false)
-                                            console.log(dropdown)
                                             setBottomSheet(true)
                                         }}
                                     >
@@ -398,7 +356,8 @@ const Navbar = () => {
                         )}
                     </AnimatePresence>
                     <ModalLogin
-                        signInWithGoogle={signInWithGoogle}
+                        // signInWithGoogle={signInWithGoogle}
+                        signInWithGoogle={login}
                         openModal={bottomSheet}
                         setOpenModal={setBottomSheet}
                     />
