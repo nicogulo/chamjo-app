@@ -5,16 +5,15 @@ import { API_URL, PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL } from "./config"
 import axios, { AxiosAdapter, AxiosRequestConfig, AxiosRequestHeaders } from "axios"
 import { throttleAdapterEnhancer } from "axios-extensions"
 
-import { createClient } from "@supabase/supabase-js"
+import { createBrowserClient } from "@supabase/ssr"
 import querystring from "@utils/querystring"
 
-const publicSupabaseUrl = PUBLIC_SUPABASE_URL ?? ""
 const supabasePublicKey = PUBLIC_SUPABASE_KEY ?? ""
+const publicURL = API_URL
 
 const defaultContentType = "application/x-www-form-urlencoded"
 
-export const supabaseAuth = createClient(publicSupabaseUrl, supabasePublicKey)
-export const supabaseClient = createClient(publicSupabaseUrl ?? "", supabasePublicKey)
+export const supabaseSsrClient = createBrowserClient(publicURL!, supabasePublicKey)
 
 export const client = axios.create({
     baseURL: API_URL,
@@ -28,6 +27,7 @@ const fetchAPI = async <T = any>(config: AxiosRequestConfig): Promise<T> => {
     try {
         const headers: AxiosRequestHeaders = {
             "Content-Type": defaultContentType,
+            apikey: supabasePublicKey,
             ...config?.headers
         }
 

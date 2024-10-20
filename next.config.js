@@ -25,6 +25,14 @@ const nextConfig = {
         })
 
         return config
+    },
+    rewrites: async () => {
+        return [
+            {
+                source: "/api/:path*",
+                destination: "https://ndbqcbbgigoygotysyae.supabase.co/:path*"
+            }
+        ]
     }
 }
 

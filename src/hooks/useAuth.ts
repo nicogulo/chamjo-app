@@ -1,4 +1,4 @@
-import { supabaseAuth } from "@config/auth"
+import { supabaseSsrClient } from "@config/auth"
 import { User } from "@supabase/supabase-js"
 import toast from "@utils/toast"
 
@@ -8,7 +8,7 @@ const useAuth = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const auth = async () => {
-        const { data, error } = await supabaseAuth.auth.getSession()
+        const { data, error } = await supabaseSsrClient.auth.getSession()
 
         const loggedIn = data.session && data.session.user
         if (loggedIn) {
@@ -35,7 +35,7 @@ export const useProfile = () => {
         const fetchProfile = async () => {
             const {
                 data: { user }
-            } = await supabaseAuth.auth.getUser()
+            } = await supabaseSsrClient.auth.getUser()
             setProfile(user)
             setLoading(false)
         }

@@ -10,6 +10,8 @@ import CTA from "./home/components/CTA"
 import Navbar from "@components/Navbar"
 import Footer from "@components/Footer"
 import BackToTop from "@components/BackToTop"
+import { createClient } from "@config/supabase-server"
+import { redirect } from "next/navigation"
 
 interface HomeProps {
     searchParams?: { [key: string]: string }
@@ -17,6 +19,12 @@ interface HomeProps {
 
 const Home = async ({ searchParams }: HomeProps) => {
     const country = searchParams?.country
+    const supabase = createClient()
+
+    const { data } = await supabase.auth.getUser()
+    if (data?.user) {
+        redirect("/browse")
+    }
 
     return (
         <>
