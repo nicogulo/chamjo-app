@@ -79,14 +79,13 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({
 
             <div
                 className={classNames(
-                    "w-full absolute left-0 top-0  mt-[80px] transition-[height] duration-300 overflow-hidden z-[30] bg-base-100 rounded-xl",
+                    "w-full absolute left-0 top-0  mt-[80px] transition-[height] duration-300 overflow-hidden z-[30] bg-base-100 xl:rounded-xl xl:shadow-[0px_8px_44px_0px_rgba(3,21,49,0.06)]",
                     overlayClassName,
                     {
                         "!h-[calc(100vh-72px)]": height && isMobile
                     }
                 )}
                 style={{
-                    boxShadow: "0px 8px 44px 0px rgba(3, 21, 49, 0.06)",
                     height
                 }}
             >

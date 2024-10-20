@@ -15,6 +15,8 @@ import toast from "@utils/toast"
 import { Else, If, Then, When } from "@components/If"
 import { supabaseSsrClient } from "@config/auth"
 import Loader from "@components/Loader"
+import Icons from "@components/Icons"
+import Illustration from "@components/Illustrations"
 
 import Category from "./Category"
 import Filter from "./Filter"
@@ -54,14 +56,10 @@ const SkeletonItemCard = () => (
     </div>
 )
 
-const SkeletonItemCategory = () => (
-    <div className='flex flex-col gap-2'>
-        <Skeleton width={247} height={48} />
-    </div>
-)
+const SkeletonItemCategory = () => <Skeleton width={247} height={48} />
 
 const SkeletonCard = () => [...Array(12)].map((_, index) => <SkeletonItemCard key={index} />)
-const SkeletonCategory = () => [...Array(10)].map((_, index) => <SkeletonItemCategory key={index} />)
+const SkeletonCategory = () => [...Array(14)].map((_, index) => <SkeletonItemCategory key={index} />)
 
 const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
     let page = 0
@@ -173,7 +171,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
         }
 
         router.replace(`${pathName}?${params.toString()}`, { scroll: false })
-    }, 1000)
+    }, 500)
 
     useEffect(() => {
         getAppData(pagination)
@@ -187,7 +185,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
         setSearchValue(searchParams.get("search") || "")
     }, [])
 
-    console.log(isLoadingData)
+    const isEmptyData = dataApp.length === 0
 
     return (
         <div className='flex justify-center'>
@@ -198,9 +196,11 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                 }}
             >
                 {/* Sidebar */}
-                {/* <If condition={isLoadingCategory}>
+                <If condition={isLoadingCategory}>
                     <Then>
-                        <SkeletonCategory />
+                        <div className='flex flex-col gap-2'>
+                            <SkeletonCategory />
+                        </div>
                     </Then>
                     <Else>
                         <Category
@@ -214,12 +214,11 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                             searchParams={search}
                         />
                     </Else>
-                </If> */}
-                <SkeletonCategory />
+                </If>
 
                 {/* End Sidebar */}
             </div>
-            <div className='flex flex-col xl:px-6 px-4 py-6 xl:gap-8 gap-6 w-full xl:max-w-full max-w-[375px] h-[calc(100vh-72px)] overflow-y-scroll'>
+            <div className='flex flex-col xl:px-6 px-4 py-6 xl:mb-0 mb-6 xl:gap-8 gap-6 w-full xl:max-w-full max-w-[375px] h-[calc(100vh-72px)] overflow-y-scroll'>
                 <div className='flex flex-col xl:gap-5 gap-4'>
                     <div className='flex flex-row justify-between items-center'>
                         <div className='flex gap-1 xl:heading-xs text-body-2xl font-medium text-base-900' id='title'>
@@ -239,7 +238,9 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                                 </Then>
                                 <Else>
                                     <When condition={totalData}>
-                                        <span className='total-data bg-primary-500 text-base-1'>{totalData}</span>
+                                        <span className='xl:hidden text-body-xs px-2 py-1 ml-1 rounded-md bg-base-800 text-base-100'>
+                                            {totalData}
+                                        </span>
                                     </When>
                                 </Else>
                             </If>
@@ -265,22 +266,48 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                     />
                 </div>
 
-                <div className='flex flex-row flex-wrap xl:gap-8'>
+                <div
+                    className={classNames("flex flex-row flex-wrap xl:gap-8 gap-4 pb-3 xl:h-auto h-full", {
+                        "!h-full": isEmptyData
+                    })}
+                >
                     <If condition={isLoadingData}>
                         <Then>
                             <SkeletonCard />
                         </Then>
                         <Else>
-                            {dataApp.map((item, index) => (
-                                <ListItemCard
-                                    key={index}
-                                    name={item.app_name}
-                                    category={item.sub_category}
-                                    mockup={item.app_mockup}
-                                    logo={item.app_logo}
-                                    status={item.app_new}
-                                />
-                            ))}
+                            <If condition={isEmptyData}>
+                                <Then>
+                                    <div className='flex flex-col items-center justify-center gap-6 w-full'>
+                                        <Illustration name='Empty' width={220} height={196} />
+                                        <div className='flex flex-col w-full text-center'>
+                                            <p className='text-base-900 text-heading-xs'>No app found</p>
+                                            <div className='flex items-center justify-center gap-1 text-base-800 text-body-lg text-center'>
+                                                Tell us what you looking for!{" "}
+                                                <a
+                                                    href='https://forms.gle/3xG8ZkbApRvJjDoy6'
+                                                    target='_blank'
+                                                    className='text-primary-500 place-items-center gap-1'
+                                                >
+                                                    Request <Icons icon='ArrowNavbar' width={9} height={9} />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Then>
+                                <Else>
+                                    {dataApp.map((item, index) => (
+                                        <ListItemCard
+                                            key={index}
+                                            name={item.app_name}
+                                            category={item.sub_category}
+                                            mockup={item.app_mockup}
+                                            logo={item.app_logo}
+                                            status={item.app_new}
+                                        />
+                                    ))}
+                                </Else>
+                            </If>
                         </Else>
                     </If>
                 </div>

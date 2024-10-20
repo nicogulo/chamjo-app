@@ -84,9 +84,12 @@ const Filter = ({ itemFilter, loading, onChange, total, categoryParams, searchPa
 
     return (
         <>
-            <span className='filter' onClick={() => setIsFilter(!isFilter)}>
+            <span
+                className='xl:hidden flex items-center justify-center gap-2.5 bg-base-50 p-2 rounded-[10px]'
+                onClick={() => setIsFilter(!isFilter)}
+            >
+                <Icons icon='Filter' width={20} height={20} />
                 <span className='text-base-800 text-body-md'>Filter</span>
-                <Icons icon='Filter' />
             </span>
             <div
                 className={classNames("modal-dialog", {

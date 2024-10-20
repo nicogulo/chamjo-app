@@ -10,9 +10,15 @@ interface Props {
 }
 
 const ListItemCard: React.FC<Props> = ({ name, category, mockup, logo, status }) => {
+    const isNew = status && "New"
     return (
         <div className='relative flex flex-row gap-4 p-6 bg-base-200 rounded-2xl min-w-[344px] min-h-[168px]'>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 relative'>
+                {status && (
+                    <div className='flex bg-secondary-500 border-2 border-secondary-100 rounded-md absolute right-[34px] -top-3.5'>
+                        <span className='text-body-xs text-base-100 font-normal uppercase py-1 px-2'>{isNew}</span>
+                    </div>
+                )}
                 <Image
                     src={logo as string}
                     alt={name as string}

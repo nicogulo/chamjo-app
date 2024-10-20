@@ -23,7 +23,7 @@ const Navbar = () => {
     const avatar = profile?.user_metadata.avatar_url
 
     return (
-        <div className='flex flex-row justify-between xl:px-8 px-4 py-[18px] xl:max-w-full max-w-[375px] mx-auto h-auto border-b border-base-400'>
+        <div className='relative flex flex-row justify-between xl:px-8 px-4 py-[18px] xl:max-w-full max-w-[375px] mx-auto h-auto border-b border-base-400'>
             <div className='flex flex-row items-center gap-3'>
                 <Link href='/' className='cursor-pointer'>
                     <Icons icon='LogoChamjo' width={79} height={24} />
@@ -67,7 +67,7 @@ const Navbar = () => {
                             <CollapseMenu
                                 open={isOpenProfile}
                                 onChange={setOpenProfile}
-                                overlayClassName='xl:!w-fit xl:right-8 xl:!left-[initial] xl:!mt-[58px] !mt-[72px] '
+                                overlayClassName='xl:!w-fit max-xl:max-w-[375px] xl:right-8 xl:!left-[initial] xl:!mt-[58px] !mt-[71px] rounded-none'
                                 overlay={
                                     <div id='profile' className='flex xl:justify-end flex-col w-full'>
                                         <Profile

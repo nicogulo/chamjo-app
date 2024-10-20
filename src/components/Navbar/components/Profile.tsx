@@ -53,7 +53,7 @@ const Profile: React.FC<Props> = ({ name, email, avatar, isLoading, handleProfil
                 transition={{ duration: 0.3 }}
             >
                 <div className='flex flex-col gap-3 p-[18px]'>
-                    <div className='relative flex flex-col items-center justify-center gap-2 border-b border-b-base-400 -mx-[18px] px-[18px]'>
+                    <div className='relative flex flex-col items-center justify-center gap-2 border-b border-b-base-400 border-opacity-60 -mx-[18px] px-[18px]'>
                         <If condition={isLoading}>
                             <Then>
                                 <Skeleton circle width={24} height={24} />
@@ -88,24 +88,26 @@ const Profile: React.FC<Props> = ({ name, email, avatar, isLoading, handleProfil
                         </div>
                     </div>
 
-                    <div className='flex flex-col border-b border-b-base-400 -mx-[18px] px-[18px] pb-2 xl:hidden'>
+                    <div className='flex flex-col xl:items-start items-center border-b border-b-base-400 border-opacity-60 -mx-[18px] px-[18px] pb-2 xl:hidden'>
                         <Link href='https://forms.gle/3xG8ZkbApRvJjDoy6' target='_blank'>
-                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>App Request</span>
+                            <span className='text-body-md xl:text-base-900 text-base-800 hover:text-primary-500 py-3'>
+                                App Request
+                            </span>
                         </Link>
                         <Link href='/https://forms.gle/ny9eatUyZqXKejqn7' target='_blank'>
-                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
+                            <span className='text-body-md xl:text-base-900 text-base-800 hover:text-primary-500 py-3'>
                                 Region Request
                             </span>
                         </Link>
                     </div>
-                    <div className='flex flex-col border-b border-b-base-400 -mx-[18px] px-[18px] pb-2'>
+                    <div className='flex flex-col xl:items-start items-center border-b border-b-base-400 border-opacity-60 -mx-[18px] px-[18px] pb-2'>
                         <Link href='/terms-and-conditions' target='_blank'>
-                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
+                            <span className='text-body-md xl:text-base-900 text-base-800 hover:text-primary-500 py-3'>
                                 Terms & conditions
                             </span>
                         </Link>
                         <Link href='/privacy-policies' target='_blank'>
-                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
+                            <span className='text-body-md xl:text-base-900 text-base-800 hover:text-primary-500 py-3'>
                                 Privacy Policy
                             </span>
                         </Link>
@@ -113,16 +115,18 @@ const Profile: React.FC<Props> = ({ name, email, avatar, isLoading, handleProfil
                             href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
                             target='_blank'
                         >
-                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>Contact Us</span>
+                            <span className='text-body-md xl:text-base-900 text-base-800 hover:text-primary-500 py-3'>
+                                Contact Us
+                            </span>
                         </Link>
                     </div>
                     <div
-                        className='cursor-pointer text-base-900 hover:text-primary-500 border-b border-b-base-400 -mx-[18px] px-[18px] pb-5'
+                        className='flex flex-col xl:items-start items-center cursor-pointer xl:text-base-900 text-base-800 hover:text-primary-500 border-b border-b-base-400 border-opacity-60 -mx-[18px] px-[18px] pb-5'
                         onClick={logout}
                     >
                         <span className='text-body-md '>{loading ? "loading..." : "Logout"}</span>
                     </div>
-                    <div className='flex flex-row gap-4 justify-end'>
+                    <div className='flex flex-row gap-4 xl:justify-end justify-center'>
                         <Link href='https://x.com/chamjodesign' target='_blank'>
                             <Icons
                                 icon='Twitters'
