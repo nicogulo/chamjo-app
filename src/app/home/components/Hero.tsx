@@ -4,37 +4,17 @@ import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 
-import { supabaseAuth } from "@config/auth"
-import { getURL } from "@helpers/get-url"
-import toast from "@utils/toast"
+import { login } from "app/action"
 
+import useAuth from "@hooks/useAuth"
+
+import ModalLogin from "@components/Navbar/components/ModalLogin"
 import Button from "@components/Button"
 import Icons from "@components/Icons"
-import { removeClickedCard } from "@components/Navbar/utils/clikced-card"
-import ModalLogin from "@components/Navbar/components/ModalLogin"
-import useAuth from "@hooks/useAuth"
 
 const Hero = () => {
     const [open, setOpen] = useState(false)
     const { isLoggedIn } = useAuth()
-
-    const signInWithGoogle = async () => {
-        const { error, data } = await supabaseAuth.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-                redirectTo: getURL()
-            }
-        })
-
-        if (data) {
-            removeClickedCard()
-            toast.loading(`Redirect to ${data.provider}`)
-        }
-
-        if (error) {
-            toast.error(error.message)
-        }
-    }
 
     const handleOpenModal = () => {
         setOpen(true)
@@ -74,7 +54,7 @@ const Hero = () => {
             >
                 {isLoggedIn ? "Go to dashboard" : "Sign up for free"}
             </Button>
-            {open && <ModalLogin openModal={open} setOpenModal={setOpen} signInWithGoogle={signInWithGoogle} />}
+            {open && <ModalLogin openModal={open} setOpenModal={setOpen} signInWithGoogle={login} />}
         </section>
     )
 }
