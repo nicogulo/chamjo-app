@@ -12,8 +12,7 @@ export async function login() {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-            // redirectTo: getURL()
-            redirectTo: "https://chamjo-app-dev.vercel.app/auth/callback"
+            redirectTo: getURL()
         }
     })
     console.log("asasasa", getURL())
