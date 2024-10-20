@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-import { supabaseAuth } from "@config/auth"
+import { supabaseSsrClient } from "@config/auth"
 import { getURL } from "@helpers/get-url"
 import toast from "@utils/toast"
 
@@ -19,7 +19,7 @@ const CTA = () => {
     const [open, setOpen] = useState(false)
 
     const signInWithGoogle = async () => {
-        const { error, data } = await supabaseAuth.auth.signInWithOAuth({
+        const { error, data } = await supabaseSsrClient.auth.signInWithOAuth({
             provider: "google",
             options: {
                 redirectTo: getURL()
