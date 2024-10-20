@@ -1,81 +1,168 @@
+import React, { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+
+import { AnimatePresence, motion } from "framer-motion"
+import Skeleton from "react-loading-skeleton"
+
+import { supabaseSsrClient } from "@config/auth"
+import toast from "@utils/toast"
+
 import Icons from "@components/Icons"
 import { Else, If, Then, When } from "@components/If"
-import classNames from "@utils/classnames"
-import { AnimatePresence, motion } from "framer-motion"
-import Image from "next/image"
-import React from "react"
-import Skeleton from "react-loading-skeleton"
-import { useMediaQuery } from "react-responsive"
 
 interface Props {
     name?: string
     email?: string
     avatar?: string
-    isOpen?: boolean
     isLoading?: boolean
-    logout?: () => void
     handleProfile?: () => void
 }
 
-const Profile: React.FC<Props> = ({ name, email, avatar, isOpen, isLoading, logout, handleProfile }) => {
-    const isMobile = useMediaQuery({ maxWidth: 1066 })
+const Profile: React.FC<Props> = ({ name, email, avatar, isLoading, handleProfile }) => {
+    const router = useRouter()
+    const [loading, setLoading] = useState(false)
+
+    const logout = async () => {
+        try {
+            setLoading(true)
+            const { error } = await supabaseSsrClient.auth.signOut()
+            if (error) {
+                throw new Error(error.message)
+            } else {
+                toast.success("Logout success")
+                router.push("/")
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            }
+            setLoading(false)
+        } catch (err: any) {
+            toast.error(err.message)
+            setLoading(false)
+        }
+    }
     return (
-        <When condition={isOpen}>
-            <AnimatePresence>
-                <motion.div
-                    initial={{ y: -50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -50, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    id='profile'
-                    className='xl:w-[223px] xl:h-[207px] w-[343px] h-[207px] overflow-hidden rounded flex-col absolute justify-center xl:right-1.5 right-[-48px] mt-1 top-full gap-[14px] bg-base-100 shadow-[0px_8px_44px_rgba(3,21,49,0.06)]'
-                >
-                    <div className='w-full relative bg-[#FABBAA] rounded-t py-3 px-[18px]'>
+        <AnimatePresence>
+            <motion.div
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -50, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+            >
+                <div className='flex flex-col gap-3 p-[18px]'>
+                    <div className='relative flex flex-col items-center justify-center gap-2 border-b border-b-base-400 -mx-[18px] px-[18px]'>
                         <If condition={isLoading}>
                             <Then>
-                                <Skeleton circle width={isMobile ? 24 : 40} height={isMobile ? 24 : 40} />
+                                <Skeleton circle width={24} height={24} />
                             </Then>
                             <Else>
-                                <div
-                                    className='w-10 h-10 rounded-full'
-                                    style={{
-                                        border: "4px solid rgba(0, 0, 0, 0.05)"
-                                    }}
-                                >
+                                <div className='bg-base-400 rounded-full'>
                                     <Image
                                         src={avatar as string}
                                         alt={name as string}
-                                        width={isMobile ? 24 : 40}
-                                        height={isMobile ? 24 : 40}
-                                        className='rounded-full'
+                                        width={24}
+                                        height={24}
+                                        className='rounded-full m-1.5'
                                     />
                                 </div>
                             </Else>
                         </If>
-                        <Icons icon='Art1' width={33} height={38} wrapperClassname='absolute top-[22px] left-[78px]' />
-                        <Icons icon='Art2' width={33} height={38} wrapperClassname='absolute top-[0px] left-[147px]' />
-                        <Icons icon='Art3' width={33} height={38} wrapperClassname='absolute top-[38px] right-[14px]' />
-                    </div>
-                    <div className='flex flex-col p-[18px]'>
-                        <div className='flex flex-col gap-0.5 pb-3.5 border-b border-b-base-3'>
-                            <span className='text-[16px] font-medium text-base-900 leading-6 w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
+                        <Icons
+                            icon='X'
+                            width={24}
+                            height={24}
+                            wrapperClassname='cursor-pointer absolute top-0 right-[18px] text-base-600'
+                            onClick={handleProfile}
+                        />
+
+                        <div className='flex flex-col gap-0.5 pb-5'>
+                            <span className='text-body-lg font-medium text-base-900 text-center whitespace-nowrap overflow-hidden text-ellipsis'>
                                 {name}
                             </span>
-                            <span className='text-[14px] font-normal text-base-800 leading-[22px]  w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
+                            <span className='text-body-md font-normal text-base-700 text-center w-[187px] whitespace-nowrap overflow-hidden text-ellipsis'>
                                 {email}
                             </span>
                         </div>
-
-                        <div
-                            className='action flex flex-row items-center gap-3.5 pt-3.5 cursor-pointer'
-                            onClick={logout}
-                        >
-                            <Icons icon='Logout' width={20} height={20} /> <p>{isLoading ? "loading..." : "Logout"}</p>
-                        </div>
                     </div>
-                </motion.div>
-            </AnimatePresence>
-        </When>
+
+                    <div className='flex flex-col border-b border-b-base-400 -mx-[18px] px-[18px] pb-2 xl:hidden'>
+                        <Link
+                            href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
+                            target='_blank'
+                        >
+                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>App Request</span>
+                        </Link>
+                        <Link
+                            href='https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9'
+                            target='_blank'
+                        >
+                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
+                                Region Request
+                            </span>
+                        </Link>
+                    </div>
+                    <div className='flex flex-col border-b border-b-base-400 -mx-[18px] px-[18px] pb-2'>
+                        <Link
+                            href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
+                            target='_blank'
+                        >
+                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
+                                Terms & conditions
+                            </span>
+                        </Link>
+                        <Link
+                            href='https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9'
+                            target='_blank'
+                        >
+                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
+                                Privacy Policy
+                            </span>
+                        </Link>
+                        <Link
+                            href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
+                            target='_blank'
+                        >
+                            <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>Contact Us</span>
+                        </Link>
+                    </div>
+                    <div
+                        className='cursor-pointer text-base-900 hover:text-primary-500 border-b border-b-base-400 -mx-[18px] px-[18px] pb-5'
+                        onClick={logout}
+                    >
+                        <span className='text-body-md '>{loading ? "loading..." : "Logout"}</span>
+                    </div>
+                    <div className='flex flex-row gap-4 justify-end'>
+                        <Link href='https://x.com/chamjodesign' target='_blank'>
+                            <Icons
+                                icon='Twitters'
+                                width={24}
+                                height={24}
+                                className='cursor-pointer text-base-600 hover:text-primary-400'
+                            />
+                        </Link>
+                        <Link href='https://linkedin.com/company/chamjodesign/' target='_blank'>
+                            <Icons
+                                icon='Linkedins'
+                                width={24}
+                                height={24}
+                                className='cursor-pointer text-base-600 hover:text-primary-400'
+                            />
+                        </Link>
+                        <Link href='https://instagram.com/chamjodesign' target='_blank'>
+                            <Icons
+                                icon='Instagrams'
+                                width={24}
+                                height={24}
+                                className='cursor-pointer text-base-600 hover:text-primary-400'
+                            />
+                        </Link>
+                    </div>
+                </div>
+            </motion.div>
+        </AnimatePresence>
     )
 }
 
