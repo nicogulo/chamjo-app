@@ -197,7 +197,7 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 input {
     background-image: url("https://data-polahub.herokuapp.com/images/icons/search.svg");
     background-color: rgba(235, 236, 239, 0.7);
-    background-position: 22px center;
+    background-position: 20px center;
     background-repeat: no-repeat;
     border: 1px solid #ccc;
 

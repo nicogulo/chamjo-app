@@ -1,8 +1,6 @@
 import React from "react"
-import { Inter } from "next/font/google"
-import "./module.css"
 
-const inter = Inter({ subsets: ["latin"] })
+import "./module.css"
 
 interface Props {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -23,7 +21,7 @@ export default function SearchBar({ onChange, value }: Props) {
                     type='search'
                     name='search'
                     rel='search'
-                    className={`mobile-search input-search  text-base-7 focus:text-base-8 focus:bg-base-100 focus:outline-none focus:ring-primary-5 focus:ring-2 focus:border-transparent flex-1 placeholder-base-6`}
+                    className={`mobile-search input-search  text-base-900 focus:text-base-900 focus:bg-base-100 focus:outline-none focus:ring-base-800 focus:ring-2 focus:border-transparent flex-1 placeholder-base-600`}
                     placeholder='Search with name app'
                     value={value}
                     onChange={onChange}
