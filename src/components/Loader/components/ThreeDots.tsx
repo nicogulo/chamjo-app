@@ -103,8 +103,4 @@ const ThreeDots = ({ width, height, color, label, radius = defaultRadius }: Thre
     </svg>
 )
 
-ThreeDots.defaultProps = {
-    radius: defaultRadius
-}
-
 export default ThreeDots

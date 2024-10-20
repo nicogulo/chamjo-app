@@ -23,7 +23,7 @@ interface OvalProps {
     radius?: number
 }
 
-const Oval = ({ width, height, color, label, radius }: OvalProps) => (
+const Oval = ({ width, height, color, label, radius = 18 }: OvalProps) => (
     <svg
         width={width}
         height={height}
@@ -49,9 +49,5 @@ const Oval = ({ width, height, color, label, radius }: OvalProps) => (
         </g>
     </svg>
 )
-
-Oval.defaultProps = {
-    radius: 18
-}
 
 export default Oval
