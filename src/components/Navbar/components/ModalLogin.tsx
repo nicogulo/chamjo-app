@@ -1,12 +1,14 @@
 "use client"
 import React, { useState } from "react"
-import { If, Then, Else } from "components/If/index"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { useMediaQuery } from "react-responsive"
 
+import toast from "@utils/toast"
+
+import { If, Then, Else } from "components/If/index"
 import Icons from "components/Icons"
 import Button from "@components/Button"
-import { useMediaQuery } from "react-responsive"
 import BottomSheet from "@components/BottomSheet"
 
 interface ModalLoginProps {
@@ -16,7 +18,21 @@ interface ModalLoginProps {
 }
 
 const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginProps) => {
+    const [loading, setLoading] = useState(false)
     const isMobile = useMediaQuery({ maxWidth: "1066px" })
+
+    const handleLogin = async () => {
+        try {
+            setLoading(true)
+            toast.loading("Please wait...")
+            await signInWithGoogle()
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            toast.error("Failed to login")
+        }
+    }
+
     return (
         <If condition={isMobile}>
             <Then>
@@ -66,9 +82,11 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                 <Button
                                     className='!border-none  text-base-100 gap-2 xl:text-body-md text-body-sm justify-center hover:text-base-3'
                                     block
-                                    onClick={signInWithGoogle}
+                                    onClick={handleLogin}
                                     height={46}
                                     variant='primary'
+                                    loading={loading}
+                                    disabled={loading}
                                 >
                                     <Icons icon='GoogleIcon' />
                                     Continue with Google
@@ -171,9 +189,11 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                                 <Button
                                                     className='!border-none text-base-100 gap-2 xl:text-body-md text-body-sm justify-center hover:text-base-3'
                                                     block
-                                                    onClick={signInWithGoogle}
+                                                    onClick={handleLogin}
                                                     height={46}
                                                     variant='primary'
+                                                    loading={loading}
+                                                    disabled={loading}
                                                 >
                                                     <Icons icon='GoogleIcon' />
                                                     Continue with Google
