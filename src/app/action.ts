@@ -15,7 +15,6 @@ export async function login() {
             redirectTo: getURL()
         }
     })
-    console.log("asasasa", getURL())
 
     if (data.url) {
         removeClickedCard()
