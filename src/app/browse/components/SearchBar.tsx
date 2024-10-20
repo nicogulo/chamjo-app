@@ -13,7 +13,7 @@ export default function SearchBar({ onChange, value }: Props) {
     }
 
     return (
-        <div className='relative mb-5 max-[1066px]:mb-6 max-[1066px]:w-full max-[1066px]:px-4'>
+        <div className='relative'>
             <form action='' onSubmit={onSubmit}>
                 <input
                     autoComplete='off'

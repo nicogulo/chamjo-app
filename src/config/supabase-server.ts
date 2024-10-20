@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 export function createClient() {
     const cookieStore = cookies()
     const maxAge = 60 * 60 * 24 * 3
+    console.log(process.env.NEXT_PUBLIC_API_URL!, process.env.NEXT_PUBLIC_SUPABASE_KEY!, "server")
 
     return createServerClient(process.env.NEXT_PUBLIC_API_URL!, process.env.NEXT_PUBLIC_SUPABASE_KEY!, {
         cookieOptions: {
