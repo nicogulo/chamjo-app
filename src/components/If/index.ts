@@ -7,4 +7,4 @@ import Switch from "./Switch"
 import Then from "./Then"
 import When from "./When"
 
-export { If, Then, Else, When, Switch, Case, Default }
+export { Case, Default, Else, If, Switch, Then, When }

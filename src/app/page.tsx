@@ -1,17 +1,16 @@
-import Hero from "./home/components/Hero"
-
-import Content from "./home/components/Content"
-import Trusted from "./home/components/Trusted"
-import Benefit from "./home/components/Benefit"
-import Benchmark from "./home/components/Benchmark"
-
-import Faq from "./home/components/Faq"
-import CTA from "./home/components/CTA"
-import Navbar from "@components/Navbar"
-import Footer from "@components/Footer"
 import BackToTop from "@components/BackToTop"
+import Footer from "@components/Footer"
+import Navbar from "@components/Navbar"
 import { createClient } from "@config/supabase-server"
 import { redirect } from "next/navigation"
+
+import Benchmark from "./home/components/Benchmark"
+import Benefit from "./home/components/Benefit"
+import Content from "./home/components/Content"
+import CTA from "./home/components/CTA"
+import Faq from "./home/components/Faq"
+import Hero from "./home/components/Hero"
+import Trusted from "./home/components/Trusted"
 
 interface HomeProps {
     searchParams?: { [key: string]: string }

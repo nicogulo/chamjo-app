@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable simple-import-sort/imports */
 
-import { API_URL, PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL } from "./config"
+import { API_URL, PUBLIC_SUPABASE_KEY } from "./config"
 import axios, { AxiosAdapter, AxiosRequestConfig, AxiosRequestHeaders } from "axios"
 import { throttleAdapterEnhancer } from "axios-extensions"
 

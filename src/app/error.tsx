@@ -1,8 +1,9 @@
 "use client"
 
-import React from "react"
-import Providers from "./providers"
 import Container from "@components/Container"
+import React from "react"
+
+import Providers from "./providers"
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
     return (

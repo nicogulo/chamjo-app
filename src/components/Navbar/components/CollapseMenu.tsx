@@ -1,19 +1,18 @@
-"use client"
+'use client';
 
-import React, { memo, useEffect, useRef, useState } from "react"
-import { usePathname } from "next/navigation"
-import OutsideClickHandler from "react-outside-click-handler"
-import { Transition } from "react-transition-group"
-import { useMediaQuery } from "react-responsive"
-
-import classNames from "@utils/classnames"
+import classNames from '@utils/classnames';
+import { usePathname } from 'next/navigation';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
+import { useMediaQuery } from 'react-responsive';
+import { Transition } from 'react-transition-group';
 
 interface CollapseMenuProps extends React.PropsWithChildren {
-    open?: boolean
-    onChange?: (open: boolean) => void
-    overlay: React.ReactNode
-    overlayClassName?: string
-    dataTestId?: string
+    open?: boolean;
+    onChange?: (open: boolean) => void;
+    overlay: React.ReactNode;
+    overlayClassName?: string;
+    dataTestId?: string;
 }
 
 const CollapseMenu: React.FC<CollapseMenuProps> = ({
@@ -22,54 +21,54 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({
     children,
     overlay,
     overlayClassName,
-    dataTestId = "chamjo-collapse-menu"
+    dataTestId = 'chamjo-collapse-menu'
 }) => {
-    const pathname = usePathname()
-    const [open, setOpen] = useState(openProp)
-    const [height, setHeight] = useState<number | undefined>(open ? undefined : 0)
-    const ref = useRef<HTMLDivElement>(null)
-    const isMobile = useMediaQuery({ maxWidth: "1066px" })
+    const pathname = usePathname();
+    const [open, setOpen] = useState(openProp);
+    const [height, setHeight] = useState<number | undefined>(open ? undefined : 0);
+    const ref = useRef<HTMLDivElement>(null);
+    const isMobile = useMediaQuery({ maxWidth: '1066px' });
 
     useEffect(() => {
-        setOpen(openProp)
-    }, [openProp])
+        setOpen(openProp);
+    }, [openProp]);
 
     const handleClose = () => {
-        setOpen(false)
-        onChange?.(false)
-    }
+        setOpen(false);
+        onChange?.(false);
+    };
 
     const handleToggle = () => {
-        setOpen(!open)
-        onChange?.(!open)
-    }
+        setOpen(!open);
+        onChange?.(!open);
+    };
 
     useEffect(() => {
-        handleClose()
+        handleClose();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pathname])
+    }, [pathname]);
 
     useEffect(() => {
-        if (!height || !open || !ref.current) return undefined
+        if (!height || !open || !ref.current) return undefined;
 
         const resizeObserver = new ResizeObserver((entries) => {
             if (entries && entries[0] && entries[0].contentRect) {
-                setHeight(entries[0].contentRect.height)
+                setHeight(entries[0].contentRect.height);
             }
-        })
-        resizeObserver.observe(ref.current)
+        });
+        resizeObserver.observe(ref.current);
         return () => {
-            resizeObserver.disconnect()
-        }
-    }, [height, open])
+            resizeObserver.disconnect();
+        };
+    }, [height, open]);
 
     useEffect(() => {
         if (open) {
-            setHeight(ref.current?.getBoundingClientRect().height)
+            setHeight(ref.current?.getBoundingClientRect().height);
         } else {
-            setHeight(0)
+            setHeight(0);
         }
-    }, [open])
+    }, [open]);
 
     return (
         <OutsideClickHandler onOutsideClick={() => handleClose()}>
@@ -79,10 +78,10 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({
 
             <div
                 className={classNames(
-                    "w-full absolute left-0 top-0  mt-[80px] transition-[height] duration-300 overflow-hidden z-[30] bg-base-100 xl:rounded-xl xl:shadow-[0px_8px_44px_0px_rgba(3,21,49,0.06)]",
+                    'w-full absolute left-0 top-0  mt-[80px] transition-[height] duration-300 overflow-hidden z-[30] bg-base-100 xl:rounded-xl xl:shadow-[0px_8px_44px_0px_rgba(3,21,49,0.06)]',
                     overlayClassName,
                     {
-                        "!h-[calc(100vh-72px)]": height && isMobile
+                        '!h-[calc(100vh-72px)]': height && isMobile
                     }
                 )}
                 style={{
@@ -96,7 +95,7 @@ const CollapseMenu: React.FC<CollapseMenuProps> = ({
                 </div>
             </div>
         </OutsideClickHandler>
-    )
-}
+    );
+};
 
-export default memo(CollapseMenu)
+export default memo(CollapseMenu);

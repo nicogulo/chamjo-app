@@ -1,16 +1,13 @@
-import React, { useState } from "react"
+import Icons from "@components/Icons"
+import { Else, If, Then } from "@components/If"
+import { supabaseSsrClient } from "@config/auth"
+import toast from "@utils/toast"
+import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-
-import { AnimatePresence, motion } from "framer-motion"
+import React, { useState } from "react"
 import Skeleton from "react-loading-skeleton"
-
-import { supabaseSsrClient } from "@config/auth"
-import toast from "@utils/toast"
-
-import Icons from "@components/Icons"
-import { Else, If, Then, When } from "@components/If"
 
 interface Props {
     name?: string

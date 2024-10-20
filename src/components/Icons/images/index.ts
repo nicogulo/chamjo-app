@@ -1,5 +1,5 @@
-import React from "react"
 import dynamic from "next/dynamic"
+import React from "react"
 
 const lazy = (fn: () => Promise<{ default: React.FC<React.SVGProps<SVGSVGElement>> }>) => {
     if (typeof window === "undefined") {

@@ -1,15 +1,13 @@
 "use client"
-import React, { useState } from "react"
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { useMediaQuery } from "react-responsive"
-
-import toast from "@utils/toast"
-
-import { If, Then, Else } from "components/If/index"
-import Icons from "components/Icons"
-import Button from "@components/Button"
 import BottomSheet from "@components/BottomSheet"
+import Button from "@components/Button"
+import toast from "@utils/toast"
+import Icons from "components/Icons"
+import { Else, If, Then } from "components/If/index"
+import { AnimatePresence, motion } from "framer-motion"
+import Link from "next/link"
+import React, { useState } from "react"
+import { useMediaQuery } from "react-responsive"
 
 interface ModalLoginProps {
     signInWithGoogle: () => void

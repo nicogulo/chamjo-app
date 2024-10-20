@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation"
 import { createClient } from "@config/supabase-server"
+import { redirect } from "next/navigation"
 
 import MainPage from "./components/MainPage"
 

@@ -1,7 +1,6 @@
+import { COOKIE_DOMAIN, COOKIE_PREFIX } from "@config/config"
 import * as cookie from "cookies-next"
 import { OptionsType } from "cookies-next/lib/types"
-
-import { COOKIE_DOMAIN, COOKIE_PREFIX } from "@config/config"
 
 let defaultOptions: OptionsType = {
     path: "/",

@@ -1,6 +1,5 @@
 import dayjs, { Dayjs } from "dayjs"
 import localeData from "dayjs/plugin/localeData"
-
 import "dayjs/locale/id"
 export type LanguagesCode = "id" | "en"
 

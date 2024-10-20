@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 interface CaseProps extends React.PropsWithChildren<{}> {
     // eslint-disable-next-line react/no-unused-prop-types
     condition: IfCondition

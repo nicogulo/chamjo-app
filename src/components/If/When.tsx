@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 interface WhenProps extends React.PropsWithChildren<{}> {
     condition: IfCondition
 }

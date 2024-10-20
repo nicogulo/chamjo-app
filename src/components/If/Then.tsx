@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-types */
+
 interface ThenProps extends React.PropsWithChildren<{}> {}
 
 // eslint-disable-next-line react/jsx-no-useless-fragment

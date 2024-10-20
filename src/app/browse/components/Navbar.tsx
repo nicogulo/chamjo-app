@@ -1,17 +1,15 @@
 "use client"
 
-import React, { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import Skeleton from "react-loading-skeleton"
-
-import useAuth, { useProfile } from "@hooks/useAuth"
-import classNames from "@utils/classnames"
-
 import Icons from "@components/Icons"
 import { Else, If, Then, When } from "@components/If"
 import CollapseMenu from "@components/Navbar/components/CollapseMenu"
 import Profile from "@components/Navbar/components/Profile"
+import useAuth, { useProfile } from "@hooks/useAuth"
+import classNames from "@utils/classnames"
+import Image from "next/image"
+import Link from "next/link"
+import React, { useState } from "react"
+import Skeleton from "react-loading-skeleton"
 
 const Navbar = () => {
     const [isOpenProfile, setOpenProfile] = useState(false)

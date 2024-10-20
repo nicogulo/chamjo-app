@@ -1,7 +1,6 @@
 import { supabaseSsrClient } from "@config/auth"
 import { User } from "@supabase/supabase-js"
 import toast from "@utils/toast"
-
 import { useEffect, useState } from "react"
 
 const useAuth = () => {

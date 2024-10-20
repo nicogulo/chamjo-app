@@ -1,16 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-
-import { login } from "app/action"
-
-import useAuth from "@hooks/useAuth"
-
-import ModalLogin from "@components/Navbar/components/ModalLogin"
 import Button from "@components/Button"
 import Icons from "@components/Icons"
+import ModalLogin from "@components/Navbar/components/ModalLogin"
+import useAuth from "@hooks/useAuth"
+import { login } from "app/action"
+import Image from "next/image"
+import Link from "next/link"
+import React, { useState } from "react"
 
 const Hero = () => {
     const [open, setOpen] = useState(false)

@@ -1,11 +1,10 @@
 "use client"
 
-import React, { useState } from "react"
-
 import Container from "@components/Container"
-import classNames from "@utils/classnames"
-import { useCollapse } from "react-collapsed"
 import Icons from "@components/Icons"
+import classNames from "@utils/classnames"
+import React, { useState } from "react"
+import { useCollapse } from "react-collapsed"
 
 interface CollapseProps {
     title: string

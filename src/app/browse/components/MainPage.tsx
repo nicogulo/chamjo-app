@@ -1,27 +1,25 @@
 "use client"
 
+import Icons from "@components/Icons"
+import { Else, If, Then, When } from "@components/If"
+import Illustration from "@components/Illustrations"
+import Loader from "@components/Loader"
+import { supabaseSsrClient } from "@config/auth"
+import { Database } from "@utils/supabase"
+import toast from "@utils/toast"
+import classNames from "classnames"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useDebouncedCallback } from "use-debounce"
 import { useMediaQuery } from "react-responsive"
-import classNames from "classnames"
+import { useDebouncedCallback } from "use-debounce"
 
 import "./module.css"
 
-import { Database } from "@utils/supabase"
-import toast from "@utils/toast"
-
-import { Else, If, Then, When } from "@components/If"
-import { supabaseSsrClient } from "@config/auth"
-import Loader from "@components/Loader"
-import Icons from "@components/Icons"
-import Illustration from "@components/Illustrations"
-
 import Category from "./Category"
 import Filter from "./Filter"
-import SearchBar from "./SearchBar"
 import ListItemCard from "./ListItemCard"
+import SearchBar from "./SearchBar"
 
 export interface CategoryModel {
     id: number | null
@@ -62,8 +60,8 @@ const SkeletonCard = () => [...Array(12)].map((_, index) => <SkeletonItemCard ke
 const SkeletonCategory = () => [...Array(14)].map((_, index) => <SkeletonItemCategory key={index} />)
 
 const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
-    let page = 0
-    let limit = 17
+    const page = 0
+    const limit = 17
 
     const [isLoadingCategory, setLoadingCategory] = useState(false)
     const [isLoadingData, setLoadingData] = useState(false)
@@ -94,7 +92,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                     ascending: true
                 })
 
-            let response: CategoryModel[] = data
+            const response: CategoryModel[] = data
                 ? data.map((item: any) => ({
                       id: item.id,
                       appCategoryName: item.app_category_name,
@@ -280,9 +278,11 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                                 <Then>
                                     <div className='flex flex-col items-center justify-center gap-6 w-full'>
                                         <Illustration name='Empty' width={220} height={196} />
-                                        <div className='flex flex-col w-full text-center'>
-                                            <p className='text-base-900 text-heading-xs'>No app found</p>
-                                            <div className='flex items-center justify-center gap-1 text-base-800 text-body-lg text-center'>
+                                        <div className='flex flex-col gap-3 w-full text-center'>
+                                            <p className='text-base-900 xl:text-heading-xs text-body-2xl'>
+                                                No app found
+                                            </p>
+                                            <div className='flex items-center justify-center gap-1 text-base-800 xl:text-body-lg text-body-md text-center'>
                                                 Tell us what you looking for!{" "}
                                                 <a
                                                     href='https://forms.gle/3xG8ZkbApRvJjDoy6'

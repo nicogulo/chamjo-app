@@ -1,6 +1,6 @@
-import React from "react"
 import classNames from "classnames"
 import Loader from "components/Loader"
+import React from "react"
 
 interface ButtonProps
     extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {

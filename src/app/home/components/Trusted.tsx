@@ -1,10 +1,9 @@
+import Container from "@components/Container"
 import React from "react"
 
-import Container from "@components/Container"
-
-import Google from "../svgx/Google"
 import FlipKart from "../svgx/FlipKart"
 import Gojek from "../svgx/Gojek"
+import Google from "../svgx/Google"
 import Grab from "../svgx/Grab"
 import Shopee from "../svgx/Shopee"
 import Traveloka from "../svgx/Traveloka"

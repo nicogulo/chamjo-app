@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from "react"
-import IconComponents from "./images"
 import classNames from "classnames"
+import React from "react"
+
+import IconComponents from "./images"
 
 export type IconType = keyof typeof IconComponents
 

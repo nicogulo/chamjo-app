@@ -1,13 +1,12 @@
 "use client"
 
-import React, { useCallback, useEffect, useState } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import classNames from "classnames"
-
 import Icons from "@components/Icons"
 import { Else, If, Then, When } from "@components/If"
 import Loader from "@components/Loader"
+import classNames from "classnames"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { CategoryModel } from "./MainPage"
 
@@ -76,6 +75,7 @@ const Filter = ({ itemFilter, loading, onChange, total, categoryParams, searchPa
             setClickedId(index)
             onChange?.(itemFilter?.[index].appCategoryName ?? "")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemFilter, setClickedId])
 
     if (!elModalRoot) {

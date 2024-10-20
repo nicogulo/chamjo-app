@@ -1,4 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable @typescript-eslint/ban-types */
+
 import React, { ReactElement } from "react"
 
 import Else from "./Else"

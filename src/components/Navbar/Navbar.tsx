@@ -1,26 +1,22 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-
+import Button from "@components/Button"
+import Icons from "@components/Icons"
+import { Else, If, Then, When } from "@components/If"
+import useAuth, { useProfile } from "@hooks/useAuth"
+import { login } from "app/action"
+import classNames from "classnames"
+import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import classNames from "classnames"
+import React, { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useMediaQuery } from "react-responsive"
 
-import { login } from "app/action"
-
-import useAuth, { useProfile } from "@hooks/useAuth"
-
-import Icons from "@components/Icons"
-import { Else, If, Then, When } from "@components/If"
-import Button from "@components/Button"
-
 import "./module.css"
 
-import ModalLogin from "./components/ModalLogin"
 import CollapseMenu from "./components/CollapseMenu"
+import ModalLogin from "./components/ModalLogin"
 import Profile from "./components/Profile"
 
 const Navbar = () => {
@@ -63,6 +59,7 @@ const Navbar = () => {
         return () => {
             window.removeEventListener("scroll", handleScroll)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scrollPos, dropdown])
 
     useEffect(() => {
@@ -326,7 +323,7 @@ const Navbar = () => {
 
                                 <div className='flex flex-col items-center gap-6 pt-6'>
                                     {itemNav.map((item, index) => (
-                                        <Link href={item.link}>
+                                        <Link href={item.link} key={index}>
                                             <span
                                                 className='font-normal text-body-md text-base-800 hover:text-primary-500 text-center cursor-pointer'
                                                 onClick={(e) => {

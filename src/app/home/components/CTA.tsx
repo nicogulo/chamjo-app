@@ -1,15 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
-
-import { supabaseSsrClient } from "@config/auth"
-import { getURL } from "@helpers/get-url"
-import toast from "@utils/toast"
-
 import Button from "@components/Button"
 import Container from "@components/Container"
 import ModalLogin from "@components/Navbar/components/ModalLogin"
 import { removeClickedCard } from "@components/Navbar/utils/clikced-card"
+import { supabaseSsrClient } from "@config/auth"
+import { getURL } from "@helpers/get-url"
+import toast from "@utils/toast"
+import React, { useState } from "react"
 
 import ElipseInside from "../svgx/elipse-inside.svg"
 import ElipseInsideMobile from "../svgx/elipse-inside-mobile.svg"

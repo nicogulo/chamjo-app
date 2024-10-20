@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import NextHead from "next/head"
 
 interface HeadProps extends React.PropsWithChildren<{}> {

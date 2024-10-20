@@ -1,7 +1,6 @@
-import React from "react"
-import Image from "next/image"
-
 import Container from "@components/Container"
+import Image from "next/image"
+import React from "react"
 
 import ListApp from "../images/list-app.webp"
 import ListAppMobile from "../images/list-app-mobile.webp"

@@ -1,7 +1,7 @@
 "use client"
 
 import Icons from "@components/Icons"
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 const BackToTop = () => {
     const [isVisible, setIsVisible] = useState(false)

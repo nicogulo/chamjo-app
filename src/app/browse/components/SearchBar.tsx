@@ -21,7 +21,7 @@ export default function SearchBar({ onChange, value }: Props) {
                     type='search'
                     name='search'
                     rel='search'
-                    className={`mobile-search input-search  text-base-900 focus:text-base-900 focus:bg-base-100 focus:outline-none focus:ring-base-800 focus:ring-2 focus:border-transparent flex-1 placeholder-base-600`}
+                    className='mobile-search input-search  text-base-900 focus:text-base-900 focus:bg-base-100 focus:outline-none focus:ring-base-800 focus:ring-2 focus:border-transparent flex-1 placeholder-base-600'
                     placeholder='Search with name app'
                     value={value}
                     onChange={onChange}

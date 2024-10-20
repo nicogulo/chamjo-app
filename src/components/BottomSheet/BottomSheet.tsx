@@ -1,7 +1,6 @@
-import { Drawer } from "vaul"
-
 import { When } from "@components/If"
 import classNames from "classnames"
+import { Drawer } from "vaul"
 
 type DrawerRootProps = React.ComponentProps<typeof Drawer.Root>
 interface BottomSheetProps {

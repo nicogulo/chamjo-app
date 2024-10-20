@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import classNames from "classnames"
-
 import { Else, If, Then, When } from "@components/If"
 import Loader from "@components/Loader"
+import classNames from "classnames"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
 
 import { CategoryModel } from "./MainPage"
 
@@ -36,13 +35,14 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
             setClickedId(index)
             onChange?.(category?.[index].appCategoryName ?? "")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, setClickedId])
 
     return (
         <>
             {category?.map((item, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <button
                             className={classNames(
                                 " text-body-md text-base-800 cursor-pointer w-full h-12 px-4 rounded-lg focus:outline-none flex items-center justify-between outline-none my-1 active:focus:outline-none hover:bg-base-300 bg-opacity-70 hover:outline-none ",

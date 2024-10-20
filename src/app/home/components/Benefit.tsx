@@ -1,10 +1,10 @@
+import Container from "@components/Container"
+import Image from "next/image"
 import React from "react"
 
-import Container from "@components/Container"
 import BenefitImage1 from "../images/benefit-1.webp"
 import BenefitImage2 from "../images/benefit-2.webp"
 import BenefitImage3 from "../images/benefit-3.webp"
-import Image from "next/image"
 
 const Benefit = () => {
     return (
