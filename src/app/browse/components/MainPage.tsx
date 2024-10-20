@@ -267,7 +267,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                 </div>
 
                 <div
-                    className={classNames("flex flex-row flex-wrap xl:gap-8 gap-4 pb-3 xl:h-auto h-full", {
+                    className={classNames("flex flex-row flex-wrap xl:gap-8 gap-4 pb-3 h-auto", {
                         "!h-full": isEmptyData
                     })}
                 >

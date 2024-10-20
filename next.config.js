@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+    eslint: {
+        dirs: ["src"]
+    },
     images: {
         dangerouslyAllowSVG: true,
         contentDispositionType: "attachment",
