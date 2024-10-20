@@ -89,34 +89,22 @@ const Profile: React.FC<Props> = ({ name, email, avatar, isLoading, handleProfil
                     </div>
 
                     <div className='flex flex-col border-b border-b-base-400 -mx-[18px] px-[18px] pb-2 xl:hidden'>
-                        <Link
-                            href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
-                            target='_blank'
-                        >
+                        <Link href='https://forms.gle/3xG8ZkbApRvJjDoy6' target='_blank'>
                             <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>App Request</span>
                         </Link>
-                        <Link
-                            href='https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9'
-                            target='_blank'
-                        >
+                        <Link href='/https://forms.gle/ny9eatUyZqXKejqn7' target='_blank'>
                             <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
                                 Region Request
                             </span>
                         </Link>
                     </div>
                     <div className='flex flex-col border-b border-b-base-400 -mx-[18px] px-[18px] pb-2'>
-                        <Link
-                            href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
-                            target='_blank'
-                        >
+                        <Link href='/terms-and-conditions' target='_blank'>
                             <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
                                 Terms & conditions
                             </span>
                         </Link>
-                        <Link
-                            href='https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9'
-                            target='_blank'
-                        >
+                        <Link href='/privacy-policies' target='_blank'>
                             <span className='text-body-md text-base-900 hover:text-primary-500 py-3'>
                                 Privacy Policy
                             </span>

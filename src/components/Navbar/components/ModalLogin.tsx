@@ -93,31 +93,16 @@ const ModalLogin = ({ signInWithGoogle, openModal, setOpenModal }: ModalLoginPro
                                 </Button>
                                 <p className='text-base-700 text-body-sm text-center'>
                                     By continuing, you agree to our{" "}
-                                    <span
-                                        className='text-base-900 font-medium cursor-pointer'
-                                        onClick={() => {
-                                            window.open(
-                                                "https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9",
-                                                "popup",
-                                                "width=600, height=600"
-                                            )
-                                        }}
-                                    >
+                                    <Link className='text-base-900 font-medium cursor-pointer' href='/privacy-policy'>
                                         Privacy Policy
-                                    </span>{" "}
+                                    </Link>{" "}
                                     and{" "}
-                                    <span
+                                    <Link
+                                        href='/terms-and-conditions'
                                         className='text-base-900 font-medium cursor-pointer'
-                                        onClick={() => {
-                                            window.open(
-                                                "https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197",
-                                                "popup",
-                                                "width=600, height=600"
-                                            )
-                                        }}
                                     >
                                         T&Cs
-                                    </span>
+                                    </Link>
                                 </p>
                             </div>
                         </div>

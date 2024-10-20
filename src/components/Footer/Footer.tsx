@@ -53,30 +53,18 @@ const Footer = () => {
                             >
                                 <span className='text-body-md text-base-800'>Contact Us</span>
                             </Link>
-                            <Link
-                                href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
-                                target='_blank'
-                            >
+                            <Link href='https://forms.gle/3xG8ZkbApRvJjDoy6' target='_blank'>
                                 <span className='text-body-md text-base-800'>App Request</span>
                             </Link>
-                            <Link
-                                href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
-                                target='_blank'
-                            >
+                            <Link href='/https://forms.gle/ny9eatUyZqXKejqn7' target='_blank'>
                                 <span className='text-body-md text-base-800'>Region request</span>
                             </Link>
                         </div>
                         <div className='flex xl:flex-col flex-row gap-3'>
-                            <Link
-                                href='https://tulip-heaven-489.notion.site/Chamjo-Terms-and-Conditions-3fd51a28fa4144ed939b6eaa72aeb197'
-                                target='_blank'
-                            >
+                            <Link href='/terms-and-conditions' target='_blank'>
                                 <span className='text-body-md text-base-800'>Terms & conditions</span>
                             </Link>
-                            <Link
-                                href='https://tulip-heaven-489.notion.site/Chamjo-Privacy-Policies-a019198a19d441fe9cc069dc223c9dc9'
-                                target='_blank'
-                            >
+                            <Link href='/privacy-policy' target='_blank'>
                                 <span className='text-body-md text-base-800'>Privacy Policy</span>
                             </Link>
                         </div>

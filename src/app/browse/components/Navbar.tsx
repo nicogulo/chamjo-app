@@ -44,13 +44,15 @@ const Navbar = () => {
             </div>
             <div className='flex flex-row items-center gap-7'>
                 <Link
-                    href='/browse'
+                    href='https://forms.gle/3xG8ZkbApRvJjDoy6'
+                    target='_blank'
                     className='text-base-800 xl:text-body-md text-body-sm hover:text-primary-500 hover:text-base-6 xl:block hidden'
                 >
                     Request App
                 </Link>
                 <Link
-                    href='/about'
+                    href='/https://forms.gle/ny9eatUyZqXKejqn7'
+                    target='_blank'
                     className='text-base-800 xl:text-body-md text-body-sm hover:text-primary-500 hover:text-base-6 xl:block hidden'
                 >
                     Region Request
