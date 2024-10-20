@@ -7,9 +7,9 @@ const ChevronRight: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
             <path
                 d='M6 12L10 8L6 4'
                 stroke='currentColor'
-                stroke-width='1.5'
-                stroke-linecap='round'
-                stroke-linejoin='round'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
             />
         </svg>
     )
