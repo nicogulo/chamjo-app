@@ -13,7 +13,6 @@ import { CategoryModel } from "./MainPage"
 interface CategoryProps {
     category: CategoryModel[] | null
     categoryParams?: string
-
     searchParams?: string
     total?: number
     onChange?: (category: string) => void
@@ -42,42 +41,28 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
     return (
         <>
             {category?.map((item, index) => {
-                const imageActive = item.imageActive || ""
-                const imageInactive = item.imageInactive || ""
                 return (
                     <div>
                         <button
                             className={classNames(
-                                " text-body-md text-base-800 cursor-pointer w-full h-12 px-4 focus:outline-none flex items-center justify-between outline-none my-1 active:focus:outline-none hover:bg-base-300 bg-opacity-70 hover:outline-none hover:rounded-lg",
+                                " text-body-md text-base-800 cursor-pointer w-full h-12 px-4 rounded-lg focus:outline-none flex items-center justify-between outline-none my-1 active:focus:outline-none hover:bg-base-300 bg-opacity-70 hover:outline-none ",
                                 {
-                                    "category-active": index === clickedId
+                                    "category-active bg-base-300": index === clickedId
                                 }
                             )}
                             type='button'
                             onClick={(event) => {
                                 handleClick(event, index)
                                 onChange?.(item.appCategoryName ?? "")
-                                router.push(
+                                router.replace(
                                     `/browse?category=${item.appCategoryName}&id=${item.id}${searchParams ? `&search=${searchParams}` : ""}`,
                                     { scroll: false }
                                 )
                             }}
                         >
                             <div className='flex flex-row items-center gap-3'>
-                                <Image
-                                    src={index === clickedId ? imageActive : imageInactive}
-                                    alt=''
-                                    width={24}
-                                    height={24}
-                                />
-                                <span
-                                    className={classNames(
-                                        "text-base-800 text-body-md text-left whitespace-nowrap w-[100px] overflow-hidden text-ellipsis",
-                                        {
-                                            "text-primary-5": index === clickedId
-                                        }
-                                    )}
-                                >
+                                <Image src={item.icons as string} alt='' width={24} height={24} />
+                                <span className='text-base-800 text-body-md text-left whitespace-nowrap w-[100px] overflow-hidden text-ellipsis'>
                                     {item.appCategoryName}
                                 </span>
                             </div>
@@ -107,18 +92,7 @@ const Category = ({ category, categoryParams, searchParams, total, onChange, loa
                                         </Then>
                                         <Else>
                                             <When condition={total}>
-                                                <span
-                                                    className={classNames(
-                                                        "h-[22px] w-[27px] text-[10px] rounded-[6px] ml-1 uppercase text-[#9AA1AD] bg-[#9AA1AD] bg-opacity-80",
-                                                        {
-                                                            "bg-[#E06343] bg-opacity-100 !text-[#FAFAFB]":
-                                                                index === clickedId
-                                                        }
-                                                    )}
-                                                    style={{
-                                                        boxShadow: "0px 6px 12px -5px rgba(224, 99, 67, 0.25);"
-                                                    }}
-                                                >
+                                                <span className='flex items-center justify-center py-1 px-2 text-body-xs rounded-md uppercase bg-base-800 text-base-100'>
                                                     {total}
                                                 </span>
                                             </When>

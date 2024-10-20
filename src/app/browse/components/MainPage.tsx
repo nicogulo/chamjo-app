@@ -1,26 +1,29 @@
 "use client"
 
-import { Else, If, Then } from "@components/If"
-import fetchAPI, { supabaseAuth, supabaseClient } from "@config/auth"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
-import Category from "./Category"
-import classNames from "classnames"
-import { Database } from "@utils/supabase"
-import toast from "@utils/toast"
-import Filter from "./Filter"
-import "./module.css"
-import Loader from "@components/Loader"
-import SearchBar from "./SearchBar"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useDebouncedCallback } from "use-debounce"
 import { useMediaQuery } from "react-responsive"
+import classNames from "classnames"
+
+import "./module.css"
+
+import { Database } from "@utils/supabase"
+import toast from "@utils/toast"
+
+import { Else, If, Then, When } from "@components/If"
+import { supabaseSsrClient } from "@config/auth"
+import Loader from "@components/Loader"
+
+import Category from "./Category"
+import Filter from "./Filter"
+import SearchBar from "./SearchBar"
 
 export interface CategoryModel {
     id: number | null
     appCategoryName: string | null
-    imageInactive: string | null
-    imageActive: string | null
+    icons: string | null
     isNew: boolean
     status: string | null
 }
@@ -70,30 +73,31 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
     const getCategory = async () => {
         try {
             setLoadingCategory(true)
+            const { count, data } = await supabaseSsrClient
+                .from("category")
+                .select("*", { count: "exact" })
+                .order("app_category_name", {
+                    ascending: true
+                })
 
-            const response = await fetchAPI({
-                url: "AppCategory",
-                method: "GET",
-                params: {
-                    select: "*",
-                    order: "app_category_name.asc"
-                }
-            })
-            if (!response.data) {
-                throw response
+            let response: CategoryModel[] = data
+                ? data.map((item: any) => ({
+                      id: item.id,
+                      appCategoryName: item.app_category_name,
+                      icons: item.icon,
+                      isNew: item.isNew,
+                      status: item.status
+                  }))
+                : []
+
+            const supperAppIndex = response.findIndex((item) => item.appCategoryName === "Super App")
+            if (supperAppIndex !== -1) {
+                const [supperApp] = response.splice(supperAppIndex, 1)
+                response.splice(1, 0, supperApp)
             }
 
-            const data = response?.data.map((item: any) => ({
-                id: item.id,
-                appCategoryName: item.app_category_name,
-                imageInactive: item.image_inactive,
-                imageActive: item.image_active,
-                isNew: item.isNew,
-                status: item.status
-            }))
-
             if (data) {
-                setCategory(data)
+                setCategory(response)
             }
             setLoadingCategory(false)
         } catch (error: any) {
@@ -105,28 +109,23 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
     const getAppData = async (pagination: any) => {
         try {
             setLoadingData(true)
-            let params: object = {
-                select: "*,CategoriesOnApps!inner(*)",
-                order: "id.desc",
-                limit: pagination.limit,
-                offset: pagination.page,
-                "CategoriesOnApps.category_id": `eq.${categoryidParams}`
-            }
+
+            let query = supabaseSsrClient
+                .from("Application")
+                .select("*, CategoriesOnApps!inner(*)", { count: "exact" })
+                .order("id", { ascending: false })
+                .eq("CategoriesOnApps.category_id", categoryidParams)
+                .range(pagination.page * pagination.limit, (pagination.page + 1) * pagination.limit - 1)
+                .limit(pagination.limit)
 
             if (search) {
-                params = {
-                    ...params,
-                    app_name: `ilike.%${search}%`
-                }
+                query = query.ilike("app_name", `%${search}%`)
             }
 
-            const response = await fetchAPI({
-                url: "Application",
-                method: "GET",
-                params: params
-            })
-            const data: DataAppType[] = response.data
-            const countData = response?.count
+            const { data, count } = await query
+
+            const response: DataAppType[] = data ?? []
+            const countData = count
 
             if (!data) {
                 throw response
@@ -140,7 +139,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                 !searchValue || name.includes(searchValue)
             })
 
-            setTotalData(countData)
+            setTotalData(countData as number)
             setDataApp(dataFilter as unknown as DataAppType[])
 
             setLoadingData(false)
@@ -183,7 +182,12 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
 
     return (
         <div className='flex'>
-            <div className='max-w-[280px] w-full p-4 bg-base-100 xl:block hidden overflow-scroll h-[calc(100vh-72px)] border-r border-r-base-400'>
+            <div
+                className='max-w-[280px] w-full p-4 bg-base-100 xl:block hidden overflow-scroll h-[calc(100vh-72px)] border-r border-r-base-400'
+                style={{
+                    scrollbarWidth: "none"
+                }}
+            >
                 {/* Sidebar */}
                 <If condition={isLoadingCategory}>
                     <Then>
@@ -205,13 +209,13 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
 
                 {/* End Sidebar */}
             </div>
-            <div className='wrapper-card px-6'>
+            <div className='wrapper-card xl:px-6'>
                 <div className='wrapper-title'>
-                    <span className='title' id='title'>
-                        Browse <span className='text-base-5'>in </span>{" "}
+                    <span className='title text-base-900' id='title'>
+                        Browse <span className='text-base-600'>in </span>{" "}
                         <span
-                            className={classNames("text-base-8", {
-                                "category-name": !checkLength(selectedTittle) && isMobile
+                            className={classNames({
+                                "truncate w-[100px]": !checkLength(selectedTittle) && isMobile
                             })}
                         >
                             {selectedTittle}
@@ -223,7 +227,9 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                                 </div>
                             </Then>
                             <Else>
-                                <span className='total-data bg-primary-500 text-base-1'>{totalData}</span>
+                                <When condition={totalData}>
+                                    <span className='total-data bg-primary-500 text-base-1'>{totalData}</span>
+                                </When>
                             </Else>
                         </If>
                     </span>
@@ -232,6 +238,7 @@ const MainPage = ({ categoryParams, categoryidParams, search }: Props) => {
                         total={totalData}
                         loading={isLoadingCategory}
                         categoryParams={categoryParams}
+                        searchParams={search}
                         onChange={(value) => {
                             setSelectedTittle(value)
                             setPagination({ page: page, limit: limit })
